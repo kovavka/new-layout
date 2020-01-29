@@ -1,6 +1,9 @@
 import * as React from 'react'
+import './screen.less'
+import '../components/components.less'
 import {StateService} from '../services/StateService'
 import {ScreenType} from '../types/ScreenType'
+import { SettingsScreen } from './Settings/SettingsScreen'
 
 type MainState = {
     currentScreen: ScreenType
@@ -32,11 +35,11 @@ export class Main extends React.Component<any, MainState> {
     }
 
     render() {
-        const currentScreen = this.stateService.currentScreen
+        const {currentScreen} = this.state
         return (
             <div className="App">
-                {currentScreen === ScreenType.IDLE && (
-                    <div />
+                {currentScreen === ScreenType.SETTINGS && (
+                    <SettingsScreen />
                 )}
             </div>
         )

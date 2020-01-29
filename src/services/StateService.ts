@@ -1,8 +1,9 @@
 import signals from 'signals';
+import {ScreenType} from "../types/ScreenType";
 
 export class StateService {
 
-    currentScreen: any
+    currentScreen: ScreenType = ScreenType.SETTINGS
 
     onChange: signals.Signal = new signals.Signal()
 
