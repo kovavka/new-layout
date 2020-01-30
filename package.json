@@ -70,9 +70,10 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "start": "npm run svg && node scripts/start.js",
+    "build": "npm run svg && node scripts/build.js",
+    "test": "node scripts/test.js",
+    "svg": "node scripts/svgGenerator.js"
   },
   "eslintConfig": {
     "extends": "react-app"
