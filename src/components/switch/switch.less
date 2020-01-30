@@ -1,0 +1,40 @@
+@import '../../variables.less';
+
+.switch {
+  flex-shrink: 0;
+  position: relative;
+  width: 48px;
+  height: 24px;
+  user-select: none;
+  margin-right: 8px;
+
+  .switch__box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 16px;
+    background-color: @color-secondary-light;
+
+    &.switch__box--on {
+      background-color: @color-primary;
+    }
+  }
+
+  .switch__button {
+    position: absolute;
+    top: 2px;
+    bottom: 2px;
+    right: 26px;
+    left: 2px;
+    background-color: @secondary-text-color;
+    border-radius: 9px;
+    transition: all 100ms ease;
+
+    &.switch__button--on {
+      right: 2px;
+      left: 26px;
+    }
+  }
+}
