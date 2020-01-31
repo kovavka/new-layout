@@ -3,7 +3,8 @@ import './screen.less'
 import '../components/components.less'
 import {StateService} from '../services/StateService'
 import {ScreenType} from '../types/ScreenType'
-import { SettingsScreen } from './Settings/SettingsScreen'
+import { SettingsScreen } from './settings/SettingsScreen'
+import { TableScreen } from './table/TableScreen'
 
 type MainState = {
     currentScreen: ScreenType
@@ -34,12 +35,19 @@ export class Main extends React.Component<any, MainState> {
         })
     }
 
+    onAppClicked() {
+        this.stateService.nextScreen()
+    }
+
     render() {
         const {currentScreen} = this.state
         return (
-            <div className="App">
+            <div className="App" onClick={this.onAppClicked.bind(this)}>
                 {currentScreen === ScreenType.SETTINGS && (
                     <SettingsScreen />
+                )}
+                {currentScreen === ScreenType.TABLE && (
+                    <TableScreen />
                 )}
             </div>
         )
