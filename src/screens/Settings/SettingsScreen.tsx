@@ -37,7 +37,7 @@ export class SettingsScreen extends React.Component<{}, IState> {
                     <div className="page-setting__section-content">
                         <div className="theme theme--selected">
                             <div className="theme__visual">
-                                <div className="theme__visual-inner">
+                                <div className="theme__visual-inner" style={{backgroundColor: "#E5E5E5"}}>
                                     <div className="theme__secondary-color" style={{backgroundColor: "#B8C0D1"}}></div>
                                     <div className="theme__text-color" style={{backgroundColor: "#000000"}}></div>
                                     <div className="theme__primary-color" style={{backgroundColor: "#1565C0"}}></div>
@@ -47,9 +47,9 @@ export class SettingsScreen extends React.Component<{}, IState> {
                         </div>
                         <div className="theme">
                             <div className="theme__visual">
-                                <div className="theme__visual-inner">
-                                    <div className="theme__secondary-color" style={{backgroundColor: "#B8C0D1"}}></div>
-                                    <div className="theme__text-color" style={{backgroundColor: "#000000"}}></div>
+                                <div className="theme__visual-inner" style={{backgroundColor: "#282C34"}}>
+                                    <div className="theme__secondary-color" style={{backgroundColor: "#37445C"}}></div>
+                                    <div className="theme__text-color" style={{backgroundColor: "#E6E6E6"}}></div>
                                     <div className="theme__primary-color" style={{backgroundColor: "#1565C0"}}></div>
                                 </div>
                             </div>
