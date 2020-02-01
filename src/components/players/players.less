@@ -1,0 +1,53 @@
+@import '../../variables.less';
+
+.player {
+  .player__name {
+
+  }
+
+  .player__wind {
+    font-size: @font-size-header;
+  }
+}
+
+.player--top {
+  margin-top: 16px;
+  margin-bottom: 4px;
+
+  .player__name {
+    text-align: center;
+  }
+
+  .player__wind {
+    margin-top: 12px;
+    text-align: center;
+  }
+}
+
+.player--bottom {
+  margin-top: 4px;
+  margin-bottom: 16px;
+
+  .player__name {
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .player__wind {
+    text-align: center;
+  }
+}
+
+.player--left {
+  .player__name {
+    svg {
+      g {
+        transform: translate(0, 18px) rotate(90deg) translate(-18px, 0);
+      }
+    }
+  }
+}
+
+.player--right {
+
+}

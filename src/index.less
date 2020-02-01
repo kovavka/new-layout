@@ -82,3 +82,21 @@ ul {
   text-decoration: underline;
   color: @color-primary;
 }
+
+.flex-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .flex-container__top {
+
+  }
+
+  .flex-container__content {
+    flex-grow: 1;
+  }
+
+  .flex-container__bottom {
+    flex: 0 0 auto;
+  }
+}

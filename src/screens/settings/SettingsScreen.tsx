@@ -20,8 +20,8 @@ export class SettingsScreen extends React.Component<{}, IState> {
 
     render() {
         return (
-            <div className="page-setting">
-                <div className="page-setting__max-content">
+            <div className="flex-container page-setting">
+                <div className="flex-container__content">
                     <TopPanel />
                     <div className="page-setting__name">Super long long long name</div>
                     <div className="page-setting__section">
@@ -66,7 +66,7 @@ export class SettingsScreen extends React.Component<{}, IState> {
                         </div>
                     </div>
                 </div>
-                <div className="page-setting__bottom">
+                <div className="flex-container__bottom page-setting__bottom">
                     <div className="link">Log out</div>
                 </div>
             </div>
