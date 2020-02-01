@@ -17,21 +17,21 @@ export class RotatedName extends React.Component<IProps, ISate> {
     };
 
     componentDidMount(): void {
-        setTimeout(() => {
-            this.setState({
-                maxNameHeight: this.calcMaxNameHeight()
-            })
-        }, 100)
+        // setTimeout(() => {
+        //     this.setState({
+        //         maxNameHeight: this.calcMaxNameHeight()
+        //     })
+        // }, 100)
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<ISate>): void {
-        let maxNameHeight = this.calcMaxNameHeight();
-
-        if (maxNameHeight !== prevState.maxNameHeight) {
-            this.setState({
-                maxNameHeight: maxNameHeight
-            })
-        }
+        // let maxNameHeight = this.calcMaxNameHeight();
+        //
+        // if (maxNameHeight !== prevState.maxNameHeight) {
+        //     this.setState({
+        //         maxNameHeight: maxNameHeight
+        //     })
+        // }
     }
 
     private calcMaxNameHeight() {
@@ -44,11 +44,9 @@ export class RotatedName extends React.Component<IProps, ISate> {
         const {name, id} = this.props;
 
         return (
-           <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${FONT_SIZE_PRIMARY} ${this.state.maxNameHeight}`}>
-               <g>
-                   <text id={id} fill="currentColor" fontSize={FONT_SIZE_PRIMARY_PX}>{name}</text>
-               </g>
-           </svg>
+            <div>
+                {name}
+            </div>
         )
     }
 }

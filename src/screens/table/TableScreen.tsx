@@ -14,8 +14,16 @@ export class TableScreen extends React.Component {
                     <div className="flex-container__top">
                         <PlayerTop />
                     </div>
-                    <div className="flex-container__content">
+                    <div className="flex-container__content page-table__center">
                         <PlayerLeft />
+                        <div className="table-info">
+                            <div className="table-info__round">
+                                東1
+                            </div>
+                            <div className="table-info__">
+                            </div>
+                        </div>
+
                         <PlayerRight />
                     </div>
                     <div className="flex-container__bottom">
