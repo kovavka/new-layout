@@ -39,13 +39,32 @@
 }
 
 .player--left {
+  display: flex;
+  align-items: center;
+
+  .player__wind-container {
+    margin-left: 12px;
+  }
 }
 
 .player--right {
+  display: flex;
+  align-items: center;
+
+  .player__wind-container {
+    margin-right: 12px;
+  }
 }
 
 .player--rotated {
   height: 100%;
+
+  .player__name,
+  .player__wind {
+    position: absolute;
+    transform-origin: 0 0;
+    text-align: center;
+  }
 
   .player__name-container {
     height: 100%;
@@ -56,12 +75,6 @@
 
   .player__name {
     height: 24px; //font width
-    position: absolute;
-    transform-origin: 0 0;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   &.player--left .player__name {
@@ -75,9 +88,8 @@
     transform: rotate(270deg);
   }
 
-
   .player__wind-container {
-    height: 100%;
+    height: 32px;
     width: 45px; //font width
     overflow: hidden;
     position: relative;
@@ -85,12 +97,6 @@
 
   .player__wind {
     height: 45px; //font width
-    position: absolute;
-    transform-origin: 0 0;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   &.player--left .player__wind {
@@ -104,4 +110,10 @@
     transform: rotate(270deg);
   }
 
+}
+
+.player__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

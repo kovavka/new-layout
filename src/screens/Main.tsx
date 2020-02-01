@@ -36,7 +36,7 @@ export class Main extends React.Component<any, MainState> {
     }
 
     onAppClicked() {
-        this.stateService.nextScreen();
+        // this.stateService.nextScreen();
     }
 
     render() {

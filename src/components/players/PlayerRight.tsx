@@ -10,14 +10,14 @@ export class PlayerRight extends React.Component<IProps> {
     render() {
         return (
             <div className="player player--right player--rotated">
-                <div className="player__name-container">
-                    <div className="player__name" style={{width: this.props.nameHeight}}>
-                        Test Testov
-                    </div>
-                </div>
                 <div className="player__wind-container">
                     <div className="player__wind">
                         北
+                    </div>
+                </div>
+                <div className="player__name-container">
+                    <div className="player__name" style={{width: this.props.nameHeight}}>
+                        Test Testov
                     </div>
                 </div>
             </div>
