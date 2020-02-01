@@ -39,27 +39,9 @@
 }
 
 .player--left {
-  .player__wind {
-    svg {
-      width: @font-size-header;
-
-      g {
-        transform: rotate(90deg);
-      }
-    }
-  }
 }
 
 .player--right {
-  .player__wind {
-    svg {
-      width: @font-size-header;
-
-      g {
-        transform: rotate(-90deg);
-      }
-    }
-  }
 }
 
 .player--rotated {
@@ -73,25 +55,53 @@
   }
 
   .player__name {
-    width: calc(100vh - 100px - 100px - 48px); //top player, bottom player, bottom panel
     height: 24px; //font width
     position: absolute;
     transform-origin: 0 0;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
-    padding: 5px;
     text-overflow: ellipsis;
   }
 
-  .player__name--left {
+  &.player--left .player__name {
     left: 24px;
     transform: rotate(90deg);
   }
 
-  .player__name--right {
+  &.player--right .player__name {
     bottom: -24px;
     left: 0;
     transform: rotate(270deg);
   }
+
+
+  .player__wind-container {
+    height: 100%;
+    width: 45px; //font width
+    overflow: hidden;
+    position: relative;
+  }
+
+  .player__wind {
+    height: 45px; //font width
+    position: absolute;
+    transform-origin: 0 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.player--left .player__wind {
+    left: 45px;
+    transform: rotate(90deg);
+  }
+
+  &.player--right .player__wind {
+    bottom: -45px;
+    left: 0;
+    transform: rotate(270deg);
+  }
+
 }

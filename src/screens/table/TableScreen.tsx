@@ -5,9 +5,33 @@ import { PlayerBottom } from "../../components/players/PlayerBottom";
 import { PlayerLeft } from "../../components/players/PlayerLeft";
 import { PlayerRight } from "../../components/players/PlayerRight";
 
+declare var frame: any
 
-export class TableScreen extends React.Component {
+type IState = {
+    rotatedNameHeight: string
+}
+
+export class TableScreen extends React.Component<{}, IState> {
+    state = {
+        rotatedNameHeight: 'initial'
+    };
+    frameRef = React.createRef<HTMLIFrameElement>();
+
+    componentDidMount(): void {
+        this.setState({
+            rotatedNameHeight: frame.innerHeight
+        });
+
+        frame.onresize = () => {
+            this.setState({
+                rotatedNameHeight: frame.innerHeight
+            });
+        }
+    }
+
     render() {
+        const {rotatedNameHeight} = this.state;
+
         return (
             <div className="flex-container page-table">
                 <div className="flex-container__content flex-container">
@@ -15,7 +39,9 @@ export class TableScreen extends React.Component {
                         <PlayerTop />
                     </div>
                     <div className="flex-container__content page-table__center">
-                        <PlayerLeft />
+                        <iframe ref={this.frameRef}  name="frame" width="100%" height="100%" style={{position: 'absolute', visibility: 'hidden'}}></iframe>
+
+                        <PlayerLeft nameHeight={rotatedNameHeight} />
                         <div className="table-info">
                             <div className="table-info__round">
                                 東1
@@ -24,7 +50,7 @@ export class TableScreen extends React.Component {
                             </div>
                         </div>
 
-                        <PlayerRight />
+                        <PlayerRight nameHeight={rotatedNameHeight} />
                     </div>
                     <div className="flex-container__bottom">
                         <PlayerBottom />
