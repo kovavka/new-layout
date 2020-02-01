@@ -11,7 +11,7 @@ type IState = {
     rotatedNameHeight: string
 }
 
-export class TableScreen extends React.Component<{}, IState> {
+export class TableScreenBeforeStart extends React.Component<{}, IState> {
     state = {
         rotatedNameHeight: 'initial'
     };
@@ -43,28 +43,11 @@ export class TableScreen extends React.Component<{}, IState> {
 
                         <PlayerLeft nameHeight={rotatedNameHeight} />
                         <div className="table-info">
-                            <div className="table-info__round">
-                                東 1
+                            <div className="table-info__table-caption">
+                               Table
                             </div>
-                            <div className="table-info__tenbou">
-                                <div className="svg-button">
-                                    <svg>
-                                        <use xlinkHref="#riichi-small"></use>
-                                    </svg>
-                                </div>
-                                <div className="table-info__tenbou-count">
-                                    1
-                                </div>
-                            </div>
-                            <div className="table-info__tenbou">
-                                <div className="svg-button">
-                                    <svg>
-                                        <use xlinkHref="#honba"></use>
-                                    </svg>
-                                </div>
-                                <div className="table-info__tenbou-count">
-                                    2
-                                </div>
+                            <div className="table-info__table-number">
+                               #4
                             </div>
                         </div>
 

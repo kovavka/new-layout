@@ -1,13 +1,12 @@
 import * as React from "react";
 import './players.less'
+import {Player} from './Player';
+import {PlayerMode} from '../../types/PlayerEnums';
 
 export class PlayerBottom extends React.Component {
     render() {
         return (
-            <div className="player player--bottom">
-                <div className="player__wind">西</div>
-               <div className="player__name">Super long long long name</div>
-            </div>
+            <Player name="Super long long long name" wind="西" mode={PlayerMode.BOTTOM} />
         )
     }
 }

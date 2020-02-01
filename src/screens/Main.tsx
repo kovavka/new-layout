@@ -5,6 +5,7 @@ import {StateService} from '../services/StateService'
 import {ScreenType} from '../types/ScreenType'
 import { SettingsScreen } from './settings/SettingsScreen'
 import { TableScreen } from './table/TableScreen'
+import { TableScreenBeforeStart } from './table/TableScreenBeforeStart'
 
 type MainState = {
     currentScreen: ScreenType;
@@ -45,6 +46,9 @@ export class Main extends React.Component<any, MainState> {
             <div className="App" onClick={this.onAppClicked.bind(this)}>
                 {currentScreen === ScreenType.SETTINGS && (
                     <SettingsScreen />
+                )}
+                {currentScreen === ScreenType.BEFORE_START && (
+                    <TableScreenBeforeStart />
                 )}
                 {currentScreen === ScreenType.TABLE && (
                     <TableScreen />
