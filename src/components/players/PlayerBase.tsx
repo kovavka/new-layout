@@ -71,11 +71,24 @@ export class PlayerBase extends React.Component<IProps> {
                     </div>
                 )}
 
-                {points && pointsMode === PlayerPointsMode.IDLE && (
+                {points && (
                     <div className="player__score-container">
-                        <div className="player__score">
-                            {points}
-                        </div>
+                        {pointsMode === PlayerPointsMode.IDLE && (
+                            <div className="player__score">
+                                {points}
+                            </div>
+                        )}
+                        {pointsMode === PlayerPointsMode.POSITIVE && (
+                            <div className="player__score player__score--success">
+                                +{points}
+                            </div>
+                        )}
+                        {pointsMode === PlayerPointsMode.NEGATIVE && (
+                            <div className="player__score player__score--danger">
+                                -{points}
+                            </div>
+                        )}
+
                     </div>
                 )}
 

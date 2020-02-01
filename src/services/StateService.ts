@@ -2,7 +2,7 @@ import signals from 'signals';
 import {ScreenType} from "../types/ScreenType";
 
 export class StateService {
-    currentScreen: ScreenType = ScreenType.BEFORE_START;
+    currentScreen: ScreenType = ScreenType.TABLE;
     maxScreen = 3
 
     onChange: signals.Signal = new signals.Signal();

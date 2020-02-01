@@ -4,7 +4,6 @@ import '../components/components.less'
 import {StateService} from '../services/StateService'
 import {ScreenType} from '../types/ScreenType'
 import { SettingsScreen } from './settings/SettingsScreen'
-import { TableScreen } from './table/TableScreen'
 import { TableScreenBeforeStart } from './examples/TableScreenBeforeStart'
 import {TableScreenIdle} from './examples/TableScreenIdle';
 
