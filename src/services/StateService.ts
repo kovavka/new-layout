@@ -2,7 +2,8 @@ import signals from 'signals';
 import {ScreenType} from "../types/ScreenType";
 
 export class StateService {
-    currentScreen: ScreenType = ScreenType.TABLE;
+    currentScreen: ScreenType = ScreenType.BEFORE_START;
+    maxScreen = 3
 
     onChange: signals.Signal = new signals.Signal();
 
@@ -17,7 +18,9 @@ export class StateService {
     private constructor() {}
 
     nextScreen() {
-        this.currentScreen++;
-        this.onChange.dispatch();
+        if (this.currentScreen !== this.maxScreen) {
+            this.currentScreen++;
+            this.onChange.dispatch();
+        }
     }
 }

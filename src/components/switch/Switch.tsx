@@ -21,6 +21,6 @@ export class Switch extends React.Component<SwitchProps> {
                 <div className={'switch__box' + (this.props.switched ? ' switch__box--on' : '')}></div>
                 <div className={'switch__button' + (this.props.switched ? ' switch__button--on' : '')}></div>
             </div>
-        )
+        );
     }
 }

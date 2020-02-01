@@ -19,14 +19,17 @@ type IProps = {
     riichiButtonMode?: PlayerButtonMode
 }
 
-export class Player extends React.Component<IProps> {
+export class PlayerBase extends React.Component<IProps> {
 
     renderName() {
-        const {name, nameHeight} = this.props;
+        const {name, wind, nameHeight, inlineWind} = this.props;
 
         return (
             <div className="player__name-container">
                 <div className="player__name" style={{width: nameHeight}}>
+                    {inlineWind && (
+                        <span className="player__inline-wind">{wind}</span>
+                    )}
                     {name}
                 </div>
             </div>
@@ -46,7 +49,7 @@ export class Player extends React.Component<IProps> {
             winButtonMode,
             loseButtonMode,
             riichiButtonMode,
-        } = this.props
+        } = this.props;
 
         return (
             <div className = {classNames(
@@ -64,6 +67,14 @@ export class Player extends React.Component<IProps> {
                     <div className="player__wind-container">
                         <div className="player__wind">
                             {wind}
+                        </div>
+                    </div>
+                )}
+
+                {points && pointsMode === PlayerPointsMode.IDLE && (
+                    <div className="player__score-container">
+                        <div className="player__score">
+                            {points}
                         </div>
                     </div>
                 )}

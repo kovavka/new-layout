@@ -70,6 +70,6 @@ export class SettingsScreen extends React.Component<{}, IState> {
                     <div className="link">Log out</div>
                 </div>
             </div>
-        )
+        );
     }
 }

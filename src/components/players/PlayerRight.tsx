@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './players.less';
-import {Player} from './Player';
+import {PlayerBase} from './PlayerBase';
 import {PlayerButtonMode, PlayerMode, PlayerPointsMode} from '../../types/PlayerEnums';
 
 type IProps = {
@@ -30,11 +30,10 @@ export class PlayerRight extends React.Component<IProps> {
             winButtonMode,
             loseButtonMode,
             riichiButtonMode,
-        } = this.props
-
+        } = this.props;
 
         return (
-            <Player
+            <PlayerBase
                 name={name}
                 wind={wind}
                 mode={PlayerMode.RIGHT}
@@ -48,6 +47,6 @@ export class PlayerRight extends React.Component<IProps> {
                 loseButtonMode={loseButtonMode}
                 riichiButtonMode={riichiButtonMode}
             />
-        )
+        );
     }
 }

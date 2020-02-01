@@ -1,12 +1,16 @@
 @import '../../variables.less';
 
 .player {
-  .player__name {
-
-  }
-
   .player__wind {
     font-size: @font-size-header;
+  }
+
+  .player__score {
+    font-size: @font-size-secondary;
+  }
+
+  .player__inline-wind {
+    margin-right: 8px;
   }
 }
 
@@ -14,13 +18,12 @@
   margin-top: 16px;
   margin-bottom: 4px;
 
-  .player__name {
-    text-align: center;
+  .player__wind-container {
+    margin-top: 12px;
   }
 
-  .player__wind {
+  .player__score-container {
     margin-top: 12px;
-    text-align: center;
   }
 }
 
@@ -28,12 +31,20 @@
   margin-top: 4px;
   margin-bottom: 16px;
 
-  .player__name {
-    margin-top: 12px;
-    text-align: center;
+  .player__wind-container {
+    margin-bottom: 12px;
   }
 
-  .player__wind {
+  .player__score-container {
+    margin-bottom: 12px;
+  }
+}
+
+.player--top,
+.player--bottom {
+  .player__name,
+  .player__wind,
+  .player__score {
     text-align: center;
   }
 }
@@ -46,6 +57,10 @@
   .player__wind-container {
     margin-left: 12px;
   }
+
+  .player__score-container {
+    margin-left: 12px;
+  }
 }
 
 .player--right {
@@ -53,7 +68,11 @@
   display: flex;
   align-items: center;
 
-  .player__wind-container {
+  .player__score-container {
+    margin-right: 12px;
+  }
+
+  .player__score {
     margin-right: 12px;
   }
 }
@@ -61,11 +80,11 @@
 .player--rotated {
   &.player--left,
   &.player--right {
-
     height: 100%;
 
     .player__name,
-    .player__wind {
+    .player__wind,
+    .player__score {
       position: absolute;
       transform-origin: 0 0;
       text-align: center;
@@ -73,13 +92,13 @@
 
     .player__name-container {
       height: 100%;
-      width: 24px; //font width
+      width: 24px; //font height
       overflow: hidden;
       position: relative;
     }
 
     .player__name {
-      height: 24px; //font width
+      height: 24px;
     }
 
     &.player--left .player__name {
@@ -94,14 +113,14 @@
     }
 
     .player__wind-container {
-      height: 32px;
-      width: 45px; //font width
+      height: 32px; //font width
+      width: 45px; //font height
       overflow: hidden;
       position: relative;
     }
 
     .player__wind {
-      height: 45px; //font width
+      height: 45px;
     }
 
     &.player--left .player__wind {
@@ -114,11 +133,34 @@
       left: 0;
       transform: rotate(270deg);
     }
+
+    .player__score-container {
+      height: 100px; //max width for score
+      width: 32px; //from height
+      overflow: hidden;
+      position: relative;
+    }
+
+    .player__score {
+      width: 100px;
+    }
+
+    &.player--left .player__score {
+      left: 32px;
+      transform: rotate(90deg);
+    }
+
+    &.player--right .player__score {
+      bottom: -32px;
+      left: 0;
+      transform: rotate(270deg);
+    }
   }
 
   &.player--top {
     .player__wind,
-    .player__name {
+    .player__name,
+    .player__score {
       transform: rotate(180deg);
     }
   }

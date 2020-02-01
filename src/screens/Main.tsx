@@ -5,7 +5,8 @@ import {StateService} from '../services/StateService'
 import {ScreenType} from '../types/ScreenType'
 import { SettingsScreen } from './settings/SettingsScreen'
 import { TableScreen } from './table/TableScreen'
-import { TableScreenBeforeStart } from './table/TableScreenBeforeStart'
+import { TableScreenBeforeStart } from './examples/TableScreenBeforeStart'
+import {TableScreenIdle} from './examples/TableScreenIdle';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -37,7 +38,7 @@ export class Main extends React.Component<any, MainState> {
     }
 
     onAppClicked() {
-        // this.stateService.nextScreen();
+        this.stateService.nextScreen();
     }
 
     render() {
@@ -51,7 +52,7 @@ export class Main extends React.Component<any, MainState> {
                     <TableScreenBeforeStart />
                 )}
                 {currentScreen === ScreenType.TABLE && (
-                    <TableScreen />
+                    <TableScreenIdle />
                 )}
             </div>
         )
