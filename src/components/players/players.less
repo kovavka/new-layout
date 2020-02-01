@@ -44,12 +44,40 @@
       width: @font-size-primary;
 
       g {
-        transform: translate(0, 18px) rotate(90deg) translate(-18px, 0);
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .player__wind {
+    svg {
+      width: @font-size-header;
+
+      g {
+        transform: rotate(90deg);
       }
     }
   }
 }
 
 .player--right {
+  .player__name {
+    svg {
+      width: @font-size-primary;
 
+      g {
+        transform: rotate(-90deg);
+      }
+    }
+  }
+
+  .player__wind {
+    svg {
+      width: @font-size-header;
+
+      g {
+        transform: rotate(-90deg);
+      }
+    }
+  }
 }

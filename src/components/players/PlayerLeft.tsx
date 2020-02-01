@@ -1,6 +1,6 @@
 import * as React from "react";
 import './players.less'
-import {FONT_SIZE_HEADER, FONT_SIZE_PRIMARY} from "../../Variables";
+import {FONT_SIZE_HEADER, FONT_SIZE_HEADER_PX} from '../../Variables';
 import {RotatedName} from "./RotatedName";
 
 export class PlayerLeft extends React.Component {
@@ -11,9 +11,9 @@ export class PlayerLeft extends React.Component {
                    <RotatedName id="leftName" name="Bla Blabla" />
                </div>
                <div className="player__wind">
-                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 80">
-                       <g fill="none" fillRule="evenodd" transform="translate(20 20) ">
-                           <text fill="currentColor" fontSize={FONT_SIZE_HEADER}>南</text>
+                   <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${FONT_SIZE_HEADER} 42`}>
+                       <g fill="none" fillRule="evenodd">
+                           <text fill="currentColor" fontSize={FONT_SIZE_HEADER_PX}>南</text>
                        </g>
                    </svg>
                </div>

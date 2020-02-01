@@ -8,11 +8,11 @@ type SwitchProps = {
 
 export class Switch extends React.Component<SwitchProps> {
     constructor(props: SwitchProps) {
-        super(props)
+        super(props);
     }
 
     onToggle() {
-        this.props.onToggle()
+        this.props.onToggle();
     }
 
     render() {

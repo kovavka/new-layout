@@ -1,6 +1,6 @@
 import * as React from "react";
 import './players.less'
-import {FONT_SIZE_HEADER, FONT_SIZE_PRIMARY} from "../../Variables";
+import {FONT_SIZE_HEADER, FONT_SIZE_PRIMARY, FONT_SIZE_PRIMARY_PX} from '../../Variables';
 
 type ISate = {
     maxNameHeight: number
@@ -14,7 +14,7 @@ type IProps = {
 export class RotatedName extends React.Component<IProps, ISate> {
     state = {
         maxNameHeight: 100
-    }
+    };
 
     componentDidMount(): void {
         setTimeout(() => {
@@ -25,7 +25,7 @@ export class RotatedName extends React.Component<IProps, ISate> {
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<ISate>): void {
-        let maxNameHeight = this.calcMaxNameHeight()
+        let maxNameHeight = this.calcMaxNameHeight();
 
         if (maxNameHeight !== prevState.maxNameHeight) {
             this.setState({
@@ -35,18 +35,18 @@ export class RotatedName extends React.Component<IProps, ISate> {
     }
 
     private calcMaxNameHeight() {
-        let textElement: any = document.getElementById(this.props.id)
-        let textBox = textElement.getBBox()
-        return textBox.width
+        let textElement: any = document.getElementById(this.props.id);
+        let textBox = textElement.getBBox();
+        return textBox.width;
     }
 
     render() {
-        const {name, id} = this.props
+        const {name, id} = this.props;
 
         return (
-           <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 18 ${this.state.maxNameHeight}`}>
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${FONT_SIZE_PRIMARY} ${this.state.maxNameHeight}`}>
                <g>
-                   <text id={id} fill="currentColor" fontSize={FONT_SIZE_PRIMARY}>{name}</text>
+                   <text id={id} fill="currentColor" fontSize={FONT_SIZE_PRIMARY_PX}>{name}</text>
                </g>
            </svg>
         )

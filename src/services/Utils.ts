@@ -20,8 +20,8 @@ export function preventIosAutoZoom() {
             'dblclick',
             (e: any) => {
                     e.preventDefault()
-                    e.stopPropagation()
-                    return false
+                    e.stopPropagation();
+                    return false;
             },
             {passive: false}
         )

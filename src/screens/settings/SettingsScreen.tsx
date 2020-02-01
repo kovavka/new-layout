@@ -8,14 +8,14 @@ type IState = {
 }
 
 export class SettingsScreen extends React.Component<{}, IState> {
-    stateService: StateService = StateService.instance
+    stateService: StateService = StateService.instance;
 
-    state = {switched: false}
+    state = {switched: false};
 
     private onSingleDeviceModeToggle() {
         this.setState({
             switched: !this.state.switched
-        })
+        });
     }
 
     render() {
