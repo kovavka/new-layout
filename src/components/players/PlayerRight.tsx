@@ -1,16 +1,53 @@
 import * as React from 'react';
 import './players.less';
 import {Player} from './Player';
-import {PlayerMode} from '../../types/PlayerEnums';
+import {PlayerButtonMode, PlayerMode, PlayerPointsMode} from '../../types/PlayerEnums';
 
 type IProps = {
+    name: string
+    wind: string
     nameHeight: string
+    startWithName?: boolean
+    inlineWind?: boolean
+    points?: number
+    pointsMode?: PlayerPointsMode
+    penaltyPoints?: number
+    winButtonMode?: PlayerButtonMode
+    loseButtonMode?: PlayerButtonMode
+    riichiButtonMode?: PlayerButtonMode
 }
 
 export class PlayerRight extends React.Component<IProps> {
     render() {
+        const {
+            name,
+            wind,
+            nameHeight,
+            inlineWind,
+            points,
+            pointsMode,
+            penaltyPoints,
+            winButtonMode,
+            loseButtonMode,
+            riichiButtonMode,
+        } = this.props
+
+
         return (
-            <Player name="Test Testov" wind="北" mode={PlayerMode.RIGHT} nameHeight={this.props.nameHeight} rotated={true}  />
+            <Player
+                name={name}
+                wind={wind}
+                mode={PlayerMode.RIGHT}
+                nameHeight={nameHeight}
+                rotated={true}
+                inlineWind={inlineWind}
+                points={points}
+                pointsMode={pointsMode}
+                penaltyPoints={penaltyPoints}
+                winButtonMode={winButtonMode}
+                loseButtonMode={loseButtonMode}
+                riichiButtonMode={riichiButtonMode}
+            />
         )
     }
 }

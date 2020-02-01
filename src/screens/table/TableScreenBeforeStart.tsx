@@ -35,27 +35,27 @@ export class TableScreenBeforeStart extends React.Component<{}, IState> {
         return (
             <div className="flex-container page-table">
                 <div className="flex-container__content flex-container">
-                    <div className="flex-container__top">
-                        <PlayerTop />
-                    </div>
-                    <div className="flex-container__content page-table__center">
-                        <iframe ref={this.frameRef}  name="frame" width="100%" height="100%" style={{position: 'absolute', visibility: 'hidden'}}></iframe>
+                    {/*<div className="flex-container__top">*/}
+                    {/*    <PlayerTop />*/}
+                    {/*</div>*/}
+                    {/*<div className="flex-container__content page-table__center">*/}
+                    {/*    <iframe ref={this.frameRef}  name="frame" width="100%" height="100%" style={{position: 'absolute', visibility: 'hidden'}}></iframe>*/}
 
-                        <PlayerLeft nameHeight={rotatedNameHeight} />
-                        <div className="table-info">
-                            <div className="table-info__table-caption">
-                               Table
-                            </div>
-                            <div className="table-info__table-number">
-                               #4
-                            </div>
-                        </div>
+                    {/*    <PlayerLeft nameHeight={rotatedNameHeight} />*/}
+                    {/*    <div className="table-info">*/}
+                    {/*        <div className="table-info__table-caption">*/}
+                    {/*           Table*/}
+                    {/*        </div>*/}
+                    {/*        <div className="table-info__table-number">*/}
+                    {/*           #4*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
 
-                        <PlayerRight nameHeight={rotatedNameHeight} />
-                    </div>
-                    <div className="flex-container__bottom">
-                        <PlayerBottom />
-                    </div>
+                    {/*    <PlayerRight nameHeight={rotatedNameHeight} />*/}
+                    {/*</div>*/}
+                    {/*<div className="flex-container__bottom">*/}
+                    {/*    <PlayerBottom />*/}
+                    {/*</div>*/}
                 </div>
                 <div className="flex-container__bottom">
                     <BottomPanel />

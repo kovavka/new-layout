@@ -59,59 +59,69 @@
 }
 
 .player--rotated {
-  height: 100%;
+  &.player--left,
+  &.player--right {
 
-  .player__name,
-  .player__wind {
-    position: absolute;
-    transform-origin: 0 0;
-    text-align: center;
-  }
-
-  .player__name-container {
     height: 100%;
-    width: 24px; //font width
-    overflow: hidden;
-    position: relative;
+
+    .player__name,
+    .player__wind {
+      position: absolute;
+      transform-origin: 0 0;
+      text-align: center;
+    }
+
+    .player__name-container {
+      height: 100%;
+      width: 24px; //font width
+      overflow: hidden;
+      position: relative;
+    }
+
+    .player__name {
+      height: 24px; //font width
+    }
+
+    &.player--left .player__name {
+      left: 24px;
+      transform: rotate(90deg);
+    }
+
+    &.player--right .player__name {
+      bottom: -24px;
+      left: 0;
+      transform: rotate(270deg);
+    }
+
+    .player__wind-container {
+      height: 32px;
+      width: 45px; //font width
+      overflow: hidden;
+      position: relative;
+    }
+
+    .player__wind {
+      height: 45px; //font width
+    }
+
+    &.player--left .player__wind {
+      left: 45px;
+      transform: rotate(90deg);
+    }
+
+    &.player--right .player__wind {
+      bottom: -45px;
+      left: 0;
+      transform: rotate(270deg);
+    }
   }
 
-  .player__name {
-    height: 24px; //font width
+  &.player--top {
+    .player__wind,
+    .player__name {
+      transform: rotate(180deg);
+    }
   }
-
-  &.player--left .player__name {
-    left: 24px;
-    transform: rotate(90deg);
-  }
-
-  &.player--right .player__name {
-    bottom: -24px;
-    left: 0;
-    transform: rotate(270deg);
-  }
-
-  .player__wind-container {
-    height: 32px;
-    width: 45px; //font width
-    overflow: hidden;
-    position: relative;
-  }
-
-  .player__wind {
-    height: 45px; //font width
-  }
-
-  &.player--left .player__wind {
-    left: 45px;
-    transform: rotate(90deg);
-  }
-
-  &.player--right .player__wind {
-    bottom: -45px;
-    left: 0;
-    transform: rotate(270deg);
-  }
-
 }
 
 .player__name {

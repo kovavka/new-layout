@@ -7,6 +7,7 @@ import { PlayerRight } from "../../components/players/PlayerRight";
 
 declare var frame: any
 
+//todo move to general state and HOC
 type IState = {
     rotatedNameHeight: string
 }
@@ -36,12 +37,12 @@ export class TableScreen extends React.Component<{}, IState> {
             <div className="flex-container page-table">
                 <div className="flex-container__content flex-container">
                     <div className="flex-container__top">
-                        <PlayerTop />
+                        <PlayerTop name="Random player" wind="東" rotated={false} />
                     </div>
                     <div className="flex-container__content page-table__center">
                         <iframe ref={this.frameRef}  name="frame" width="100%" height="100%" style={{position: 'absolute', visibility: 'hidden'}}></iframe>
 
-                        <PlayerLeft nameHeight={rotatedNameHeight} />
+                        <PlayerLeft name="Bla Blabla" wind="南" nameHeight={rotatedNameHeight} />
                         <div className="table-info">
                             <div className="table-info__round">
                                 東 1
@@ -68,10 +69,10 @@ export class TableScreen extends React.Component<{}, IState> {
                             </div>
                         </div>
 
-                        <PlayerRight nameHeight={rotatedNameHeight} />
+                        <PlayerRight name="Test Testov" wind="北" nameHeight={rotatedNameHeight} />
                     </div>
                     <div className="flex-container__bottom">
-                        <PlayerBottom />
+                        <PlayerBottom name="Super long long long name" wind="西" />
                     </div>
                 </div>
                 <div className="flex-container__bottom">

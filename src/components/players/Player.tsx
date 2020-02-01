@@ -5,14 +5,15 @@ import {classNames} from '../../services/ReactUtils';
 
 type IProps = {
     name: string,
-    mode: PlayerMode,
-    nameHeight?: string
-    rotated?: boolean,
-    startWithName?: boolean
     wind: string
+    mode: PlayerMode
+    nameHeight?: string
+    rotated?: boolean
+    startWithName?: boolean
     inlineWind?: boolean
     points?: number
     pointsMode?: PlayerPointsMode
+    penaltyPoints?: number
     winButtonMode?: PlayerButtonMode
     loseButtonMode?: PlayerButtonMode
     riichiButtonMode?: PlayerButtonMode
@@ -21,7 +22,7 @@ type IProps = {
 export class Player extends React.Component<IProps> {
 
     renderName() {
-        const {name, nameHeight} = this.props
+        const {name, nameHeight} = this.props;
 
         return (
             <div className="player__name-container">
@@ -34,19 +35,18 @@ export class Player extends React.Component<IProps> {
 
     render() {
         const {
+            wind,
             mode,
             rotated,
             startWithName,
-            wind,
             inlineWind,
             points,
             pointsMode,
+            penaltyPoints,
             winButtonMode,
             loseButtonMode,
-            riichiButtonMode
+            riichiButtonMode,
         } = this.props
-
-        console.log(inlineWind)
 
         return (
             <div className = {classNames(
@@ -63,7 +63,7 @@ export class Player extends React.Component<IProps> {
                 {wind && !inlineWind && (
                     <div className="player__wind-container">
                         <div className="player__wind">
-                            北
+                            {wind}
                         </div>
                     </div>
                 )}
