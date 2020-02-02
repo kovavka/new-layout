@@ -31,7 +31,8 @@
 
   .player__wind-container,
   .player__score-container,
-  .player__button-container {
+  .player__button-container,
+  .player__riichi-button {
     margin-top: 12px;
   }
 }
@@ -42,7 +43,8 @@
 
   .player__wind-container,
   .player__score-container,
-  .player__button-container {
+  .player__button-container,
+  .player__riichi-button {
     margin-bottom: 12px;
   }
 }
@@ -63,7 +65,8 @@
 
   .player__wind-container,
   .player__score-container,
-  .player__button-container {
+  .player__button-container,
+  .player__riichi-button {
     margin-left: 12px;
   }
 }
@@ -75,7 +78,8 @@
 
   .player__wind-container,
   .player__score-container,
-  .player__button-container {
+  .player__button-container,
+  .player__riichi-button {
     margin-right: 12px;
   }
 }
@@ -188,13 +192,13 @@
     display: flex;
     justify-content: center;
 
-    div:last-child {
+    div:nth-child(2) {
       margin-left: 8px;
     }
   }
 
   &:not(.player__button-container--horizontal) {
-    div:last-child {
+    div:nth-child(2) {
       margin-top: 8px;
     }
   }
@@ -204,22 +208,23 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid @color-secondary-light;
+  border: 2px solid @color-secondary-light-1;
   border-radius: 8px;
   box-sizing: border-box;
 
   &.player__button--small {
     width: 52px;
     height: 52px;
-
-    svg {
-      width: 36px;
-      height: 36px;
-    }
   }
 
   &.player__button--horizontal {
+    width: 112px;
+    height: 52px;
+  }
 
+  &.player__button--vertical {
+    width: 52px;
+    height: 112px;
   }
 
   &.player__button--success {
@@ -233,8 +238,23 @@
   }
 
   &.player__button--pressed {
-    border-color: @color-secondary;
-    color: @color-secondary;
+    border-color: @color-secondary-dark;
+    color: @color-secondary-dark;
+  }
+
+  &.player__button--disabled {
+    border-color: @color-secondary-light-2;
+    color: @color-secondary-light-2;
+  }
+
+  svg {
+    width: 36px;
+    height: 36px;
+  }
+
+  .player__button-dead-hand {
+    text-align: center;
+    font-size: @font-size-small-2;
   }
 }
 
@@ -249,6 +269,7 @@
 
     svg {
       position: absolute;
+      z-index: -1;
       height: 106px;
       width: 106px;
 

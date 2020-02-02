@@ -7,6 +7,8 @@ import { SettingsScreen } from './settings/SettingsScreen'
 import { TableScreenBeforeStart } from './examples/TableScreenBeforeStart'
 import {TableScreenIdle} from './examples/TableScreenIdle';
 import {TableScreenRon} from './examples/TableScreenRon';
+import {TableScreenExhaustiveDraw} from './examples/TableScreenExhaustiveDraw';
+import {TableScreenChombo} from './examples/TableScreenChombo';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -56,6 +58,12 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.TABLE_RON && (
                     <TableScreenRon />
+                )}
+                {currentScreen === ScreenType.TABLE_DRAW && (
+                    <TableScreenExhaustiveDraw />
+                )}
+                {currentScreen === ScreenType.CHOMBO && (
+                    <TableScreenChombo />
                 )}
             </div>
         )

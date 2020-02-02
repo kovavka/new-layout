@@ -2,7 +2,7 @@ import signals from 'signals';
 import {ScreenType} from "../types/ScreenType";
 
 export class StateService {
-    currentScreen: ScreenType = ScreenType.TABLE_RON;
+    currentScreen: ScreenType = ScreenType.CHOMBO;
 
     onChange: signals.Signal = new signals.Signal();
 

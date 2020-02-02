@@ -38,15 +38,39 @@ export class PlayerBase extends React.Component<IProps> {
         )
     }
 
+    renderRiichiButton() {
+        const {verticalButtons, riichiButtonMode} = this.props;
+
+        if (riichiButtonMode !== undefined) {
+           return (
+               <div className={classNames('player__riichi-button', {'player__riichi-button--rotated': verticalButtons})}>
+                   {riichiButtonMode === PlayerButtonMode.IDLE && (
+                       <svg>
+                           <use xlinkHref="#riichi-big-empty" />
+                       </svg>
+                   )}
+                   {riichiButtonMode === PlayerButtonMode.PRESSED && (
+                       <svg>
+                           <use xlinkHref="#riichi-big" />
+                       </svg>
+                   )}
+               </div>
+           )
+        } else {
+           return null
+        }
+    }
+
     renderButtons() {
-        const {verticalButtons, winButtonMode, loseButtonMode, riichiButtonMode, showDeadButton} = this.props;
+        const {startWithName, verticalButtons, winButtonMode, loseButtonMode, showDeadButton} = this.props;
         const hasWinButton = winButtonMode !== undefined;
         const hasLoseButton = loseButtonMode !== undefined;
-        const hasRiichiButton = riichiButtonMode !== undefined;
         const oneButton = (hasWinButton && !hasLoseButton) || (hasLoseButton && !hasWinButton);
 
         return (
             <>
+                {!startWithName && this.renderRiichiButton()}
+
                 <div className={classNames(
                     'player__button-container',
                     {'player__button-container--horizontal': !verticalButtons}
@@ -57,8 +81,8 @@ export class PlayerBase extends React.Component<IProps> {
                         <div className={classNames(
                             'player__button',
                             {'player__button--small': !oneButton},
-                            {'player__button--vertical': !oneButton && verticalButtons},
-                            {'player__button--horizontal': !oneButton && !verticalButtons},
+                            {'player__button--vertical': oneButton && verticalButtons},
+                            {'player__button--horizontal': oneButton && !verticalButtons},
                             {'player__button--disabled': winButtonMode === PlayerButtonMode.DISABLE},
                             {'player__button--success': winButtonMode === PlayerButtonMode.PRESSED},
                         )}
@@ -73,8 +97,8 @@ export class PlayerBase extends React.Component<IProps> {
                         <div className={classNames(
                             'player__button',
                             {'player__button--small': !oneButton},
-                            {'player__button--vertical': !oneButton && verticalButtons},
-                            {'player__button--horizontal': !oneButton && !verticalButtons},
+                            {'player__button--vertical': oneButton && verticalButtons},
+                            {'player__button--horizontal': oneButton && !verticalButtons},
                             {'player__button--disabled': loseButtonMode === PlayerButtonMode.DISABLE},
                             {'player__button--danger': loseButtonMode === PlayerButtonMode.PRESSED},
                         )}
@@ -84,35 +108,22 @@ export class PlayerBase extends React.Component<IProps> {
                             </svg>
                         </div>
                     )}
+
+                    {showDeadButton && (
+                        <div className={classNames(
+                            'player__button player__button--pressed',
+                            {'player__button--vertical': verticalButtons},
+                            {'player__button--horizontal': !verticalButtons},
+                        )}
+                        >
+                            <div className="player__button-dead-hand">
+                                dead hand
+                            </div>
+                        </div>
+                    )}
                 </div>
 
-                {showDeadButton && (
-                    <div className={classNames(
-                        'player__button player__button--pressed',
-                        {'player__button--vertical': verticalButtons},
-                        {'player__button--horizontal': !verticalButtons},
-                    )}
-                    >
-                        <div className="player__button-dead-hand">
-                            dead hand
-                        </div>
-                    </div>
-                )}
-
-                {hasRiichiButton && (
-                    <div className={classNames('player__riichi-button', {'player__riichi-button--rotated': verticalButtons})}>
-                        {riichiButtonMode === PlayerButtonMode.IDLE && (
-                            <svg>
-                                <use xlinkHref="#riichi-big-empty" />
-                            </svg>
-                        )}
-                        {riichiButtonMode === PlayerButtonMode.PRESSED && (
-                            <svg>
-                                <use xlinkHref="#riichi-big" />
-                            </svg>
-                        )}
-                    </div>
-                )}
+                {startWithName && this.renderRiichiButton()}
             </>
         );
     }
