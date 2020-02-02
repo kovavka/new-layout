@@ -18,7 +18,7 @@ type IProps = {
     winButtonMode?: PlayerButtonMode
     loseButtonMode?: PlayerButtonMode
     riichiButtonMode?: PlayerButtonMode
-    deadHandButtonMode?: PlayerButtonMode
+    showDeadButton?: boolean
 }
 
 export class PlayerBase extends React.Component<IProps> {
@@ -39,54 +39,79 @@ export class PlayerBase extends React.Component<IProps> {
     }
 
     renderButtons() {
-        const {verticalButtons, winButtonMode, loseButtonMode, riichiButtonMode, deadHandButtonMode} = this.props;
+        const {verticalButtons, winButtonMode, loseButtonMode, riichiButtonMode, showDeadButton} = this.props;
+        const hasWinButton = winButtonMode !== undefined;
+        const hasLoseButton = loseButtonMode !== undefined;
+        const hasRiichiButton = riichiButtonMode !== undefined;
+        const oneButton = (hasWinButton && !hasLoseButton) || (hasLoseButton && !hasWinButton);
 
         return (
             <>
-                {winButtonMode && loseButtonMode && (
-                    <div className={classNames('player__button-container', {'player__button-horizontal': !verticalButtons})}>
-                        <div className="player__button">
-                            <svg>
-                                <use xlinkHref="#win"></use>
-                            </svg>
-                        </div>
-                        <div className="player__button">
-                            <svg>
-                                <use xlinkHref="#lose"></use>
-                            </svg>
-                        </div>
-                    </div>
-                )}
+                <div className={classNames(
+                    'player__button-container',
+                    {'player__button-container--horizontal': !verticalButtons}
+                    )}
+                >
 
-                {winButtonMode || loseButtonMode || deadHandButtonMode && (
+                    {hasWinButton && (
+                        <div className={classNames(
+                            'player__button',
+                            {'player__button--small': !oneButton},
+                            {'player__button--vertical': !oneButton && verticalButtons},
+                            {'player__button--horizontal': !oneButton && !verticalButtons},
+                            {'player__button--disabled': winButtonMode === PlayerButtonMode.DISABLE},
+                            {'player__button--success': winButtonMode === PlayerButtonMode.PRESSED},
+                        )}
+                        >
+                            <svg>
+                                <use xlinkHref="#win" />
+                            </svg>
+                        </div>
+                    )}
+
+                    {hasLoseButton && (
+                        <div className={classNames(
+                            'player__button',
+                            {'player__button--small': !oneButton},
+                            {'player__button--vertical': !oneButton && verticalButtons},
+                            {'player__button--horizontal': !oneButton && !verticalButtons},
+                            {'player__button--disabled': loseButtonMode === PlayerButtonMode.DISABLE},
+                            {'player__button--danger': loseButtonMode === PlayerButtonMode.PRESSED},
+                        )}
+                        >
+                            <svg>
+                                <use xlinkHref="#lose" />
+                            </svg>
+                        </div>
+                    )}
+                </div>
+
+                {showDeadButton && (
                     <div className={classNames(
-                        'player__button',
-                        {'player__button-vertical': verticalButtons},
-                        {'player__button-horizontal': !verticalButtons},
-                        )}
+                        'player__button player__button--pressed',
+                        {'player__button--vertical': verticalButtons},
+                        {'player__button--horizontal': !verticalButtons},
+                    )}
                     >
-                        {winButtonMode && (
-                            <svg>
-                                <use xlinkHref="#win"></use>
-                            </svg>
-                        )}
-
-                        {loseButtonMode && (
-                            <svg>
-                                <use xlinkHref="#lose"></use>
-                            </svg>
-                        )}
-
-                        {deadHandButtonMode && (
-                            <div className="player__button-dead-hand">
-                                dead hand
-                            </div>
-                        )}
+                        <div className="player__button-dead-hand">
+                            dead hand
+                        </div>
                     </div>
                 )}
 
-                {riichiButtonMode && (
-                    <div className=""></div>
+                {hasRiichiButton && (
+                    <div className={classNames('player__riichi-button', {'player__riichi-button--rotated': verticalButtons})}>
+                        {riichiButtonMode === PlayerButtonMode.IDLE && (
+                            <svg>
+                                <use xlinkHref="#riichi-big-empty" />
+                            </svg>
+                        )}
+                        {riichiButtonMode === PlayerButtonMode.PRESSED && (
+                            <svg>
+                                <use xlinkHref="#riichi-big" />
+                            </svg>
+                        )}
+                    </div>
                 )}
             </>
         );

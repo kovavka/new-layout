@@ -119,7 +119,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let winButtonMode: PlayerButtonMode | undefined;
         let loseButtonMode: PlayerButtonMode | undefined;
         let riichiButtonMode: PlayerButtonMode | undefined;
-        let deadHandButtonMode: PlayerButtonMode | undefined;
+        let showDeadButton: boolean | undefined;
 
         if (tableMode && outcomeMode !== undefined) {
             switch (outcomeMode) {
@@ -142,7 +142,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 case OutcomeTableMode.EXHAUSTIVE_DRAW:
                     winButtonMode = PlayerButtonMode.IDLE;
                     riichiButtonMode = PlayerButtonMode.IDLE;
-                    deadHandButtonMode = PlayerButtonMode.IDLE;
+                    showDeadButton = false;
                     break;
                 case OutcomeTableMode.ABORTIVE_DRAW:
                     riichiButtonMode = PlayerButtonMode.IDLE;
@@ -165,7 +165,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 winButtonMode={winButtonMode}
                 loseButtonMode={loseButtonMode}
                 riichiButtonMode={riichiButtonMode}
-                deadHandButtonMode={deadHandButtonMode}
+                showDeadButton={showDeadButton}
             />
             );
     }
@@ -180,7 +180,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let winButtonMode: PlayerButtonMode | undefined;
         let loseButtonMode: PlayerButtonMode | undefined;
         let riichiButtonMode: PlayerButtonMode | undefined;
-        let deadHandButtonMode: PlayerButtonMode | undefined;
+        let showDeadButton: boolean | undefined;
 
         if (tableMode && outcomeMode !== undefined) {
             switch (outcomeMode) {
@@ -203,7 +203,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 case OutcomeTableMode.EXHAUSTIVE_DRAW:
                     winButtonMode = PlayerButtonMode.IDLE;
                     riichiButtonMode = PlayerButtonMode.IDLE;
-                    deadHandButtonMode = PlayerButtonMode.IDLE;
+                    showDeadButton = false;
                     break;
                 case OutcomeTableMode.ABORTIVE_DRAW:
                     riichiButtonMode = PlayerButtonMode.IDLE;
@@ -225,7 +225,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 winButtonMode={winButtonMode}
                 loseButtonMode={loseButtonMode}
                 riichiButtonMode={riichiButtonMode}
-                deadHandButtonMode={deadHandButtonMode}
+                showDeadButton={showDeadButton}
             />
             );
     }
@@ -240,7 +240,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let winButtonMode: PlayerButtonMode | undefined;
         let loseButtonMode: PlayerButtonMode | undefined;
         let riichiButtonMode: PlayerButtonMode | undefined;
-        let deadHandButtonMode: PlayerButtonMode | undefined;
+        let showDeadButton: boolean | undefined;
 
         if (tableMode && outcomeMode !== undefined) {
             switch (outcomeMode) {
@@ -263,7 +263,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 case OutcomeTableMode.EXHAUSTIVE_DRAW:
                     winButtonMode = PlayerButtonMode.IDLE;
                     riichiButtonMode = PlayerButtonMode.IDLE;
-                    deadHandButtonMode = PlayerButtonMode.IDLE;
+                    showDeadButton = false;
                     break;
                 case OutcomeTableMode.ABORTIVE_DRAW:
                     riichiButtonMode = PlayerButtonMode.IDLE;
@@ -285,7 +285,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 winButtonMode={winButtonMode}
                 loseButtonMode={loseButtonMode}
                 riichiButtonMode={riichiButtonMode}
-                deadHandButtonMode={deadHandButtonMode}
+                showDeadButton={showDeadButton}
             />
             );
     }
@@ -299,7 +299,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let winButtonMode: PlayerButtonMode | undefined;
         let loseButtonMode: PlayerButtonMode | undefined;
         let riichiButtonMode: PlayerButtonMode | undefined;
-        let deadHandButtonMode: PlayerButtonMode | undefined;
+        let showDeadButton: boolean | undefined;
 
         if (tableMode && outcomeMode !== undefined) {
             switch (outcomeMode) {
@@ -322,7 +322,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 case OutcomeTableMode.EXHAUSTIVE_DRAW:
                     winButtonMode = PlayerButtonMode.IDLE;
                     riichiButtonMode = PlayerButtonMode.IDLE;
-                    deadHandButtonMode = PlayerButtonMode.IDLE;
+                    showDeadButton = false;
                     break;
                 case OutcomeTableMode.ABORTIVE_DRAW:
                     riichiButtonMode = PlayerButtonMode.IDLE;
@@ -343,7 +343,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 winButtonMode={winButtonMode}
                 loseButtonMode={loseButtonMode}
                 riichiButtonMode={riichiButtonMode}
-                deadHandButtonMode={deadHandButtonMode}
+                showDeadButton={showDeadButton}
             />
             );
     }

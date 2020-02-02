@@ -29,11 +29,9 @@
   margin-top: 16px;
   margin-bottom: 4px;
 
-  .player__wind-container {
-    margin-top: 12px;
-  }
-
-  .player__score-container {
+  .player__wind-container,
+  .player__score-container,
+  .player__button-container {
     margin-top: 12px;
   }
 }
@@ -42,11 +40,9 @@
   margin-top: 4px;
   margin-bottom: 16px;
 
-  .player__wind-container {
-    margin-bottom: 12px;
-  }
-
-  .player__score-container {
+  .player__wind-container,
+  .player__score-container,
+  .player__button-container {
     margin-bottom: 12px;
   }
 }
@@ -65,11 +61,9 @@
   display: flex;
   align-items: center;
 
-  .player__wind-container {
-    margin-left: 12px;
-  }
-
-  .player__score-container {
+  .player__wind-container,
+  .player__score-container,
+  .player__button-container {
     margin-left: 12px;
   }
 }
@@ -79,11 +73,9 @@
   display: flex;
   align-items: center;
 
-  .player__score-container {
-    margin-right: 12px;
-  }
-
-  .player__score {
+  .player__wind-container,
+  .player__score-container,
+  .player__button-container {
     margin-right: 12px;
   }
 }
@@ -189,4 +181,87 @@
 
 .player__score--danger {
   color: @color-danger;
+}
+
+.player__button-container {
+  &.player__button-container--horizontal {
+    display: flex;
+    justify-content: center;
+
+    div:last-child {
+      margin-left: 8px;
+    }
+  }
+
+  &:not(.player__button-container--horizontal) {
+    div:last-child {
+      margin-top: 8px;
+    }
+  }
+}
+
+.player__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid @color-secondary-light;
+  border-radius: 8px;
+  box-sizing: border-box;
+
+  &.player__button--small {
+    width: 52px;
+    height: 52px;
+
+    svg {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  &.player__button--horizontal {
+
+  }
+
+  &.player__button--success {
+    border-color: @color-success;
+    color: @color-success;
+  }
+
+  &.player__button--danger {
+    border-color: @color-danger;
+    color: @color-danger;
+  }
+
+  &.player__button--pressed {
+    border-color: @color-secondary;
+    color: @color-secondary;
+  }
+}
+
+.player__riichi-button {
+  display: flex;
+  justify-content: center;
+
+  &.player__riichi-button--rotated {
+    width: 17px;
+    height: 106px;
+    position: relative;
+
+    svg {
+      position: absolute;
+      height: 106px;
+      width: 106px;
+
+      use {
+        transform: rotate(90deg) translate(0px, -100%);
+      }
+    }
+  }
+
+  &:not(.player__riichi-button--rotated) {
+    svg {
+      width: 106px;
+      height: 17px;
+    }
+  }
 }
