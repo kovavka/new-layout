@@ -76,6 +76,9 @@ export class PlayerBase extends React.Component<IProps> {
                         {pointsMode === PlayerPointsMode.IDLE && (
                             <div className="player__score">
                                 {points}
+                                {penaltyPoints && (
+                                    <div className="player__penalty">{penaltyPoints / 1000 + 'k'}</div>
+                                )}
                             </div>
                         )}
                         {pointsMode === PlayerPointsMode.POSITIVE && (

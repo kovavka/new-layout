@@ -7,10 +7,21 @@
 
   .player__score {
     font-size: @font-size-secondary;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .player__inline-wind {
     margin-right: 8px;
+  }
+
+  .player__penalty {
+    margin-left: 8px;
+    padding: 2px 4px;
+    font-size: @font-size-small-1;
+    background-color: @color-danger;
+    color: @secondary-text-color;
   }
 }
 
@@ -135,14 +146,14 @@
     }
 
     .player__score-container {
-      height: 100px; //max width for score
+      height: 200px; //max width for score
       width: 32px; //from height
       overflow: hidden;
       position: relative;
     }
 
     .player__score {
-      width: 100px;
+      width: 200px;
     }
 
     &.player--left .player__score {

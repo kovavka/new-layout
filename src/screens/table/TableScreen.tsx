@@ -5,12 +5,18 @@ import { PlayerLeft } from "../../components/players/PlayerLeft";
 import { PlayerRight } from "../../components/players/PlayerRight";
 import {PlayerPointsMode} from '../../types/PlayerEnums';
 import {PlayerBottom} from '../../components/players/PlayerBottom';
+import {TableMode} from '../../types/TableMode';
+import {OutcomeTableMode} from '../../types/OutcomeTypes';
 
-declare var frame: any
+declare var frame: any;
 
 type IProps = {
+    tableMode: TableMode
+    outcomeMode?: OutcomeTableMode
     showRoundInfo?: boolean
     showTableNumber?: boolean
+    showTimer?: boolean
+    gamesLeft?: number
     showPoints?: boolean
     inlineWind?: boolean
     // topPlayer: Player
@@ -43,7 +49,7 @@ export class TableScreen extends React.Component<IProps, IState> {
     }
 
     renderTableInfo() {
-        const {showRoundInfo, showTableNumber} = this.props;
+        const {showRoundInfo, showTableNumber, showTimer, gamesLeft} = this.props;
 
         return (
             <div className="table-info">
@@ -72,6 +78,21 @@ export class TableScreen extends React.Component<IProps, IState> {
                                 2
                             </div>
                         </div>
+                        {showTimer && (
+                            <div className="table-info__timer">
+                                47:25
+                            </div>
+                        )}
+                        {gamesLeft && (
+                            <div className="table-info__games-left">
+                                <div className="table-info__games-left-count">
+                                    {gamesLeft}
+                                </div>
+                                <div className="table-info__games-left-caption">
+                                    max games left
+                                </div>
+                            </div>
+                        )}
                     </>
                 )}
                 {showTableNumber && (
@@ -90,8 +111,9 @@ export class TableScreen extends React.Component<IProps, IState> {
 
     renderPlayerTop() {
         const {inlineWind, showPoints} = this.props;
-        let points = showPoints ? 21600 : undefined
-        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined
+        let points = showPoints ? 21600 : undefined;
+        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
+        let penaltyPoints = 22500;
 
         return (
             <PlayerTop
@@ -101,6 +123,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 inlineWind={inlineWind}
                 points={points}
                 pointsMode={pointsMode}
+                penaltyPoints={penaltyPoints}
             />
             )
     }
@@ -108,8 +131,8 @@ export class TableScreen extends React.Component<IProps, IState> {
     renderPlayerLeft() {
         const {inlineWind, showPoints} = this.props;
         const {rotatedNameHeight} = this.state;
-        let points = showPoints ? 54100 : undefined
-        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined
+        let points = showPoints ? 54100 : undefined;
+        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
 
         return (
             <PlayerLeft
@@ -126,8 +149,8 @@ export class TableScreen extends React.Component<IProps, IState> {
     renderPlayerRight() {
         const {inlineWind, showPoints} = this.props;
         const {rotatedNameHeight} = this.state;
-        let points = showPoints ? 32800 : undefined
-        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined
+        let points = showPoints ? 32800 : undefined;
+        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
 
         return (
             <PlayerRight
@@ -143,8 +166,8 @@ export class TableScreen extends React.Component<IProps, IState> {
 
     renderPlayerBottom() {
         const {inlineWind, showPoints} = this.props;
-        let points = showPoints ? 10500 : undefined
-        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined
+        let points = showPoints ? 10500 : undefined;
+        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
 
         return (
             <PlayerBottom
