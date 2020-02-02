@@ -15,6 +15,7 @@ type IProps = {
     winButtonMode?: PlayerButtonMode
     loseButtonMode?: PlayerButtonMode
     riichiButtonMode?: PlayerButtonMode
+    deadHandButtonMode?: PlayerButtonMode
 }
 
 export class PlayerRight extends React.Component<IProps> {
@@ -30,6 +31,7 @@ export class PlayerRight extends React.Component<IProps> {
             winButtonMode,
             loseButtonMode,
             riichiButtonMode,
+            deadHandButtonMode,
         } = this.props;
 
         return (
@@ -40,12 +42,14 @@ export class PlayerRight extends React.Component<IProps> {
                 nameHeight={nameHeight}
                 rotated={true}
                 inlineWind={inlineWind}
+                verticalButtons={true}
                 points={points}
                 pointsMode={pointsMode}
                 penaltyPoints={penaltyPoints}
                 winButtonMode={winButtonMode}
                 loseButtonMode={loseButtonMode}
                 riichiButtonMode={riichiButtonMode}
+                deadHandButtonMode={deadHandButtonMode}
             />
         );
     }

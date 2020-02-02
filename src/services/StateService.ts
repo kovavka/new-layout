@@ -3,7 +3,6 @@ import {ScreenType} from "../types/ScreenType";
 
 export class StateService {
     currentScreen: ScreenType = ScreenType.TABLE_RON;
-    maxScreen = 3;
 
     onChange: signals.Signal = new signals.Signal();
 
@@ -16,13 +15,19 @@ export class StateService {
     }
 
     private constructor() {
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') {
+                this.nextScreen()
+            }
+            if (e.key === 'ArrowLeft') {
+                this.prevScreen()
+            }
+        })
     }
 
     nextScreen() {
-        if (this.currentScreen !== this.maxScreen) {
-            this.currentScreen++;
-            this.onChange.dispatch();
-        }
+        this.currentScreen++;
+        this.onChange.dispatch();
     }
 
     prevScreen() {

@@ -1,9 +1,9 @@
-import * as React from "react";
-import { BottomPanel } from "../../components/bottom-panel/BottomPanel";
-import { PlayerTop } from "../../components/players/PlayerTop";
-import { PlayerLeft } from "../../components/players/PlayerLeft";
-import { PlayerRight } from "../../components/players/PlayerRight";
-import {PlayerPointsMode} from '../../types/PlayerEnums';
+import * as React from 'react';
+import {BottomPanel} from '../../components/bottom-panel/BottomPanel';
+import {PlayerTop} from '../../components/players/PlayerTop';
+import {PlayerLeft} from '../../components/players/PlayerLeft';
+import {PlayerRight} from '../../components/players/PlayerRight';
+import {PlayerButtonMode, PlayerPointsMode} from '../../types/PlayerEnums';
 import {PlayerBottom} from '../../components/players/PlayerBottom';
 import {TableMode} from '../../types/TableMode';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
@@ -110,10 +110,48 @@ export class TableScreen extends React.Component<IProps, IState> {
     }
 
     renderPlayerTop() {
-        const {inlineWind, showPoints} = this.props;
+        const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
         let points = showPoints ? 21600 : undefined;
         let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
         let penaltyPoints = 22500;
+
+        //todo move to HOC
+        let winButtonMode: PlayerButtonMode | undefined;
+        let loseButtonMode: PlayerButtonMode | undefined;
+        let riichiButtonMode: PlayerButtonMode | undefined;
+        let deadHandButtonMode: PlayerButtonMode | undefined;
+
+        if (tableMode && outcomeMode !== undefined) {
+            switch (outcomeMode) {
+                case OutcomeTableMode.RON:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    loseButtonMode = PlayerButtonMode.DISABLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.TSUMO:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.CHOMBO:
+                    loseButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.NAGASHI:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.NAGASHI_TEMPAI:
+                case OutcomeTableMode.EXHAUSTIVE_DRAW:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    deadHandButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.ABORTIVE_DRAW:
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.PAO:
+                    loseButtonMode = PlayerButtonMode.IDLE;
+                    break;
+            }
+        }
 
         return (
             <PlayerTop
@@ -124,15 +162,57 @@ export class TableScreen extends React.Component<IProps, IState> {
                 points={points}
                 pointsMode={pointsMode}
                 penaltyPoints={penaltyPoints}
+                winButtonMode={winButtonMode}
+                loseButtonMode={loseButtonMode}
+                riichiButtonMode={riichiButtonMode}
+                deadHandButtonMode={deadHandButtonMode}
             />
-            )
+            );
     }
 
     renderPlayerLeft() {
-        const {inlineWind, showPoints} = this.props;
+        const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
         const {rotatedNameHeight} = this.state;
         let points = showPoints ? 54100 : undefined;
         let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
+
+        //todo move to HOC
+        let winButtonMode: PlayerButtonMode | undefined;
+        let loseButtonMode: PlayerButtonMode | undefined;
+        let riichiButtonMode: PlayerButtonMode | undefined;
+        let deadHandButtonMode: PlayerButtonMode | undefined;
+
+        if (tableMode && outcomeMode !== undefined) {
+            switch (outcomeMode) {
+                case OutcomeTableMode.RON:
+                    winButtonMode = PlayerButtonMode.PRESSED;
+                    loseButtonMode = PlayerButtonMode.DISABLE;
+                    riichiButtonMode = PlayerButtonMode.PRESSED;
+                    break;
+                case OutcomeTableMode.TSUMO:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.CHOMBO:
+                    loseButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.NAGASHI:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.NAGASHI_TEMPAI:
+                case OutcomeTableMode.EXHAUSTIVE_DRAW:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    deadHandButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.ABORTIVE_DRAW:
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.PAO:
+                    loseButtonMode = PlayerButtonMode.IDLE;
+                    break;
+            }
+        }
 
         return (
             <PlayerLeft
@@ -142,15 +222,57 @@ export class TableScreen extends React.Component<IProps, IState> {
                 inlineWind={inlineWind}
                 points={points}
                 pointsMode={pointsMode}
+                winButtonMode={winButtonMode}
+                loseButtonMode={loseButtonMode}
+                riichiButtonMode={riichiButtonMode}
+                deadHandButtonMode={deadHandButtonMode}
             />
-            )
+            );
     }
 
     renderPlayerRight() {
-        const {inlineWind, showPoints} = this.props;
+        const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
         const {rotatedNameHeight} = this.state;
         let points = showPoints ? 32800 : undefined;
         let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
+
+        //todo move to HOC
+        let winButtonMode: PlayerButtonMode | undefined;
+        let loseButtonMode: PlayerButtonMode | undefined;
+        let riichiButtonMode: PlayerButtonMode | undefined;
+        let deadHandButtonMode: PlayerButtonMode | undefined;
+
+        if (tableMode && outcomeMode !== undefined) {
+            switch (outcomeMode) {
+                case OutcomeTableMode.RON:
+                    winButtonMode = PlayerButtonMode.DISABLE;
+                    loseButtonMode = PlayerButtonMode.PRESSED;
+                    riichiButtonMode = PlayerButtonMode.PRESSED;
+                    break;
+                case OutcomeTableMode.TSUMO:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.CHOMBO:
+                    loseButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.NAGASHI:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.NAGASHI_TEMPAI:
+                case OutcomeTableMode.EXHAUSTIVE_DRAW:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    deadHandButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.ABORTIVE_DRAW:
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.PAO:
+                    loseButtonMode = PlayerButtonMode.IDLE;
+                    break;
+            }
+        }
 
         return (
             <PlayerRight
@@ -160,14 +282,56 @@ export class TableScreen extends React.Component<IProps, IState> {
                 inlineWind={inlineWind}
                 points={points}
                 pointsMode={pointsMode}
+                winButtonMode={winButtonMode}
+                loseButtonMode={loseButtonMode}
+                riichiButtonMode={riichiButtonMode}
+                deadHandButtonMode={deadHandButtonMode}
             />
-            )
+            );
     }
 
     renderPlayerBottom() {
-        const {inlineWind, showPoints} = this.props;
+        const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
         let points = showPoints ? 10500 : undefined;
         let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
+
+        //todo move to HOC
+        let winButtonMode: PlayerButtonMode | undefined;
+        let loseButtonMode: PlayerButtonMode | undefined;
+        let riichiButtonMode: PlayerButtonMode | undefined;
+        let deadHandButtonMode: PlayerButtonMode | undefined;
+
+        if (tableMode && outcomeMode !== undefined) {
+            switch (outcomeMode) {
+                case OutcomeTableMode.RON:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    loseButtonMode = PlayerButtonMode.DISABLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.TSUMO:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.CHOMBO:
+                    loseButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.NAGASHI:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.NAGASHI_TEMPAI:
+                case OutcomeTableMode.EXHAUSTIVE_DRAW:
+                    winButtonMode = PlayerButtonMode.IDLE;
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    deadHandButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.ABORTIVE_DRAW:
+                    riichiButtonMode = PlayerButtonMode.IDLE;
+                    break;
+                case OutcomeTableMode.PAO:
+                    loseButtonMode = PlayerButtonMode.IDLE;
+                    break;
+            }
+        }
 
         return (
             <PlayerBottom
@@ -176,8 +340,12 @@ export class TableScreen extends React.Component<IProps, IState> {
                 inlineWind={inlineWind}
                 points={points}
                 pointsMode={pointsMode}
+                winButtonMode={winButtonMode}
+                loseButtonMode={loseButtonMode}
+                riichiButtonMode={riichiButtonMode}
+                deadHandButtonMode={deadHandButtonMode}
             />
-        )
+            );
     }
 
     render() {

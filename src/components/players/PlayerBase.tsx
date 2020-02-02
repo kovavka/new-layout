@@ -11,12 +11,14 @@ type IProps = {
     rotated?: boolean
     startWithName?: boolean
     inlineWind?: boolean
+    verticalButtons?: boolean
     points?: number
     pointsMode?: PlayerPointsMode
     penaltyPoints?: number
     winButtonMode?: PlayerButtonMode
     loseButtonMode?: PlayerButtonMode
     riichiButtonMode?: PlayerButtonMode
+    deadHandButtonMode?: PlayerButtonMode
 }
 
 export class PlayerBase extends React.Component<IProps> {
@@ -36,6 +38,60 @@ export class PlayerBase extends React.Component<IProps> {
         )
     }
 
+    renderButtons() {
+        const {verticalButtons, winButtonMode, loseButtonMode, riichiButtonMode, deadHandButtonMode} = this.props;
+
+        return (
+            <>
+                {winButtonMode && loseButtonMode && (
+                    <div className={classNames('player__button-container', {'player__button-horizontal': !verticalButtons})}>
+                        <div className="player__button">
+                            <svg>
+                                <use xlinkHref="#win"></use>
+                            </svg>
+                        </div>
+                        <div className="player__button">
+                            <svg>
+                                <use xlinkHref="#lose"></use>
+                            </svg>
+                        </div>
+                    </div>
+                )}
+
+                {winButtonMode || loseButtonMode || deadHandButtonMode && (
+                    <div className={classNames(
+                        'player__button',
+                        {'player__button-vertical': verticalButtons},
+                        {'player__button-horizontal': !verticalButtons},
+                        )}
+                    >
+                        {winButtonMode && (
+                            <svg>
+                                <use xlinkHref="#win"></use>
+                            </svg>
+                        )}
+
+                        {loseButtonMode && (
+                            <svg>
+                                <use xlinkHref="#lose"></use>
+                            </svg>
+                        )}
+
+                        {deadHandButtonMode && (
+                            <div className="player__button-dead-hand">
+                                dead hand
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {riichiButtonMode && (
+                    <div className=""></div>
+                )}
+            </>
+        );
+    }
+
     render() {
         const {
             wind,
@@ -46,9 +102,6 @@ export class PlayerBase extends React.Component<IProps> {
             points,
             pointsMode,
             penaltyPoints,
-            winButtonMode,
-            loseButtonMode,
-            riichiButtonMode,
         } = this.props;
 
         return (
@@ -62,6 +115,8 @@ export class PlayerBase extends React.Component<IProps> {
                 )}
             >
                 {startWithName && this.renderName()}
+
+                {this.renderButtons()}
 
                 {wind && !inlineWind && (
                     <div className="player__wind-container">
