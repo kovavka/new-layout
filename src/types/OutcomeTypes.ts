@@ -9,12 +9,12 @@ export enum OutcomeType {
 }
 
 export enum OutcomeTableMode {
-    RON,
-    TSUMO,
-    CHOMBO,
-    NAGASHI,
-    NAGASHI_TEMPAI,
-    EXHAUSTIVE_DRAW,
-    ABORTIVE_DRAW,
-    PAO,
+    RON = 'Ron',
+    TSUMO = 'Tsumo',
+    CHOMBO = 'Chombo',
+    NAGASHI = 'Nagashi',
+    NAGASHI_TEMPAI = 'Select tempai',
+    EXHAUSTIVE_DRAW = 'Exhaustive draw',
+    ABORTIVE_DRAW = 'Abortive draw',
+    PAO = 'Select pao',
 }

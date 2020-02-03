@@ -346,6 +346,38 @@ export class TableScreen extends React.Component<IProps, IState> {
             );
     }
 
+    //move to HOC
+    renderBottomPanel() {
+        const {tableMode, outcomeMode} = this.props;
+
+        let text = outcomeMode;
+        let showBack = tableMode === TableMode.SELECT_PLAYERS || tableMode ===  TableMode.RESULT;
+        let showNext = tableMode === TableMode.SELECT_PLAYERS;
+        let isNextDisabled = true;
+        let showSave = tableMode === TableMode.RESULT;
+        let isSaveDisabled = true;
+
+        let showHome = [TableMode.IDLE, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+        let showRefresh = [TableMode.IDLE, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+        let showAdd = tableMode === TableMode.IDLE;
+        let showLog = [TableMode.IDLE, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+
+        return (
+            <BottomPanel
+                text={text}
+                showBack={showBack}
+                showNext={showNext}
+                isNextDisabled={isNextDisabled}
+                showSave={showSave}
+                isSaveDisabled={isSaveDisabled}
+                showHome={showHome}
+                showRefresh={showRefresh}
+                showAdd={showAdd}
+                showLog={showLog}
+            />
+        )
+    }
+
     render() {
         return (
             <div className="flex-container page-table">
@@ -367,7 +399,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                     </div>
                 </div>
                 <div className="flex-container__bottom">
-                    <BottomPanel />
+                    {this.renderBottomPanel()}
                 </div>
             </div>
         );

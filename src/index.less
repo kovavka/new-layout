@@ -53,8 +53,12 @@ ul {
     height: 100%;
   }
 
-  &:active {
+  &.svg-button--disabled {
     color: @color-secondary;
+  }
+
+  &:not(.svg-button--disabled):active {
+    color: @color-secondary; //todo think about active color
   }
 }
 

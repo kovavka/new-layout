@@ -5,7 +5,7 @@ import {TableMode} from '../../types/TableMode';
 export class TableScreenBeforeStart extends React.Component {
     render() {
         return (
-           <TableScreen tableMode={TableMode.IDLE} showTableNumber={true} />
+           <TableScreen tableMode={TableMode.BEFORE_START} showTableNumber={true} />
         );
     }
 }
