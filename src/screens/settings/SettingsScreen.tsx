@@ -27,8 +27,8 @@ export class SettingsScreen extends React.Component<{}, IState> {
                     <div className="page-setting__section">
                         <div className="page-setting__section-title">Language</div>
                         <div className="page-setting__section-content">
-                            <div className="btn btn--rounded btn--small btn--active">En</div>
-                            <div className="btn btn--rounded btn--small">Ru</div>
+                            <div className="radio-btn radio-btn--rounded radio-btn--small radio-btn--active">En</div>
+                            <div className="radio-btn radio-btn--rounded radio-btn--small">Ru</div>
                         </div>
                     </div>
                     <div className="page-setting__section">

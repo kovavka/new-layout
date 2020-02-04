@@ -5,4 +5,5 @@ export enum ScreenType {
     TABLE_RON,
     TABLE_DRAW,
     CHOMBO,
+    GAME_RESULT,
 }

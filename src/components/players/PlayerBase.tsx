@@ -79,12 +79,12 @@ export class PlayerBase extends React.Component<IProps> {
 
                     {hasWinButton && (
                         <div className={classNames(
-                            'player__button',
-                            {'player__button--small': !oneButton},
-                            {'player__button--vertical': oneButton && verticalButtons},
-                            {'player__button--horizontal': oneButton && !verticalButtons},
-                            {'player__button--disabled': winButtonMode === PlayerButtonMode.DISABLE},
-                            {'player__button--success': winButtonMode === PlayerButtonMode.PRESSED},
+                            'player__button flat-btn',
+                            {'flat-btn--small': !oneButton},
+                            {'flat-btn--v-large': oneButton && verticalButtons},
+                            {'flat-btn--large': oneButton && !verticalButtons},
+                            {'flat-btn--disabled': winButtonMode === PlayerButtonMode.DISABLE},
+                            {'flat-btn--danger': winButtonMode === PlayerButtonMode.PRESSED},
                         )}
                         >
                             <svg>
@@ -95,12 +95,12 @@ export class PlayerBase extends React.Component<IProps> {
 
                     {hasLoseButton && (
                         <div className={classNames(
-                            'player__button',
-                            {'player__button--small': !oneButton},
-                            {'player__button--vertical': oneButton && verticalButtons},
-                            {'player__button--horizontal': oneButton && !verticalButtons},
-                            {'player__button--disabled': loseButtonMode === PlayerButtonMode.DISABLE},
-                            {'player__button--danger': loseButtonMode === PlayerButtonMode.PRESSED},
+                            'player__button flat-btn',
+                            {'flat-btn--small': !oneButton},
+                            {'flat-btn--v-large': oneButton && verticalButtons},
+                            {'flat-btn--large': oneButton && !verticalButtons},
+                            {'flat-btn--disabled': loseButtonMode === PlayerButtonMode.DISABLE},
+                            {'flat-btn--danger': loseButtonMode === PlayerButtonMode.PRESSED},
                         )}
                         >
                             <svg>
@@ -111,12 +111,12 @@ export class PlayerBase extends React.Component<IProps> {
 
                     {showDeadButton && (
                         <div className={classNames(
-                            'player__button player__button--pressed',
-                            {'player__button--vertical': verticalButtons},
-                            {'player__button--horizontal': !verticalButtons},
+                            'player__button flat-btn flat-btn--pressed ',
+                            {'flat-btn--v-large': verticalButtons},
+                            {'flat-btn--large': !verticalButtons},
                         )}
                         >
-                            <div className="player__button-dead-hand">
+                            <div className="flat-btn__caption">
                                 dead hand
                             </div>
                         </div>

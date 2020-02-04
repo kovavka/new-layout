@@ -9,6 +9,7 @@ import {TableScreenIdle} from './examples/TableScreenIdle';
 import {TableScreenRon} from './examples/TableScreenRon';
 import {TableScreenExhaustiveDraw} from './examples/TableScreenExhaustiveDraw';
 import {TableScreenChombo} from './examples/TableScreenChombo';
+import {GameResultScreen} from './game-result/GameResultScreen';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -64,6 +65,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.CHOMBO && (
                     <TableScreenChombo />
+                )}
+                {currentScreen === ScreenType.GAME_RESULT && (
+                    <GameResultScreen showRepeatButton={true} />
                 )}
             </div>
         )
