@@ -7,4 +7,5 @@ export enum ScreenType {
     CHOMBO,
     GAME_RESULT,
     NEW_GAME,
+    SEARCH_PLAYER,
 }

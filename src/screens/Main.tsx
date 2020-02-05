@@ -11,6 +11,7 @@ import {TableScreenExhaustiveDraw} from './examples/TableScreenExhaustiveDraw';
 import {TableScreenChombo} from './examples/TableScreenChombo';
 import {GameResultScreen} from './game-result/GameResultScreen';
 import { NewGameScreen } from './new-game/NewGameScreen'
+import {SearchPlayerScreen} from './new-game/SearchPlayerScreen';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -72,6 +73,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.NEW_GAME && (
                     <NewGameScreen />
+                )}
+                {currentScreen === ScreenType.SEARCH_PLAYER && (
+                    <SearchPlayerScreen />
                 )}
             </div>
         )
