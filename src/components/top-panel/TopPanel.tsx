@@ -1,4 +1,5 @@
 import * as React from "react";
+import '../components.less'
 
 export class TopPanel extends React.Component {
     render() {

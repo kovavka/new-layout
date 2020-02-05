@@ -10,6 +10,7 @@ import {TableScreenRon} from './examples/TableScreenRon';
 import {TableScreenExhaustiveDraw} from './examples/TableScreenExhaustiveDraw';
 import {TableScreenChombo} from './examples/TableScreenChombo';
 import {GameResultScreen} from './game-result/GameResultScreen';
+import { NewGameScreen } from './new-game/NewGameScreen'
 
 type MainState = {
     currentScreen: ScreenType;
@@ -68,6 +69,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.GAME_RESULT && (
                     <GameResultScreen showRepeatButton={true} />
+                )}
+                {currentScreen === ScreenType.NEW_GAME && (
+                    <NewGameScreen />
                 )}
             </div>
         )

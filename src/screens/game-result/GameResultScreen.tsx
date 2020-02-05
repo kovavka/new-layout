@@ -89,7 +89,6 @@ export class GameResultScreen extends React.Component<IProps> {
                             </svg>
                         </div>
                     )}
-
                 </div>
             </div>
         );

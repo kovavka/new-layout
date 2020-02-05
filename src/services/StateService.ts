@@ -2,7 +2,7 @@ import signals from 'signals';
 import {ScreenType} from "../types/ScreenType";
 
 export class StateService {
-    currentScreen: ScreenType = ScreenType.GAME_RESULT;
+    currentScreen: ScreenType = ScreenType.NEW_GAME;
 
     onChange: signals.Signal = new signals.Signal();
 
