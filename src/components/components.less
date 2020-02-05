@@ -3,6 +3,39 @@
 .top-panel {
   margin: 24px 16px;
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+
+  .top-panel__search {
+    position: relative;
+    flex: 1 1 auto;
+    margin-left: 18px;
+    height: 24px;
+
+    input {
+      width: calc(100% - 8px);
+      font-size: @font-size-small-2;
+      padding: 2px 4px;
+      background-color: transparent;
+      border: none;
+      border-radius: 0;
+      border-bottom: 2px solid @color-secondary-light-1;
+      outline: none;
+
+      &::placeholder {
+        color: @color-secondary-light-1;
+      }
+    }
+
+    svg {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      right: -4px;
+      bottom: -4px;
+      padding: 12px;
+    }
+  }
 }
 
 .bottom-panel {

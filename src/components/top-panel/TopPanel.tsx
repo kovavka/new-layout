@@ -1,8 +1,29 @@
 import * as React from "react";
 import '../components.less'
 
-export class TopPanel extends React.Component {
+type IProps = {
+    showSearch?: boolean
+}
+
+type IState = {
+    searchValue: string
+}
+
+export class TopPanel extends React.Component<IProps, IState> {
+    state = {
+        searchValue: ''
+    };
+
+    private onSearchChange(e) {
+        this.setState({
+            searchValue: e.target.value
+        });
+    }
+
     render() {
+        const {showSearch} = this.props;
+        const {searchValue} = this.state;
+
         return (
             <div className="top-panel">
                 <div className="svg-button">
@@ -10,7 +31,22 @@ export class TopPanel extends React.Component {
                         <use xlinkHref="#back"></use>
                     </svg>
                 </div>
+
+                {showSearch && (
+                    <div className="top-panel__search">
+                        <input value={searchValue}
+                               placeholder="type to find someone"
+                               onChange={this.onSearchChange.bind(this)}>
+
+                        </input>
+                        {!!searchValue && (
+                            <svg>
+                                <use xlinkHref="#close"></use>
+                            </svg>
+                        )}
+                    </div>
+                )}
             </div>
-        )
+        );
     }
 }
