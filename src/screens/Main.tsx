@@ -45,7 +45,7 @@ export class Main extends React.Component<any, MainState> {
     }
 
     onAppClicked() {
-        // this.stateService.prevScreen();
+        this.stateService.prevScreen();
     }
 
     render() {

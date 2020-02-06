@@ -1,6 +1,8 @@
 @import '../variables.less';
 
 .page-setting {
+  min-height: 580px;
+
   .page-setting__name {
     margin: 24px 16px;
     text-align: center;
@@ -38,13 +40,6 @@
         font-weight: 600;
         color: @color-primary;
       }
-    }
-
-    .gg {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
     }
 
     .theme__visual {
@@ -166,7 +161,8 @@
 .page-game-result {
   display: flex;
   flex-direction: column;
-  height: 94%;
+  //height: 94%; todo think about it
+  height: 100%;
   justify-content: center;
 
   .page-game-result__buttons {
@@ -224,6 +220,7 @@
     display: flex;
     flex-direction: column;
     height: 90%;
+    min-height: 352px;
     justify-content: center;
   }
 
@@ -249,7 +246,7 @@
   }
 
   .page-search-player__name {
-    margin: 20px 16px;
+    margin: 0px 16px 20px 16px;
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
