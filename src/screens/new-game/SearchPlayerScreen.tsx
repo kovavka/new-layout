@@ -4,7 +4,6 @@ import { TopPanel } from "../../components/top-panel/TopPanel";
 import { Switch } from "../../components/switch/Switch";
 import {PlayerDropdown} from '../../components/dropdown/PlayerDropdown';
 
-
 export class SearchPlayerScreen extends React.Component {
 
     private getNames() {

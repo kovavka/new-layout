@@ -2,7 +2,7 @@ import signals from 'signals';
 import {ScreenType} from "../types/ScreenType";
 
 export class StateService {
-    currentScreen: ScreenType = ScreenType.OTHER_PLAYINGS_TABLES;
+    currentScreen: ScreenType = ScreenType.LOGIN_ERROR;
 
     onChange: signals.Signal = new signals.Signal();
 
