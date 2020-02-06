@@ -12,6 +12,7 @@ import {TableScreenChombo} from './examples/TableScreenChombo';
 import {GameResultScreen} from './game-result/GameResultScreen';
 import { NewGameScreen } from './new-game/NewGameScreen'
 import {SearchPlayerScreen} from './new-game/SearchPlayerScreen';
+import {OtherPlayingTablesScreen} from './other-tables/OtherPlayingTablesScreen';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -76,6 +77,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.SEARCH_PLAYER && (
                     <SearchPlayerScreen />
+                )}
+                {currentScreen === ScreenType.OTHER_PLAYINGS_TABLES && (
+                    <OtherPlayingTablesScreen />
                 )}
             </div>
         )

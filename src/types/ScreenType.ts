@@ -8,4 +8,5 @@ export enum ScreenType {
     GAME_RESULT,
     NEW_GAME,
     SEARCH_PLAYER,
+    OTHER_PLAYINGS_TABLES,
 }
