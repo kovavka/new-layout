@@ -14,6 +14,7 @@ import { NewGameScreen } from './new-game/NewGameScreen'
 import {SearchPlayerScreen} from './new-game/SearchPlayerScreen';
 import {OtherPlayingTablesScreen} from './other-tables/OtherPlayingTablesScreen';
 import {LoginErrorScreen} from './login/LoginErrorScreen';
+import {TableScreenResult} from "./examples/TableScreenResult";
 
 type MainState = {
     currentScreen: ScreenType;
@@ -45,7 +46,7 @@ export class Main extends React.Component<any, MainState> {
     }
 
     onAppClicked() {
-        this.stateService.prevScreen();
+        // this.stateService.prevScreen();
     }
 
     render() {
@@ -66,6 +67,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.TABLE_DRAW && (
                     <TableScreenExhaustiveDraw />
+                )}
+                {currentScreen === ScreenType.TABLE_RESULT && (
+                    <TableScreenResult />
                 )}
                 {currentScreen === ScreenType.CHOMBO && (
                     <TableScreenChombo />

@@ -7,6 +7,7 @@ import {PlayerButtonMode, PlayerPointsMode} from '../../types/PlayerEnums';
 import {PlayerBottom} from '../../components/players/PlayerBottom';
 import {TableMode} from '../../types/TableMode';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
+import {ResultArrows} from "../../components/result-arrows/ResultArrows";
 
 declare var frame: any;
 
@@ -19,6 +20,7 @@ type IProps = {
     gamesLeft?: number
     showPoints?: boolean
     inlineWind?: boolean
+    showArrows?: boolean
     // topPlayer: Player
     // leftPlayer: Player
     // bottomPlayer: Player
@@ -49,7 +51,7 @@ export class TableScreen extends React.Component<IProps, IState> {
     }
 
     renderTableInfo() {
-        const {showRoundInfo, showTableNumber, showTimer, gamesLeft} = this.props;
+        const {showRoundInfo, showTableNumber, showTimer, gamesLeft, showArrows} = this.props;
 
         return (
             <div className="table-info">
@@ -93,6 +95,9 @@ export class TableScreen extends React.Component<IProps, IState> {
                                 </div>
                             </div>
                         )}
+                        {showArrows && (
+                            <ResultArrows />
+                        )}
                     </>
                 )}
                 {showTableNumber && (
@@ -121,7 +126,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let riichiButtonMode: PlayerButtonMode | undefined;
         let showDeadButton: boolean | undefined;
 
-        if (tableMode && outcomeMode !== undefined) {
+        if (tableMode && tableMode !== TableMode.RESULT && outcomeMode !== undefined) {
             switch (outcomeMode) {
                 case OutcomeTableMode.RON:
                     winButtonMode = PlayerButtonMode.IDLE;
@@ -181,7 +186,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let riichiButtonMode: PlayerButtonMode | undefined;
         let showDeadButton: boolean | undefined;
 
-        if (tableMode && outcomeMode !== undefined) {
+        if (tableMode && tableMode !== TableMode.RESULT && outcomeMode !== undefined) {
             switch (outcomeMode) {
                 case OutcomeTableMode.RON:
                     winButtonMode = PlayerButtonMode.PRESSED;
@@ -240,7 +245,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let riichiButtonMode: PlayerButtonMode | undefined;
         let showDeadButton: boolean | undefined;
 
-        if (tableMode && outcomeMode !== undefined) {
+        if (tableMode && tableMode !== TableMode.RESULT && outcomeMode !== undefined) {
             switch (outcomeMode) {
                 case OutcomeTableMode.RON:
                     winButtonMode = PlayerButtonMode.IDLE;
@@ -299,7 +304,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let riichiButtonMode: PlayerButtonMode | undefined;
         let showDeadButton: boolean | undefined;
 
-        if (tableMode && outcomeMode !== undefined) {
+        if (tableMode && tableMode !== TableMode.RESULT && outcomeMode !== undefined) {
             switch (outcomeMode) {
                 case OutcomeTableMode.RON:
                     winButtonMode = PlayerButtonMode.DISABLE;

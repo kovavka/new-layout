@@ -71,57 +71,59 @@ export class PlayerBase extends React.Component<IProps> {
             <>
                 {!startWithName && this.renderRiichiButton()}
 
-                <div className={classNames(
-                    'player__button-container',
-                    {'player__button-container--horizontal': !verticalButtons}
-                    )}
-                >
-
-                    {hasWinButton && (
-                        <div className={classNames(
-                            'player__button flat-btn',
-                            {'flat-btn--small': !oneButton},
-                            {'flat-btn--v-large': oneButton && verticalButtons},
-                            {'flat-btn--large': oneButton && !verticalButtons},
-                            {'flat-btn--disabled': winButtonMode === PlayerButtonMode.DISABLE},
-                            {'flat-btn--danger': winButtonMode === PlayerButtonMode.PRESSED},
+                {hasWinButton && hasLoseButton && showDeadButton && (
+                    <div className={classNames(
+                        'player__button-container',
+                        {'player__button-container--horizontal': !verticalButtons}
                         )}
-                        >
-                            <svg>
-                                <use xlinkHref="#win" />
-                            </svg>
-                        </div>
-                    )}
+                    >
 
-                    {hasLoseButton && (
-                        <div className={classNames(
-                            'player__button flat-btn',
-                            {'flat-btn--small': !oneButton},
-                            {'flat-btn--v-large': oneButton && verticalButtons},
-                            {'flat-btn--large': oneButton && !verticalButtons},
-                            {'flat-btn--disabled': loseButtonMode === PlayerButtonMode.DISABLE},
-                            {'flat-btn--danger': loseButtonMode === PlayerButtonMode.PRESSED},
-                        )}
-                        >
-                            <svg>
-                                <use xlinkHref="#lose" />
-                            </svg>
-                        </div>
-                    )}
-
-                    {showDeadButton && (
-                        <div className={classNames(
-                            'player__button flat-btn flat-btn--pressed ',
-                            {'flat-btn--v-large': verticalButtons},
-                            {'flat-btn--large': !verticalButtons},
-                        )}
-                        >
-                            <div className="flat-btn__caption">
-                                dead hand
+                        {hasWinButton && (
+                            <div className={classNames(
+                                'player__button flat-btn',
+                                {'flat-btn--small': !oneButton},
+                                {'flat-btn--v-large': oneButton && verticalButtons},
+                                {'flat-btn--large': oneButton && !verticalButtons},
+                                {'flat-btn--disabled': winButtonMode === PlayerButtonMode.DISABLE},
+                                {'flat-btn--danger': winButtonMode === PlayerButtonMode.PRESSED},
+                            )}
+                            >
+                                <svg>
+                                    <use xlinkHref="#win" />
+                                </svg>
                             </div>
-                        </div>
-                    )}
-                </div>
+                        )}
+
+                        {hasLoseButton && (
+                            <div className={classNames(
+                                'player__button flat-btn',
+                                {'flat-btn--small': !oneButton},
+                                {'flat-btn--v-large': oneButton && verticalButtons},
+                                {'flat-btn--large': oneButton && !verticalButtons},
+                                {'flat-btn--disabled': loseButtonMode === PlayerButtonMode.DISABLE},
+                                {'flat-btn--danger': loseButtonMode === PlayerButtonMode.PRESSED},
+                            )}
+                            >
+                                <svg>
+                                    <use xlinkHref="#lose" />
+                                </svg>
+                            </div>
+                        )}
+
+                        {showDeadButton && (
+                            <div className={classNames(
+                                'player__button flat-btn flat-btn--pressed ',
+                                {'flat-btn--v-large': verticalButtons},
+                                {'flat-btn--large': !verticalButtons},
+                            )}
+                            >
+                                <div className="flat-btn__caption">
+                                    dead hand
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
 
                 {startWithName && this.renderRiichiButton()}
             </>
