@@ -7,9 +7,8 @@ import {PlayerButtonMode, PlayerPointsMode} from '../../types/PlayerEnums';
 import {PlayerBottom} from '../../components/players/PlayerBottom';
 import {TableMode} from '../../types/TableMode';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
-import {ResultArrows} from "../../components/result-arrows/ResultArrows";
-
-declare var frame: any;
+import {ResultArrows} from '../../components/result-arrows/ResultArrows';
+import {StateService} from '../../services/StateService';
 
 type IProps = {
     tableMode: TableMode
@@ -36,81 +35,85 @@ export class TableScreen extends React.Component<IProps, IState> {
     state = {
         rotatedNameHeight: 'initial'
     };
-    frameRef = React.createRef<HTMLIFrameElement>();
 
     componentDidMount(): void {
-        this.setState({
-            rotatedNameHeight: frame.innerHeight
-        });
+        this.onFrameHeightChanged();
+        StateService.instance.frameHeightChanged.add(this.onFrameHeightChanged, this);
+    }
 
-        frame.onresize = () => {
-            this.setState({
-                rotatedNameHeight: frame.innerHeight
-            });
-        }
+    componentWillUnmount(): void {
+        StateService.instance.frameHeightChanged.remove(this.onFrameHeightChanged, this);
+    }
+
+    onFrameHeightChanged() {
+        this.setState({
+            rotatedNameHeight: document.querySelector('.page-table__center')!.clientHeight + 'px'
+        });
     }
 
     renderTableInfo() {
         const {showRoundInfo, showTableNumber, showTimer, gamesLeft, showArrows} = this.props;
 
         return (
-            <div className="table-info">
-                {showRoundInfo && (
-                    <>
-                        <div className="table-info__round">
-                            東 1
-                        </div>
-                        <div className="table-info__tenbou">
-                            <div className="svg-button">
-                                <svg>
-                                    <use xlinkHref="#riichi-small"></use>
-                                </svg>
+            <>
+                <div className="table-info">
+                    {showRoundInfo && (
+                        <>
+                            <div className="table-info__round">
+                                東 1
                             </div>
-                            <div className="table-info__tenbou-count">
-                                1
-                            </div>
-                        </div>
-                        <div className="table-info__tenbou">
-                            <div className="svg-button">
-                                <svg>
-                                    <use xlinkHref="#honba"></use>
-                                </svg>
-                            </div>
-                            <div className="table-info__tenbou-count">
-                                2
-                            </div>
-                        </div>
-                        {showTimer && (
-                            <div className="table-info__timer">
-                                47:25
-                            </div>
-                        )}
-                        {gamesLeft && (
-                            <div className="table-info__games-left">
-                                <div className="table-info__games-left-count">
-                                    {gamesLeft}
+                            <div className="table-info__tenbou">
+                                <div className="svg-button">
+                                    <svg>
+                                        <use xlinkHref="#riichi-small"></use>
+                                    </svg>
                                 </div>
-                                <div className="table-info__games-left-caption">
-                                    max games left
+                                <div className="table-info__tenbou-count">
+                                    1
                                 </div>
                             </div>
-                        )}
-                        {showArrows && (
-                            <ResultArrows />
-                        )}
-                    </>
+                            <div className="table-info__tenbou">
+                                <div className="svg-button">
+                                    <svg>
+                                        <use xlinkHref="#honba"></use>
+                                    </svg>
+                                </div>
+                                <div className="table-info__tenbou-count">
+                                    2
+                                </div>
+                            </div>
+                            {showTimer && (
+                                <div className="table-info__timer">
+                                    47:25
+                                </div>
+                            )}
+                            {gamesLeft && (
+                                <div className="table-info__games-left">
+                                    <div className="table-info__games-left-count">
+                                        {gamesLeft}
+                                    </div>
+                                    <div className="table-info__games-left-caption">
+                                        max games left
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    )}
+                    {showTableNumber && (
+                        <>
+                            <div className="table-info__table-caption">
+                                Table
+                            </div>
+                            <div className="table-info__table-number">
+                                #4
+                            </div>
+                        </>
+                    )}
+                </div>
+                {showArrows && (
+                    <ResultArrows />
                 )}
-                {showTableNumber && (
-                    <>
-                        <div className="table-info__table-caption">
-                            Table
-                        </div>
-                        <div className="table-info__table-number">
-                            #4
-                        </div>
-                    </>
-                )}
-            </div>
+            </>
         );
     }
 
@@ -391,8 +394,6 @@ export class TableScreen extends React.Component<IProps, IState> {
                         {this.renderPlayerTop()}
                     </div>
                     <div className="flex-container__content page-table__center">
-                        <iframe ref={this.frameRef}  name="frame" width="100%" height="100%" style={{position: 'absolute', visibility: 'hidden'}}></iframe>
-
                         {this.renderPlayerLeft()}
 
                         {this.renderTableInfo()}

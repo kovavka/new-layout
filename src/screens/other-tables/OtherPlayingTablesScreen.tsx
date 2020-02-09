@@ -86,7 +86,7 @@ export class OtherPlayingTablesScreen extends React.Component<IProps> {
                 <TopPanel showSearch={true} />
                 <div className="page-other-tables__content">
                     {this.getTables().map(table => (
-                        <div className="page-other-tables__table">
+                        <div key={table.tableNumber} className="page-other-tables__table">
                             {showTableNumbers && (
                                 <div className="page-other-tables__table-number">
                                     Table #{table.tableNumber}
@@ -98,7 +98,7 @@ export class OtherPlayingTablesScreen extends React.Component<IProps> {
                                 </div>
                                 <div className="page-other-tables__players">
                                     {table.players.map(player => (
-                                        <div className="page-other-tables__player">
+                                        <div key={player.displayName} className="page-other-tables__player">
                                             <div className="page-other-tables__player-score">
                                                 {player.score}
                                             </div>

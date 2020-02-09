@@ -1,0 +1,27 @@
+@import "../../variables";
+
+.result-arrows {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .result-arrows__inner {
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+
+    text {
+      font-size: @font-size-small-1;
+    }
+
+    rect {
+      color: @bg-color;
+    }
+  }
+}

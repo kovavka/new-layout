@@ -1,52 +1,296 @@
 import * as React from "react";
-import '../components.less'
+import './result-arrows.less'
+import {StateService} from '../../services/StateService'
+
+const START_ARROWS_OFFSET = 20;
+const TEXT_PATH_OFFSET = 12;
+const TEXT_INVERTED_PATH_OFFSET = 4;
+const ARROW_BACKGROUND_WIDTH = 11;
+const ARROW_WIDTH = 13.91;
+const ARROW_HEIGHT = 7.63;
+
+class Point {
+    x: number;
+    y: number;
+
+    constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+    }
+}
 
 type IProps = {
 }
 
-export class ResultArrows extends React.Component<IProps> {
+type IState = {
+    width: number
+    height: number
+}
+
+export class ResultArrows extends React.Component<IProps, IState> {
+    state = {
+        width: 0,
+        height: 0,
+    };
+
+    containerRef = React.createRef<HTMLDivElement>()
+
+    componentDidMount(): void {
+        this.onFrameHeightChanged();
+        StateService.instance.frameHeightChanged.add(this.onFrameHeightChanged, this);
+
+
+    }
+
+    componentWillUnmount(): void {
+        StateService.instance.frameHeightChanged.remove(this.onFrameHeightChanged, this);
+    }
+
+    private onFrameHeightChanged() {
+        let svgContainer = this.containerRef.current
+        if (svgContainer) {
+            this.setState({
+                width: svgContainer.clientWidth,
+                height: svgContainer.clientHeight,
+            });
+        }
+    }
+
+    private renderPath(id: string, start: Point, center: Point, end: Point, xOffset: number, yOffset: number, textStartOffset: number) {
+
+        return (
+            <g>
+                <path d={`M ${start.x},${start.y} Q${center.x},${center.y} ${end.x},${end.y} `} stroke="currentColor" fill="none"></path>
+
+
+                {/*<path*/}
+                {/*    d={`M ${p00.x} ${p00.y} C ${c00.x} ${c00.y}, ${c10.x} ${c10.y}, ${p10.x} ${p10.y}*/}
+                {/*    M ${p01.x} ${p01.y} C ${c01.x} ${c01.y}, ${c11.x} ${c11.y}, ${p11.x} ${p11.y}`}*/}
+                {/*    stroke="currentColor" fill="none"/>*/}
+
+                {/*<defs>*/}
+                {/*    <path*/}
+                {/*        id={id}*/}
+                {/*        d={`M ${p00.x + xOffset} ${p00.y + yOffset} C ${c00.x + xOffset} ${c00.y + yOffset}, ${c10.x + xOffset} ${c10.y + yOffset}, ${p10.x + xOffset} ${p10.y + yOffset}*/}
+                {/*    M ${p01.x + xOffset} ${p01.y + yOffset} C ${c01.x + xOffset} ${c01.y + yOffset}, ${c11.x + xOffset} ${c11.y + yOffset}, ${p11.x + xOffset} ${p11.y + yOffset}`}*/}
+                {/*        stroke="currentColor" fill="none"/>*/}
+                {/*</defs>*/}
+                {/*<text>*/}
+                {/*    <textPath xlinkHref={'#'+id} startOffset={textStartOffset+'%'} textAnchor="middle">*/}
+                {/*        6400 + 300*/}
+                {/*    </textPath>*/}
+                {/*</text>*/}
+
+            </g>
+        );
+    }
+
+    private renderArrow() {
+        return (
+            <>
+                <rect x={-ARROW_WIDTH} y="0" width={ARROW_BACKGROUND_WIDTH} height={ARROW_HEIGHT} fill="currentColor"/>
+                <path d={`M 0 0 l-14.18 3.902 14.097 3.877c-1.346-3.302-1.345-4.455.083-7.78z`} fill="currentColor" />
+            </>
+        )
+    }
+
+    private renderLeftBottom(offsetX: number, offsetY: number) {
+        const {width, height} = this.state;
+        const fromLeftToBottom = false;
+        const fromBottomToLeft = true;
+
+        let start = new Point(0, height/2 + START_ARROWS_OFFSET);
+        let center = new Point(width/2 - offsetX, height/2 + offsetY);
+        let end = new Point(width/2 - START_ARROWS_OFFSET, height);
+
+        return (
+            <g>
+                {/*<path d={`M0,${height/2 + START_ARROWS_OFFSET} Q${width/2 - 50},${height/2 + 30} ${width/2 - START_ARROWS_OFFSET},${height} `} stroke="currentColor" fill="none"></path>*/}
+
+                {this.renderPath('left-bottom', start, center, end, -TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 36)}
+                {fromLeftToBottom && (
+                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromBottomToLeft && (
+                    <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+            </g>
+        )
+    }
+
+    private renderLeftTop(offsetX: number, offsetY: number) {
+        const {width, height} = this.state;
+        const fromLeftToBottom = false;
+        const fromBottomToLeft = true;
+
+
+        let start =  new Point(0, height/2 - START_ARROWS_OFFSET);
+        let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
+        let end = new Point(width/2 - START_ARROWS_OFFSET, 0);
+
+        return (
+            <g>
+                {this.renderPath('left-top', start, center, end, -TEXT_INVERTED_PATH_OFFSET, -TEXT_INVERTED_PATH_OFFSET, 36)}
+
+                {fromLeftToBottom && (
+                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromBottomToLeft && (
+                    <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+            </g>
+        )
+    }
+
+    private renderRightBottom(offsetX: number, offsetY: number) {
+        const {width, height} = this.state;
+        const fromLeftToBottom = false;
+        const fromBottomToLeft = true;
+
+        let start = new Point(width/2 + START_ARROWS_OFFSET, height);
+        let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
+        let end = new Point(width, height/2 + START_ARROWS_OFFSET);
+
+        return (
+            <g>
+                {this.renderPath('right-bottom', start, center, end, TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 64)}
+
+                {fromLeftToBottom && (
+                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromBottomToLeft && (
+                    <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+            </g>
+        )
+    }
+
+    private renderRightTop(offsetX: number, offsetY: number) {
+        const {width, height} = this.state;
+        const fromLeftToBottom = false;
+        const fromBottomToLeft = true;
+
+        let start = new Point(width/2 + START_ARROWS_OFFSET, 0);
+        let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
+        let end = new Point(width, height/2 - START_ARROWS_OFFSET);
+
+        return (
+            <g>
+                {this.renderPath('right-top', start, center, end, TEXT_INVERTED_PATH_OFFSET, -TEXT_INVERTED_PATH_OFFSET, 64)}
+                {fromLeftToBottom && (
+                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromBottomToLeft && (
+                    <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+            </g>
+        )
+    }
+
+    private renderHorizontal() {
+        const {width, height} = this.state;
+        const fromLeftToRight = true;
+        const fromRightToLeft = false;
+
+        return (
+            <g>
+                <path d={`M ${0} ${height/2} H ${width}`} stroke="currentColor" fill="none"/>
+                {fromRightToLeft && (
+                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
+                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromLeftToRight && (
+                    <g transform={`translate(${width - ARROW_WIDTH} ${height/2 - ARROW_HEIGHT/2})`}>
+                        <g transform={`rotate(180) translate(0 -${ARROW_HEIGHT})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+            </g>
+        )
+    }
+
+    private renderVertical() {
+        const {width, height} = this.state;
+        const fromTopToBottom = true;
+        const fromBottomToTop = false;
+
+        return (
+            <g>
+                <path d={`M ${width/2} ${0} V ${height}`} stroke="currentColor" fill="none"/>
+
+                {fromTopToBottom && (
+                    <g transform={`translate(${width/2 - ARROW_HEIGHT/2} 0)`}>
+                        <g transform={`rotate(90) translate(${ARROW_WIDTH} -${ARROW_HEIGHT})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromBottomToTop && (
+                    <g transform={`translate(${width/2 - ARROW_HEIGHT/2} ${height - ARROW_WIDTH})`}>
+                        <g transform={`rotate(-90)`}>
+                            {this.renderArrow()}
+                       </g>
+                    </g>
+                )}
+            </g>
+        )
+    }
+
     render() {
         // const {} = this.props;
+        const {width, height} = this.state;
+        let offsetX = 0.32 * (width / 2 - START_ARROWS_OFFSET * 2);
+        let offsetY = 0.32 * (height / 2 - START_ARROWS_OFFSET * 2);
 
         return (
             <div className="result-arrows">
+                <div className="result-arrows__inner" ref={this.containerRef}>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${width} ${height}`}>
 
-                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="190" viewBox="0 0 210 297">
-                    <path d="M105.749-48.228l-.146 384.746" fill="none" stroke="#000" stroke-width="2.320752"/>
-                    <path d="M101.889 330.081l3.767 14.218 4.01-14.06c-3.314 1.314-4.467 1.302-7.777-.158z" fill="#0000c7"/>
-                    <path d="M13.042 161.246c20.473 13.936 40.945 28.38 55.584 50.002 2.78 4.34 5.314 9 6.54 12.082 14.184 33.58 16.156 81.445 16.092 121.614" fill="none" stroke="#30ceff" stroke-width="1.4477072000000002"/>
-                    <path d="M20.187 161.503l-14.07-4.288 9.838 10.817c.63-3.51 1.247-4.484 4.232-6.529z" fill="#00a7c7"/>
-                    <path d="M198.31 161.246c-20.473 13.936-40.946 28.38-55.584 50.002-2.78 4.34-5.315 9-6.54 12.082-14.185 33.58-16.156 81.445-16.093 121.614" fill="none" stroke="#30ceff" stroke-width="1.4477072000000002"/>
-                    <path d="M191.165 161.503l14.07-4.288-9.839 10.817c-.629-3.51-1.246-4.484-4.231-6.529z" fill="#00a7c7"/>
-                    <path d="M6.658 148.367l187.566.097" opacity=".98" fill="none" stroke="#000" stroke-width="2.320752"/>
-                    <path d="M190.867 144.76l14.181 3.902-14.098 3.877c1.346-3.303 1.345-4.455-.083-7.78z" fill="#0000c7"/>
-                    <path d="M198.31 135.47c-20.473-13.936-40.946-28.38-55.584-50.002-2.78-4.34-5.315-9-6.54-12.082-14.185-33.58-16.156-81.445-16.093-121.614" fill="none" stroke="#30ceff" stroke-width="1.4477072000000002"/>
-                    <path d="M191.165 135.213l14.07 4.288-9.839-10.817c-.629 3.51-1.246 4.484-4.231 6.529z" fill="#00a7c7"/>
-                    <path d="M13.042 135.47c20.473-13.936 40.945-28.38 55.584-50.002 2.78-4.34 5.314-9 6.54-12.082C89.35 39.806 91.321-8.059 91.257-48.228" fill="none" stroke="#30ceff" stroke-width="1.4477072000000002"/>
-                    <path d="M20.187 135.213L6.117 139.5l9.838-10.817c.63 3.51 1.247 4.484 4.232 6.529z" fill="#00a7c7"/>
-                    <path d="M203.967 148.264l-187.566.097" opacity=".98" fill="none" stroke="#000" stroke-width="2.320752"/>
-                    <path d="M19.758 144.657l-14.18 3.902 14.097 3.877c-1.346-3.302-1.345-4.455.083-7.78z" fill="#0000c7"/>
-                    <g>
-                        <path d="M6.117 157.215c20.914 12.612 48.533 32.963 62.509 54.033 2.78 4.34 5.314 9 6.54 12.082 13.522 33.691 15.922 73.174 15.858 113.342" fill="none" stroke="#3049ff" stroke-width="1.4477072000000002"/>
-                        <path d="M86.963 330.876l4.295 14.068 3.484-14.2c-3.264 1.437-4.416 1.468-7.779.132z" fill="#0026c7"/></g>
-                    <g>
-                        <path d="M205.235 157.215c-20.915 12.612-48.533 32.963-62.509 54.033-2.78 4.34-5.315 9-6.54 12.082-13.523 33.691-15.922 73.174-15.859 113.342" fill="none" stroke="#3049ff" stroke-width="1.4477072000000002"/>
-                        <path d="M124.388 330.876l-4.295 14.068-3.483-14.2c3.263 1.437 4.416 1.468 7.778.132z" fill="#0026c7"/>
-                    </g>
-                    <g>
-                        <path d="M6.117 139.5c20.914-12.61 48.533-32.962 62.509-54.032 2.78-4.34 5.314-9 6.54-12.082C88.687 39.696 91.087.213 91.023-39.956" fill="none" stroke="#3049ff" stroke-width="1.4477072000000002"/>
-                        <path d="M86.963-34.16l4.295-14.068 3.484 14.2c-3.264-1.437-4.416-1.467-7.779-.132z" fill="#0026c7"/>
-                    </g>
-                    <g>
-                        <path d="M205.235 139.5c-20.915-12.61-48.533-32.962-62.509-54.032-2.78-4.34-5.315-9-6.54-12.082-13.523-33.69-15.922-73.173-15.859-113.342" fill="none" stroke="#3049ff" stroke-width="1.4477072000000002"/>
-                        <path d="M124.388-34.16l-4.295-14.068-3.483 14.2c3.263-1.437 4.416-1.467 7.778-.132z" fill="#0026c7"/>
-                    </g>
-                    <g>
-                        <path d="M105.749 344.299l-.146-384.747" fill="none" stroke="#000" stroke-width="2.320752"/>
-                        <path d="M101.889-34.01l3.767-14.219 4.01 14.06c-3.314-1.314-4.467-1.302-7.777.158z" fill="#0000c7"/>
-                    </g>
-                </svg>
-
+                        {this.renderLeftBottom(offsetX, offsetY)}
+                        {this.renderLeftTop(offsetX, offsetY)}
+                        {this.renderRightBottom(offsetX, offsetY)}
+                        {this.renderRightTop(offsetX, offsetY)}
+                        {this.renderHorizontal()}
+                        {this.renderVertical()}
+                    </svg>
+                </div>
             </div>
         );
     }

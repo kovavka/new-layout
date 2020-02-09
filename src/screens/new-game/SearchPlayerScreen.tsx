@@ -32,7 +32,7 @@ export class SearchPlayerScreen extends React.Component {
                 <TopPanel showSearch={true} />
                 <div className="page-search-player__content">
                     {this.getNames().map(name => (
-                        <div className="page-search-player__name">
+                        <div key={name} className="page-search-player__name">
                             {name}
                         </div>
                     ))}

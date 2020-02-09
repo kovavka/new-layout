@@ -1,10 +1,14 @@
 import signals from 'signals';
 import {ScreenType} from "../types/ScreenType";
 
+declare var frame: any;
+
 export class StateService {
+    frameInnerHeight: string = 'initial'
     currentScreen: ScreenType = ScreenType.TABLE_RESULT;
 
     onChange: signals.Signal = new signals.Signal();
+    frameHeightChanged: signals.Signal = new signals.Signal();
 
     private static _instance: StateService;
     static get instance(): StateService {
@@ -21,8 +25,15 @@ export class StateService {
             }
             if (e.key === 'ArrowLeft') {
                 this.prevScreen()
+                this.prevScreen()
             }
         })
+
+        this.frameInnerHeight = frame.innerHeight;
+        frame.onresize = () => {
+            this.frameInnerHeight = frame.innerHeight;
+            this.frameHeightChanged.dispatch();
+        };
     }
 
     nextScreen() {
