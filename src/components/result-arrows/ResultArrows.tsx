@@ -33,7 +33,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
         height: 0,
     };
 
-    containerRef = React.createRef<HTMLDivElement>()
+    containerRef = React.createRef<HTMLDivElement>();
 
     componentDidMount(): void {
         this.onFrameHeightChanged();
@@ -47,7 +47,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
     }
 
     private onFrameHeightChanged() {
-        let svgContainer = this.containerRef.current
+        let svgContainer = this.containerRef.current;
         if (svgContainer) {
             this.setState({
                 width: svgContainer.clientWidth,
@@ -62,24 +62,14 @@ export class ResultArrows extends React.Component<IProps, IState> {
             <g>
                 <path d={`M ${start.x},${start.y} Q${center.x},${center.y} ${end.x},${end.y} `} stroke="currentColor" fill="none"></path>
 
-
-                {/*<path*/}
-                {/*    d={`M ${p00.x} ${p00.y} C ${c00.x} ${c00.y}, ${c10.x} ${c10.y}, ${p10.x} ${p10.y}*/}
-                {/*    M ${p01.x} ${p01.y} C ${c01.x} ${c01.y}, ${c11.x} ${c11.y}, ${p11.x} ${p11.y}`}*/}
-                {/*    stroke="currentColor" fill="none"/>*/}
-
-                {/*<defs>*/}
-                {/*    <path*/}
-                {/*        id={id}*/}
-                {/*        d={`M ${p00.x + xOffset} ${p00.y + yOffset} C ${c00.x + xOffset} ${c00.y + yOffset}, ${c10.x + xOffset} ${c10.y + yOffset}, ${p10.x + xOffset} ${p10.y + yOffset}*/}
-                {/*    M ${p01.x + xOffset} ${p01.y + yOffset} C ${c01.x + xOffset} ${c01.y + yOffset}, ${c11.x + xOffset} ${c11.y + yOffset}, ${p11.x + xOffset} ${p11.y + yOffset}`}*/}
-                {/*        stroke="currentColor" fill="none"/>*/}
-                {/*</defs>*/}
-                {/*<text>*/}
-                {/*    <textPath xlinkHref={'#'+id} startOffset={textStartOffset+'%'} textAnchor="middle">*/}
-                {/*        6400 + 300*/}
-                {/*    </textPath>*/}
-                {/*</text>*/}
+                <defs>
+                    <path id={id} d={`M ${start.x + xOffset},${start.y + yOffset} Q${center.x + xOffset},${center.y + yOffset} ${end.x + xOffset},${end.y + yOffset} `} stroke="currentColor" fill="none"></path>
+                </defs>
+                <text>
+                    <textPath xlinkHref={'#'+id} startOffset={textStartOffset+'%'} textAnchor="middle">
+                        6400 + 300
+                    </textPath>
+                </text>
 
             </g>
         );
@@ -91,45 +81,113 @@ export class ResultArrows extends React.Component<IProps, IState> {
                 <rect x={-ARROW_WIDTH} y="0" width={ARROW_BACKGROUND_WIDTH} height={ARROW_HEIGHT} fill="currentColor"/>
                 <path d={`M 0 0 l-14.18 3.902 14.097 3.877c-1.346-3.302-1.345-4.455.083-7.78z`} fill="currentColor" />
             </>
-        )
+        );
     }
+
+    // private renderCurve(start: Point, center: Point, end: Point, ) {
+    //
+    // }
 
     private renderLeftBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromLeftToBottom = false;
+        const fromLeftToBottom = true;
         const fromBottomToLeft = true;
 
         let start = new Point(0, height/2 + START_ARROWS_OFFSET);
-        let center = new Point(width/2 - offsetX, height/2 + offsetY);
+        let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, height);
+
+        let angle1 = 0;
+        let r = offsetX / offsetY;
+        console.log(r)
+
+        if (r < 0.25) {
+            angle1 = 45;
+        } else if (r < 0.5) {
+            let k = 11;
+            angle1 = k / r;
+        } else if (r < 1.8) {
+            let k = 12.5;
+            angle1 = k / r;
+        }
+
+        let rotateOffset1 = ARROW_HEIGHT * angle1 / 45;
+
+        let angle2 = 0;
+        if (r > 8.84) {
+            angle2 = -45
+        } else if (r > 5.4) {
+            let k = -64;
+            angle2 = k / r;
+        } else if (r > 3.9) {
+            let k = -64;
+            angle2 = k / r;
+        } else if (r > 0.75) {
+            // let k = -33;
+            // angle2 = k / r;
+
+            let k = 15 / 0.95;
+            let b = -5 - 0.75 * k;
+            angle2 = -Math.abs(k * r + b);
+        }
+
+        let rotateHeight2 = ARROW_HEIGHT * -angle2 / 180;
+        let rotateWight2 = ARROW_WIDTH * -angle2 / 180;
+
+        let t = 0.96;
+        let b = (p0, p1, p2) => (1 - t)*(1 - t) * p0 +  2 * t * (1 - t) * p1 + t * t * p2;
+        let bx = b(start.x, center.x, end.x);
+        let by = b(start.y, center.y, end.y);
+
+        let l1 = bx - end.x;
+        let m1 = by - end.y;
+        let l2 = 0;
+        let m2 = 2;
+
+        let cosA = (l1 * l2 * m1 * m2) / (Math.sqrt(l1 * l1 + m1 * m1) * Math.sqrt(l2 * l2 + m2 * m2));
+        let f = Math.acos(cosA);
+        console.log(f);
 
         return (
             <g>
-                {/*<path d={`M0,${height/2 + START_ARROWS_OFFSET} Q${width/2 - 50},${height/2 + 30} ${width/2 - START_ARROWS_OFFSET},${height} `} stroke="currentColor" fill="none"></path>*/}
-
-                {this.renderPath('left-bottom', start, center, end, -TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 36)}
                 {fromLeftToBottom && (
-                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
-                            {this.renderArrow()}
+                    <g transform={`translate(${end.x + ARROW_HEIGHT/2} ${end.y})`}>
+                        <g transform={`translate(${-rotateHeight2} ${-rotateWight2})`}>
+                            <g transform={`rotate(${angle2})`}>
+                                <g transform={`rotate(-90) translate(${ARROW_WIDTH} ${-ARROW_HEIGHT})`}>
+                                    {this.renderArrow()}
+                                </g>
+                            </g>
                         </g>
                     </g>
                 )}
                 {fromBottomToLeft && (
                     <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
-                            {this.renderArrow()}
+                        <g transform={`translate(0 ${rotateOffset1})`}>
+                            <g transform={`translate(${ARROW_WIDTH} 0) rotate(${angle1})`}>
+                                {this.renderArrow()}
+                            </g>
                         </g>
                     </g>
                 )}
+
+                {/*<path d={`M${center.x} ${center.y} ${width/2 - START_ARROWS_OFFSET} ${height}`} stroke-width="1" stroke="black"/>*/}
+                {/*<path d={`M${center.x} ${center.y} 0 ${height/2 + START_ARROWS_OFFSET}`} stroke-width="1" stroke="black"/>*/}
+                {/*<path d={`M${width/2 - START_ARROWS_OFFSET} ${height} 0 ${height/2 + START_ARROWS_OFFSET}`} stroke-width="1" stroke="black"/>*/}
+
+                {/*<path d={`M${bx} ${by} ${width/2 - START_ARROWS_OFFSET} ${height}`} strokeWidth="1" stroke="black"/>*/}
+
+                <g color="#82a5c3">
+                    {this.renderPath('left-bottom', start, center, end, -TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 36)}
+                </g>
             </g>
         )
     }
 
     private renderLeftTop(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromLeftToBottom = false;
-        const fromBottomToLeft = true;
+        const fromLeftToTop = false;
+        const fromTopToLeft = false;
 
 
         let start =  new Point(0, height/2 - START_ARROWS_OFFSET);
@@ -140,14 +198,14 @@ export class ResultArrows extends React.Component<IProps, IState> {
             <g>
                 {this.renderPath('left-top', start, center, end, -TEXT_INVERTED_PATH_OFFSET, -TEXT_INVERTED_PATH_OFFSET, 36)}
 
-                {fromLeftToBottom && (
+                {fromLeftToTop && (
                     <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
                         <g transform={`translate(${ARROW_WIDTH} 0)`}>
                             {this.renderArrow()}
                         </g>
                     </g>
                 )}
-                {fromBottomToLeft && (
+                {fromTopToLeft && (
                     <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
                         <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
                             {this.renderArrow()}
@@ -160,8 +218,8 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
     private renderRightBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromLeftToBottom = false;
-        const fromBottomToLeft = true;
+        const fromRightToBottom = false;
+        const fromBottomToRight = false;
 
         let start = new Point(width/2 + START_ARROWS_OFFSET, height);
         let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
@@ -171,14 +229,14 @@ export class ResultArrows extends React.Component<IProps, IState> {
             <g>
                 {this.renderPath('right-bottom', start, center, end, TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 64)}
 
-                {fromLeftToBottom && (
+                {fromRightToBottom && (
                     <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
                         <g transform={`translate(${ARROW_WIDTH} 0)`}>
                             {this.renderArrow()}
                         </g>
                     </g>
                 )}
-                {fromBottomToLeft && (
+                {fromBottomToRight && (
                     <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
                         <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
                             {this.renderArrow()}
@@ -186,13 +244,13 @@ export class ResultArrows extends React.Component<IProps, IState> {
                     </g>
                 )}
             </g>
-        )
+        );
     }
 
     private renderRightTop(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromLeftToBottom = false;
-        const fromBottomToLeft = true;
+        const fromRightToTop = false;
+        const fromTopToRight = false;
 
         let start = new Point(width/2 + START_ARROWS_OFFSET, 0);
         let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
@@ -201,14 +259,14 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return (
             <g>
                 {this.renderPath('right-top', start, center, end, TEXT_INVERTED_PATH_OFFSET, -TEXT_INVERTED_PATH_OFFSET, 64)}
-                {fromLeftToBottom && (
+                {fromRightToTop && (
                     <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
                         <g transform={`translate(${ARROW_WIDTH} 0)`}>
                             {this.renderArrow()}
                         </g>
                     </g>
                 )}
-                {fromBottomToLeft && (
+                {fromTopToRight && (
                     <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
                         <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
                             {this.renderArrow()}
@@ -216,7 +274,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
                     </g>
                 )}
             </g>
-        )
+        );
     }
 
     private renderHorizontal() {
@@ -242,7 +300,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
                     </g>
                 )}
             </g>
-        )
+        );
     }
 
     private renderVertical() {
@@ -269,14 +327,14 @@ export class ResultArrows extends React.Component<IProps, IState> {
                     </g>
                 )}
             </g>
-        )
+        );
     }
 
     render() {
         // const {} = this.props;
         const {width, height} = this.state;
-        let offsetX = 0.32 * (width / 2 - START_ARROWS_OFFSET * 2);
-        let offsetY = 0.32 * (height / 2 - START_ARROWS_OFFSET * 2);
+        let offsetX = 0.1 * (width / 2 - START_ARROWS_OFFSET * 2);
+        let offsetY = 0.1 * (height / 2 - START_ARROWS_OFFSET * 2);
 
         return (
             <div className="result-arrows">
