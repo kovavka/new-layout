@@ -88,6 +88,25 @@ export class ResultArrows extends React.Component<IProps, IState> {
     //
     // }
 
+
+    private getAngle(start: Point, center: Point, end: Point, isHorizontal: boolean) {
+        let t = 0.08;
+
+        //Quadratic Bezier curve
+        let b = (p0, p1, p2) => (1 - t)*(1 - t) * p0 +  2 * t * (1 - t) * p1 + t * t * p2;
+        let bx = b(start.x, center.x, end.x);
+        let by = b(start.y, center.y, end.y);
+
+        let l1 = bx - start.x;
+        let m1 = start.y - by;
+        let l2 = isHorizontal ? 1 : 0;
+        let m2 = isHorizontal ? 0 : 1;
+
+        let cosA = (l1 * l2 + m1 * m2) / (Math.sqrt(l1 * l1 + m1 * m1) * Math.sqrt(l2 * l2 + m2 * m2));
+        let angle =  Math.acos(cosA) * 180 / Math.PI;
+        return angle;
+    }
+
     private renderLeftBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToBottom = true;
@@ -97,59 +116,19 @@ export class ResultArrows extends React.Component<IProps, IState> {
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, height);
 
-        let angle1 = 0;
-        let r = offsetX / offsetY;
-        console.log(r)
 
-        if (r < 0.25) {
-            angle1 = 45;
-        } else if (r < 0.5) {
-            let k = 11;
-            angle1 = k / r;
-        } else if (r < 1.8) {
-            let k = 12.5;
-            angle1 = k / r;
-        }
+        let angle1 = this.getAngle(start, center, end, true);
+        let rotateOffset1 = (ARROW_HEIGHT + ARROW_WIDTH) / 2 * angle1 / 45;
 
-        let rotateOffset1 = ARROW_HEIGHT * angle1 / 45;
-
-        let angle2 = 0;
-        if (r > 8.84) {
-            angle2 = -45
-        } else if (r > 5.4) {
-            let k = -64;
-            angle2 = k / r;
-        } else if (r > 3.9) {
-            let k = -64;
-            angle2 = k / r;
-        } else if (r > 0.75) {
-            // let k = -33;
-            // angle2 = k / r;
-
-            let k = 15 / 0.95;
-            let b = -5 - 0.75 * k;
-            angle2 = -Math.abs(k * r + b);
-        }
-
+        let angle2 = -this.getAngle(end, center, start, false);
         let rotateHeight2 = ARROW_HEIGHT * -angle2 / 180;
         let rotateWight2 = ARROW_WIDTH * -angle2 / 180;
 
-        let t = 0.96;
-        let b = (p0, p1, p2) => (1 - t)*(1 - t) * p0 +  2 * t * (1 - t) * p1 + t * t * p2;
-        let bx = b(start.x, center.x, end.x);
-        let by = b(start.y, center.y, end.y);
-
-        let l1 = bx - end.x;
-        let m1 = by - end.y;
-        let l2 = 0;
-        let m2 = 2;
-
-        let cosA = (l1 * l2 * m1 * m2) / (Math.sqrt(l1 * l1 + m1 * m1) * Math.sqrt(l2 * l2 + m2 * m2));
-        let f = Math.acos(cosA);
-        console.log(f);
 
         return (
             <g>
+                {this.renderPath('left-bottom', start, center, end, -TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 36)}
+
                 {fromLeftToBottom && (
                     <g transform={`translate(${end.x + ARROW_HEIGHT/2} ${end.y})`}>
                         <g transform={`translate(${-rotateHeight2} ${-rotateWight2})`}>
@@ -162,7 +141,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
                     </g>
                 )}
                 {fromBottomToLeft && (
-                    <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
+                    <g transform={`translate(${start.x} ${start.y - ARROW_HEIGHT/2})`}>
                         <g transform={`translate(0 ${rotateOffset1})`}>
                             <g transform={`translate(${ARROW_WIDTH} 0) rotate(${angle1})`}>
                                 {this.renderArrow()}
@@ -170,16 +149,6 @@ export class ResultArrows extends React.Component<IProps, IState> {
                         </g>
                     </g>
                 )}
-
-                {/*<path d={`M${center.x} ${center.y} ${width/2 - START_ARROWS_OFFSET} ${height}`} stroke-width="1" stroke="black"/>*/}
-                {/*<path d={`M${center.x} ${center.y} 0 ${height/2 + START_ARROWS_OFFSET}`} stroke-width="1" stroke="black"/>*/}
-                {/*<path d={`M${width/2 - START_ARROWS_OFFSET} ${height} 0 ${height/2 + START_ARROWS_OFFSET}`} stroke-width="1" stroke="black"/>*/}
-
-                {/*<path d={`M${bx} ${by} ${width/2 - START_ARROWS_OFFSET} ${height}`} strokeWidth="1" stroke="black"/>*/}
-
-                <g color="#82a5c3">
-                    {this.renderPath('left-bottom', start, center, end, -TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 36)}
-                </g>
             </g>
         )
     }
