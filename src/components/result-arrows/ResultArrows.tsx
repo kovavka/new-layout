@@ -6,7 +6,6 @@ const START_ARROWS_OFFSET = 20;
 const TEXT_PATH_OFFSET = 12;
 const TEXT_INVERTED_PATH_OFFSET = 4;
 const ARROW_BACKGROUND_WIDTH = 11;
-const ARROW_WIDTH = 12.39;
 const ARROW_HEIGHT = 7;
 
 class Point {
@@ -92,7 +91,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
     // }
 
 
-    private getAngle(start: Point, center: Point, end: Point, isHorizontal: boolean) {
+    private getAngle(start: Point, center: Point, end: Point) {
         let t = 0.08;
 
         //Quadratic Bezier curve
@@ -102,8 +101,8 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         let l1 = bx - start.x;
         let m1 = start.y - by;
-        let l2 = isHorizontal ? 1 : 0;
-        let m2 = isHorizontal ? 0 : 1;
+        let l2 = 1;
+        let m2 = 0;
 
         let cosA = (l1 * l2 + m1 * m2) / (Math.sqrt(l1 * l1 + m1 * m1) * Math.sqrt(l2 * l2 + m2 * m2));
         let angle =  Math.acos(cosA) * 180 / Math.PI;
@@ -113,15 +112,15 @@ export class ResultArrows extends React.Component<IProps, IState> {
     private renderLeftBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToBottom = true;
-        const fromBottomToLeft = true;
+        const fromBottomToLeft = false;
 
         let start = new Point(0, height/2 + START_ARROWS_OFFSET);
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, height);
 
 
-        let angle1 = this.getAngle(start, center, end, true);
-        let angle2 = -this.getAngle(end, center, start, false) - 90;
+        let angle1 = this.getAngle(start, center, end);
+        let angle2 = -this.getAngle(end, center, start);
 
         return (
             <g>
@@ -136,9 +135,9 @@ export class ResultArrows extends React.Component<IProps, IState> {
                 )}
                 {fromLeftToBottom && (
                     <g transform={`translate(${end.x} ${end.y})`}>
-                            <g transform={`rotate(${angle2})`}>
-                                    {this.renderArrow()}
-                            </g>
+                        <g transform={`rotate(${angle2})`}>
+                                {this.renderArrow()}
+                        </g>
                     </g>
                 )}
             </g>
@@ -147,7 +146,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
     private renderLeftTop(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromLeftToTop = true;
+        const fromLeftToTop = false;
         const fromTopToLeft = true;
 
 
@@ -155,60 +154,61 @@ export class ResultArrows extends React.Component<IProps, IState> {
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, 0);
 
-
-        let angle1 = this.getAngle(start, center, end, true);
-        let angle2 = -this.getAngle(end, center, start, false) - 90;
+        let angle1 = -this.getAngle(start, center, end);
+        let angle2 = this.getAngle(end, center, start);
 
         return (
             <g>
                 {this.renderPath('left-top', start, center, end, -TEXT_INVERTED_PATH_OFFSET, -TEXT_INVERTED_PATH_OFFSET, 36)}
 
-
-                {/*{fromBottomToLeft && (*/}
-                {/*    <g transform={`translate(${start.x} ${start.y})`}>*/}
-                {/*        <g transform={`rotate(${angle1})`}>*/}
-                {/*            {this.renderArrow()}*/}
-                {/*        </g>*/}
-                {/*    </g>*/}
-                {/*)}*/}
-                {/*{fromLeftToBottom && (*/}
-                {/*    <g transform={`translate(${end.x} ${end.y})`}>*/}
-                {/*        <g transform={`rotate(${angle2})`}>*/}
-                {/*            {this.renderArrow()}*/}
-                {/*        </g>*/}
-                {/*    </g>*/}
-                {/*)}*/}
+                {fromTopToLeft && (
+                    <g transform={`translate(${start.x} ${start.y})`}>
+                        <g transform={`rotate(${angle1})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromLeftToTop && (
+                    <g transform={`translate(${end.x} ${end.y})`}>
+                        <g transform={`rotate(${angle2})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
             </g>
         )
     }
 
     private renderRightBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromRightToBottom = true;
+        const fromRightToBottom = false;
         const fromBottomToRight = true;
 
         let start = new Point(width/2 + START_ARROWS_OFFSET, height);
         let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
         let end = new Point(width, height/2 + START_ARROWS_OFFSET);
 
+        let angle1 = -this.getAngle(start, center, end);
+        let angle2 = this.getAngle(end, center, start);
+
         return (
             <g>
                 {this.renderPath('right-bottom', start, center, end, TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 64)}
 
-                {/*{fromBottomToLeft && (*/}
-                {/*    <g transform={`translate(${start.x} ${start.y})`}>*/}
-                {/*        <g transform={`rotate(${angle1})`}>*/}
-                {/*            {this.renderArrow()}*/}
-                {/*        </g>*/}
-                {/*    </g>*/}
-                {/*)}*/}
-                {/*{fromLeftToBottom && (*/}
-                {/*    <g transform={`translate(${end.x} ${end.y})`}>*/}
-                {/*        <g transform={`rotate(${angle2})`}>*/}
-                {/*            {this.renderArrow()}*/}
-                {/*        </g>*/}
-                {/*    </g>*/}
-                {/*)}*/}
+                {fromRightToBottom && (
+                    <g transform={`translate(${start.x} ${start.y})`}>
+                        <g transform={`rotate(${angle1})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromBottomToRight && (
+                    <g transform={`translate(${end.x} ${end.y})`}>
+                        <g transform={`rotate(${angle2})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
             </g>
         );
     }
@@ -216,30 +216,33 @@ export class ResultArrows extends React.Component<IProps, IState> {
     private renderRightTop(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromRightToTop = true;
-        const fromTopToRight = true;
+        const fromTopToRight = false;
 
         let start = new Point(width/2 + START_ARROWS_OFFSET, 0);
         let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
         let end = new Point(width, height/2 - START_ARROWS_OFFSET);
 
+        let angle1 = this.getAngle(start, center, end);
+        let angle2 = -this.getAngle(end, center, start);
+
         return (
             <g>
                 {this.renderPath('right-top', start, center, end, TEXT_INVERTED_PATH_OFFSET, -TEXT_INVERTED_PATH_OFFSET, 64)}
 
-                {/*{fromBottomToLeft && (*/}
-                {/*    <g transform={`translate(${start.x} ${start.y})`}>*/}
-                {/*        <g transform={`rotate(${angle1})`}>*/}
-                {/*            {this.renderArrow()}*/}
-                {/*        </g>*/}
-                {/*    </g>*/}
-                {/*)}*/}
-                {/*{fromLeftToBottom && (*/}
-                {/*    <g transform={`translate(${end.x} ${end.y})`}>*/}
-                {/*        <g transform={`rotate(${angle2})`}>*/}
-                {/*            {this.renderArrow()}*/}
-                {/*        </g>*/}
-                {/*    </g>*/}
-                {/*)}*/}
+                {fromRightToTop && (
+                    <g transform={`translate(${start.x} ${start.y})`}>
+                        <g transform={`rotate(${angle1})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {fromTopToRight && (
+                    <g transform={`translate(${end.x} ${end.y})`}>
+                        <g transform={`rotate(${angle2})`}>
+                            {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
             </g>
         );
     }
