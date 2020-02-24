@@ -6,8 +6,8 @@ const START_ARROWS_OFFSET = 20;
 const TEXT_PATH_OFFSET = 12;
 const TEXT_INVERTED_PATH_OFFSET = 4;
 const ARROW_BACKGROUND_WIDTH = 11;
-const ARROW_WIDTH = 13.91;
-const ARROW_HEIGHT = 7.63;
+const ARROW_WIDTH = 12.39;
+const ARROW_HEIGHT = 7;
 
 class Point {
     x: number;
@@ -78,8 +78,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
     private renderArrow() {
         return (
             <>
-                <rect x={-ARROW_WIDTH} y="0" width={ARROW_BACKGROUND_WIDTH} height={ARROW_HEIGHT} fill="currentColor"/>
-                <path d={`M 0 0 l-14.18 3.902 14.097 3.877c-1.346-3.302-1.345-4.455.083-7.78z`} fill="currentColor" />
+                <rect x="-1" y={-ARROW_HEIGHT/2} width={ARROW_BACKGROUND_WIDTH} height={ARROW_HEIGHT} fill="currentColor"/>
+                <path
+                    d="m 0,0 12.693819,-3.57903 c -1.499915,3.09366 -0.947277,5.02928 0,7.17478 l -12.693819,-3.59575"
+                    fill="currentColor"
+                />
             </>
         );
     }
@@ -118,35 +121,24 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
 
         let angle1 = this.getAngle(start, center, end, true);
-        let rotateOffset1 = (ARROW_HEIGHT + ARROW_WIDTH) / 2 * angle1 / 45;
-
-        let angle2 = -this.getAngle(end, center, start, false);
-        let rotateHeight2 = ARROW_HEIGHT * -angle2 / 180;
-        let rotateWight2 = ARROW_WIDTH * -angle2 / 180;
-
+        let angle2 = -this.getAngle(end, center, start, false) - 90;
 
         return (
             <g>
                 {this.renderPath('left-bottom', start, center, end, -TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 36)}
 
-                {fromLeftToBottom && (
-                    <g transform={`translate(${end.x + ARROW_HEIGHT/2} ${end.y})`}>
-                        <g transform={`translate(${-rotateHeight2} ${-rotateWight2})`}>
-                            <g transform={`rotate(${angle2})`}>
-                                <g transform={`rotate(-90) translate(${ARROW_WIDTH} ${-ARROW_HEIGHT})`}>
-                                    {this.renderArrow()}
-                                </g>
-                            </g>
+                {fromBottomToLeft && (
+                    <g transform={`translate(${start.x} ${start.y})`}>
+                        <g transform={`rotate(${angle1})`}>
+                            {this.renderArrow()}
                         </g>
                     </g>
                 )}
-                {fromBottomToLeft && (
-                    <g transform={`translate(${start.x} ${start.y - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(0 ${rotateOffset1})`}>
-                            <g transform={`translate(${ARROW_WIDTH} 0) rotate(${angle1})`}>
-                                {this.renderArrow()}
+                {fromLeftToBottom && (
+                    <g transform={`translate(${end.x} ${end.y})`}>
+                            <g transform={`rotate(${angle2})`}>
+                                    {this.renderArrow()}
                             </g>
-                        </g>
                     </g>
                 )}
             </g>
@@ -155,40 +147,45 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
     private renderLeftTop(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromLeftToTop = false;
-        const fromTopToLeft = false;
+        const fromLeftToTop = true;
+        const fromTopToLeft = true;
 
 
         let start =  new Point(0, height/2 - START_ARROWS_OFFSET);
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, 0);
 
+
+        let angle1 = this.getAngle(start, center, end, true);
+        let angle2 = -this.getAngle(end, center, start, false) - 90;
+
         return (
             <g>
                 {this.renderPath('left-top', start, center, end, -TEXT_INVERTED_PATH_OFFSET, -TEXT_INVERTED_PATH_OFFSET, 36)}
 
-                {fromLeftToTop && (
-                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
-                            {this.renderArrow()}
-                        </g>
-                    </g>
-                )}
-                {fromTopToLeft && (
-                    <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
-                            {this.renderArrow()}
-                        </g>
-                    </g>
-                )}
+
+                {/*{fromBottomToLeft && (*/}
+                {/*    <g transform={`translate(${start.x} ${start.y})`}>*/}
+                {/*        <g transform={`rotate(${angle1})`}>*/}
+                {/*            {this.renderArrow()}*/}
+                {/*        </g>*/}
+                {/*    </g>*/}
+                {/*)}*/}
+                {/*{fromLeftToBottom && (*/}
+                {/*    <g transform={`translate(${end.x} ${end.y})`}>*/}
+                {/*        <g transform={`rotate(${angle2})`}>*/}
+                {/*            {this.renderArrow()}*/}
+                {/*        </g>*/}
+                {/*    </g>*/}
+                {/*)}*/}
             </g>
         )
     }
 
     private renderRightBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromRightToBottom = false;
-        const fromBottomToRight = false;
+        const fromRightToBottom = true;
+        const fromBottomToRight = true;
 
         let start = new Point(width/2 + START_ARROWS_OFFSET, height);
         let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
@@ -198,28 +195,28 @@ export class ResultArrows extends React.Component<IProps, IState> {
             <g>
                 {this.renderPath('right-bottom', start, center, end, TEXT_PATH_OFFSET, TEXT_PATH_OFFSET, 64)}
 
-                {fromRightToBottom && (
-                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
-                            {this.renderArrow()}
-                        </g>
-                    </g>
-                )}
-                {fromBottomToRight && (
-                    <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
-                            {this.renderArrow()}
-                        </g>
-                    </g>
-                )}
+                {/*{fromBottomToLeft && (*/}
+                {/*    <g transform={`translate(${start.x} ${start.y})`}>*/}
+                {/*        <g transform={`rotate(${angle1})`}>*/}
+                {/*            {this.renderArrow()}*/}
+                {/*        </g>*/}
+                {/*    </g>*/}
+                {/*)}*/}
+                {/*{fromLeftToBottom && (*/}
+                {/*    <g transform={`translate(${end.x} ${end.y})`}>*/}
+                {/*        <g transform={`rotate(${angle2})`}>*/}
+                {/*            {this.renderArrow()}*/}
+                {/*        </g>*/}
+                {/*    </g>*/}
+                {/*)}*/}
             </g>
         );
     }
 
     private renderRightTop(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromRightToTop = false;
-        const fromTopToRight = false;
+        const fromRightToTop = true;
+        const fromTopToRight = true;
 
         let start = new Point(width/2 + START_ARROWS_OFFSET, 0);
         let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
@@ -228,20 +225,21 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return (
             <g>
                 {this.renderPath('right-top', start, center, end, TEXT_INVERTED_PATH_OFFSET, -TEXT_INVERTED_PATH_OFFSET, 64)}
-                {fromRightToTop && (
-                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
-                            {this.renderArrow()}
-                        </g>
-                    </g>
-                )}
-                {fromTopToRight && (
-                    <g transform={`translate(0 ${height/2 + START_ARROWS_OFFSET  - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0) rotate(45) translate(${ARROW_WIDTH / 2} ${ARROW_WIDTH / 2})`}>
-                            {this.renderArrow()}
-                        </g>
-                    </g>
-                )}
+
+                {/*{fromBottomToLeft && (*/}
+                {/*    <g transform={`translate(${start.x} ${start.y})`}>*/}
+                {/*        <g transform={`rotate(${angle1})`}>*/}
+                {/*            {this.renderArrow()}*/}
+                {/*        </g>*/}
+                {/*    </g>*/}
+                {/*)}*/}
+                {/*{fromLeftToBottom && (*/}
+                {/*    <g transform={`translate(${end.x} ${end.y})`}>*/}
+                {/*        <g transform={`rotate(${angle2})`}>*/}
+                {/*            {this.renderArrow()}*/}
+                {/*        </g>*/}
+                {/*    </g>*/}
+                {/*)}*/}
             </g>
         );
     }
@@ -255,15 +253,13 @@ export class ResultArrows extends React.Component<IProps, IState> {
             <g>
                 <path d={`M ${0} ${height/2} H ${width}`} stroke="currentColor" fill="none"/>
                 {fromRightToLeft && (
-                    <g transform={`translate(0 ${height/2 - ARROW_HEIGHT/2})`}>
-                        <g transform={`translate(${ARROW_WIDTH} 0)`}>
-                            {this.renderArrow()}
-                        </g>
+                    <g transform={`translate(0 ${height/2})`}>
+                        {this.renderArrow()}
                     </g>
                 )}
                 {fromLeftToRight && (
-                    <g transform={`translate(${width - ARROW_WIDTH} ${height/2 - ARROW_HEIGHT/2})`}>
-                        <g transform={`rotate(180) translate(0 -${ARROW_HEIGHT})`}>
+                    <g transform={`translate(${width} ${height/2})`}>
+                        <g transform={`rotate(180)`}>
                             {this.renderArrow()}
                         </g>
                     </g>
@@ -282,14 +278,14 @@ export class ResultArrows extends React.Component<IProps, IState> {
                 <path d={`M ${width/2} ${0} V ${height}`} stroke="currentColor" fill="none"/>
 
                 {fromTopToBottom && (
-                    <g transform={`translate(${width/2 - ARROW_HEIGHT/2} 0)`}>
-                        <g transform={`rotate(90) translate(${ARROW_WIDTH} -${ARROW_HEIGHT})`}>
+                    <g transform={`translate(${width/2} 0)`}>
+                        <g transform={`rotate(90)`}>
                             {this.renderArrow()}
                         </g>
                     </g>
                 )}
                 {fromBottomToTop && (
-                    <g transform={`translate(${width/2 - ARROW_HEIGHT/2} ${height - ARROW_WIDTH})`}>
+                    <g transform={`translate(${width/2} ${height})`}>
                         <g transform={`rotate(-90)`}>
                             {this.renderArrow()}
                        </g>
@@ -308,7 +304,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return (
             <div className="result-arrows">
                 <div className="result-arrows__inner" ref={this.containerRef}>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 ${width} ${height}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
 
                         {this.renderLeftBottom(offsetX, offsetY)}
                         {this.renderLeftTop(offsetX, offsetY)}
