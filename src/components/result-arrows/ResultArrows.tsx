@@ -7,6 +7,10 @@ const TEXT_PATH_OFFSET = 12;
 const TEXT_INVERTED_PATH_OFFSET = 4;
 const ARROW_BACKGROUND_WIDTH = 11;
 const ARROW_HEIGHT = 7;
+const RIICHI_STROKE = 1;
+const RIICHI_POINT_RADIUS = 1.8;
+const RIICHI_WIDTH = 50;
+const RIICHI_HEIGHT = 7;
 
 class Point {
     x: number;
@@ -59,13 +63,13 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         return (
             <g>
-                <path d={`M ${start.x},${start.y} Q${center.x},${center.y} ${end.x},${end.y} `} stroke="currentColor" fill="none"></path>
+                <path d={`M ${start.x},${start.y} Q${center.x},${center.y} ${end.x},${end.y} `} stroke="currentColor"></path>
 
                 <defs>
-                    <path id={id} d={`M ${start.x + xOffset},${start.y + yOffset} Q${center.x + xOffset},${center.y + yOffset} ${end.x + xOffset},${end.y + yOffset} `} stroke="currentColor" fill="none"></path>
+                    <path id={id} d={`M ${start.x + xOffset},${start.y + yOffset} Q${center.x + xOffset},${center.y + yOffset} ${end.x + xOffset},${end.y + yOffset} `} stroke="currentColor"></path>
                 </defs>
                 <text>
-                    <textPath xlinkHref={'#'+id} startOffset={textStartOffset+'%'} textAnchor="middle">
+                    <textPath xlinkHref={'#'+id} startOffset={textStartOffset+'%'} textAnchor="middle" fill="currentColor">
                         6400 + 300
                     </textPath>
                 </text>
@@ -77,7 +81,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
     private renderArrow() {
         return (
             <>
-                <rect x="-1" y={-ARROW_HEIGHT/2} width={ARROW_BACKGROUND_WIDTH} height={ARROW_HEIGHT} fill="currentColor"/>
+                <rect x="-1" y={-ARROW_HEIGHT/2} width={ARROW_BACKGROUND_WIDTH} height={ARROW_HEIGHT} style={{fill: "var(--bg-color)"}}/>
                 <path
                     d="m 0,0 12.693819,-3.57903 c -1.499915,3.09366 -0.947277,5.02928 0,7.17478 l -12.693819,-3.59575"
                     fill="currentColor"
@@ -86,21 +90,17 @@ export class ResultArrows extends React.Component<IProps, IState> {
         );
     }
 
-    // private renderCurve(start: Point, center: Point, end: Point, ) {
-    //
-    // }
-
-
-    private getAngle(start: Point, center: Point, end: Point) {
-        let t = 0.08;
-
+    private getCurvePoint(start: Point, center: Point, end: Point, t: number): Point {
         //Quadratic Bezier curve
         let b = (p0, p1, p2) => (1 - t)*(1 - t) * p0 +  2 * t * (1 - t) * p1 + t * t * p2;
         let bx = b(start.x, center.x, end.x);
         let by = b(start.y, center.y, end.y);
+        return new Point(bx, by);
+    }
 
-        let l1 = bx - start.x;
-        let m1 = start.y - by;
+    private getAngleForCurve(start: Point, point: Point): number {
+        let l1 = point.x - start.x;
+        let m1 = start.y - point.y;
         let l2 = 1;
         let m2 = 0;
 
@@ -109,10 +109,19 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return angle;
     }
 
+    private getAngle(start: Point, center: Point, end: Point): number {
+        let t = 0.08;
+        let point = this.getCurvePoint(start, center, end, t);
+
+        let angle = this.getAngleForCurve(start, point);
+        return angle;
+    }
+
     private renderLeftBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToBottom = true;
         const fromBottomToLeft = false;
+        const showRiichi = true;
 
         let start = new Point(0, height/2 + START_ARROWS_OFFSET);
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
@@ -121,6 +130,8 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         let angle1 = this.getAngle(start, center, end);
         let angle2 = -this.getAngle(end, center, start);
+
+        let riichiPosition = this.getCurvePoint(start, center, end, 0.5);
 
         return (
             <g>
@@ -137,6 +148,14 @@ export class ResultArrows extends React.Component<IProps, IState> {
                     <g transform={`translate(${end.x} ${end.y})`}>
                         <g transform={`rotate(${angle2})`}>
                                 {this.renderArrow()}
+                        </g>
+                    </g>
+                )}
+                {showRiichi && (
+                    <g transform={`translate(${riichiPosition.x + TEXT_INVERTED_PATH_OFFSET} ${riichiPosition.y - TEXT_INVERTED_PATH_OFFSET})`}>
+                        <g>
+                            <rect width={RIICHI_WIDTH} height={RIICHI_HEIGHT} x={RIICHI_STROKE} y={RIICHI_STROKE} rx="4" ry="4" stroke="currentColor" strokeWidth={RIICHI_STROKE} />
+                            <circle r={RIICHI_POINT_RADIUS} cx={RIICHI_WIDTH / 2 + RIICHI_STROKE} cy={RIICHI_HEIGHT / 2  + RIICHI_STROKE} style={{fill: "var(--color-danger)"}}  />
                         </g>
                     </g>
                 )}
@@ -307,7 +326,13 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return (
             <div className="result-arrows">
                 <div className="result-arrows__inner" ref={this.containerRef}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width={width} height={height} viewBox={`0 0 ${width} ${height}`}>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         width={width}
+                         height={height}
+                         viewBox={`0 0 ${width} ${height}`}
+                         fill="none"
+                         stroke="none"
+                    >
 
                         {this.renderLeftBottom(offsetX, offsetY)}
                         {this.renderLeftTop(offsetX, offsetY)}

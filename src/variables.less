@@ -1,16 +1,45 @@
-@bg-color: #F4F5F7;
-@primary-text-color: #000000;
-@secondary-text-color: #FFFFFF;
-@color-primary: #1565C0;
-@color-secondary: #8491AE;
-@color-secondary-light-1: #B8C0D1; //fade 0.57 from @color-secondary
-@color-secondary-light-2: #d4d9e3; //fade 0.35 from @color-secondary
-@color-secondary-dark: #47526c; //HSL: L from 60 (@color-secondary) to 35
-@color-success: #0DA678;
-@color-danger: #D32B2B;
-
 @font-size-primary: 18px;
 @font-size-secondary: 24px;
 @font-size-small-1: 14px;
 @font-size-small-2: 16px;
 @font-size-header: 32px;
+
+
+@bg-color: var(--bg-color);
+@primary-text-color: var(--primary-text-color);
+@secondary-text-color: var(--secondary-text-color);
+@color-primary: var(--color-primary);
+@color-secondary: var(--color-secondary);
+@color-secondary-light-1: var(--color-secondary-light-1);
+@color-secondary-light-2: var(--color-secondary-light-2);
+@color-secondary-dark: var(--color-secondary-dark);
+@color-success: var(--color-success);
+@color-danger: var(--color-danger);
+
+
+body {
+  --bg-color: #F4F5F7;
+  --primary-text-color: #000000;
+  --secondary-text-color: #FFFFFF;
+  --color-primary: #1565C0;
+  --color-secondary: #8491AE;
+  --color-secondary-light-1: #B8C0D1; //fade 0.57 from color-secondary
+  --color-secondary-light-2: #d4d9e3; //fade 0.35 from color-secondary
+  --color-secondary-dark: #47526c; //HSL: L from 60 (color-secondary) to 35
+  --color-success: #0DA678;
+  --color-danger: #D32B2B;
+}
+
+//body {
+//  --bg-color: #282C34;
+//  --primary-text-color: #E6E6E6;
+//  --secondary-text-color: #E6E6E6;
+//  --color-primary: #1565C0;
+//
+//  --color-secondary: #8491AE; // ??
+//  --color-secondary-light-1: #37445C;
+//  --color-secondary-light-2: #d4d9e3; //??
+//  --color-secondary-dark: #47526c; //??
+//  --color-success: #43D8AB;
+//  --color-danger: #D32B2B; //??
+//}
