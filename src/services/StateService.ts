@@ -21,13 +21,12 @@ export class StateService {
     private constructor() {
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowRight') {
-                this.nextScreen()
+                this.nextScreen();
             }
             if (e.key === 'ArrowLeft') {
-                this.prevScreen()
-                this.prevScreen()
+                this.prevScreen();
             }
-        })
+        });
 
         this.frameInnerHeight = frame.innerHeight;
         frame.onresize = () => {
