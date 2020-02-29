@@ -102,10 +102,13 @@ export class ResultArrows extends React.Component<IProps, IState> {
         );
     }
 
-    private renderRiichiBet(start: Point, center: Point, end: Point, direction: Direction) {
-        let curvePoint1 = this.getCurvePoint(start, center, end, 0.36);
-        let curvePoint2 = this.getCurvePoint(start, center, end, 0.38);
-        let angle = this.getAngleForCurve(curvePoint1, curvePoint2);
+    private renderRiichiBet(start: Point, center: Point, end: Point, inverted: boolean, direction: Direction) {
+        let t = inverted ? 0.5 : 0.5;
+        let curvePoint1 = this.getCurvePoint(start, center, end, t);
+        let curvePoint2 = this.getCurvePoint(start, center, end, t + 0.02);
+
+        let la = [Direction.TOP_RIGHT, Direction.BOTTOM_LEFT].includes(direction) ? 1 : -1;
+        let angle = this.getAngleForCurve(curvePoint1, curvePoint2) * la;
 
         let lx = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(direction) ? -1 : 1;
         let ly = [Direction.BOTTOM_RIGHT, Direction.BOTTOM_LEFT].includes(direction) ? -1 : 1;
@@ -136,12 +139,20 @@ export class ResultArrows extends React.Component<IProps, IState> {
         );
     }
 
-    private renderText(text: string, pathId: string, offset: Point, renderAtStart: boolean) {
+    private renderText(text: string, pathId: string, renderAtStart: boolean, isTextAbove: boolean, direction: Direction) {
+        let textOffset = TEXT_PATH_OFFSET + (isTextAbove ? 0 : TEXT_HEIGHT);
+
+        let lx = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(direction) ? 1 : -1;
+        let ly = [Direction.BOTTOM_RIGHT, Direction.BOTTOM_LEFT].includes(direction) ? 1 : -1;
+
+        let offsetX = textOffset * lx;
+        let offsetY = textOffset * ly;
+
         let textAnchor = renderAtStart ? 'start' : 'end';
         let startOffset = renderAtStart ? TEXT_START_OFFSET_PERCENT : TEXT_END_OFFSET_PERCENT;
 
         return (
-            <text transform={`translate(${offset.x} ${offset.y})`}>
+            <text transform={`translate(${offsetX} ${offsetY})`}>
                 <textPath xlinkHref={'#'+pathId} startOffset={startOffset+'%'} textAnchor={textAnchor} fill="currentColor">
                     {text}
                 </textPath>
@@ -176,6 +187,21 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return angle;
     }
 
+    private renderArrows(start: Point, center: Point, end: Point, inverted: boolean, direction: Direction) {
+        let l1 = [Direction.TOP_RIGHT, Direction.BOTTOM_LEFT].includes(direction) ? 1 : -1;
+        let l2 = [Direction.TOP_LEFT, Direction.BOTTOM_RIGHT].includes(direction) ? 1 : -1;
+
+        let angle1 = this.getArrowAngle(start, center, end) * l1;
+        let angle2 = this.getArrowAngle(end, center, start) * l2;
+
+        return (
+            <>
+                {inverted && this.renderArrow(start, angle1)}
+                {!inverted && this.renderArrow(end, angle2)}
+            </>
+        )
+    }
+
     private renderLeftBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToBottom = true;
@@ -183,33 +209,20 @@ export class ResultArrows extends React.Component<IProps, IState> {
         const showPao = true;
         const payment = '16000';
         const id = 'left-bottom';
+        const direction = Direction.BOTTOM_LEFT;
 
         let start = new Point(0, height/2 + START_ARROWS_OFFSET);
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, height);
 
-
-        let angle1 = this.getArrowAngle(start, center, end);
-        let angle2 = -this.getArrowAngle(end, center, start);
-
-
-        let paymentOffset = TEXT_PATH_OFFSET + TEXT_HEIGHT;
-        let paymentOffsetX = -paymentOffset;
-        let paymentOffsetY = paymentOffset;
-
-        let textOffset = new Point(paymentOffsetX, paymentOffsetY);
-
         return (
             <g>
-                {this.renderPath(id, start, center, end, true, Direction.BOTTOM_LEFT)}
+                {this.renderPath(id, start, center, end, true, direction)}
+                {this.renderArrows(start, center, end, !fromLeftToBottom, direction)}
 
-                {!fromLeftToBottom && this.renderArrow(start, angle1)}
-                {fromLeftToBottom && this.renderArrow(end, angle2)}
-
-                {this.renderText(payment, id, textOffset, !fromLeftToBottom)}
-
-                {showRiichi && this.renderRiichiBet(start, center, end, Direction.BOTTOM_LEFT)}
-                {showPao && this.renderText('pao', id, textOffset, fromLeftToBottom)}
+                {showRiichi && this.renderRiichiBet(start, center, end, !fromLeftToBottom, direction)}
+                {this.renderText(payment, id, !fromLeftToBottom, false, direction)}
+                {showPao && this.renderText('pao', id, fromLeftToBottom, false, direction)}
             </g>
         )
     }
@@ -217,68 +230,75 @@ export class ResultArrows extends React.Component<IProps, IState> {
     private renderLeftTop(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToTop = false;
-        const fromTopToLeft = true;
+        const showRiichi = true;
+        const showPao = false;
+        const payment = '16000';
+        const id = 'left-top';
+        const direction = Direction.TOP_LEFT;
 
 
         let start =  new Point(0, height/2 - START_ARROWS_OFFSET);
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, 0);
 
-        let angle1 = -this.getArrowAngle(start, center, end);
-        let angle2 = this.getArrowAngle(end, center, start);
-
         return (
             <g>
-                {this.renderPath('left-top', start, center, end, false, Direction.TOP_LEFT)}
+                {this.renderPath('left-top', start, center, end, false, direction)}
+                {this.renderArrows(start, center, end, !fromLeftToTop, direction)}
 
-                {fromTopToLeft && this.renderArrow(start, angle1)}
-                {fromLeftToTop && this.renderArrow(end, angle2)}
+                {showRiichi && this.renderRiichiBet(start, center, end, !fromLeftToTop, direction)}
+                {this.renderText(payment, id, !fromLeftToTop, true, direction)}
+                {showPao && this.renderText('pao', id, fromLeftToTop, true, direction)}
             </g>
         )
     }
 
-    private renderRightBottom(offsetX: number, offsetY: number) {
+    private renderBottomRight(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromRightToBottom = false;
         const fromBottomToRight = true;
+        const showRiichi = true;
+        const showPao = false;
+        const payment = '16000';
+        const id = 'bottom-right';
+        const direction = Direction.BOTTOM_RIGHT;
 
         let start = new Point(width/2 + START_ARROWS_OFFSET, height);
         let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
         let end = new Point(width, height/2 + START_ARROWS_OFFSET);
 
-        let angle1 = -this.getArrowAngle(start, center, end);
-        let angle2 = this.getArrowAngle(end, center, start);
-
         return (
             <g>
-                {this.renderPath('right-bottom', start, center, end, true, Direction.BOTTOM_RIGHT)}
+                {this.renderPath('bottom-right', start, center, end, true, direction)}
+                {this.renderArrows(start, center, end, !fromBottomToRight, direction)}
 
-                {fromRightToBottom && this.renderArrow(start, angle1)}
-                {fromBottomToRight && this.renderArrow(end, angle2)}
-
+                {showRiichi && this.renderRiichiBet(start, center, end, !fromBottomToRight, direction)}
+                {this.renderText(payment, id, !fromBottomToRight, false, direction)}
+                {showPao && this.renderText('pao', id, fromBottomToRight, false, direction)}
             </g>
         );
     }
 
-    private renderRightTop(offsetX: number, offsetY: number) {
+    private renderTopRight(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
-        const fromRightToTop = true;
         const fromTopToRight = false;
+        const showRiichi = true;
+        const showPao = false;
+        const payment = '16000';
+        const id = 'top-right';
+        const direction = Direction.TOP_RIGHT;
 
         let start = new Point(width/2 + START_ARROWS_OFFSET, 0);
         let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 - START_ARROWS_OFFSET - offsetY);
         let end = new Point(width, height/2 - START_ARROWS_OFFSET);
 
-        let angle1 = this.getArrowAngle(start, center, end);
-        let angle2 = -this.getArrowAngle(end, center, start);
-
         return (
             <g>
                 {this.renderPath('right-top', start, center, end, false, Direction.TOP_RIGHT)}
+                {this.renderArrows(start, center, end, !fromTopToRight, direction)}
 
-                {fromRightToTop && this.renderArrow(start, angle1)}
-                {fromTopToRight && this.renderArrow(end, angle2)}
-
+                {showRiichi && this.renderRiichiBet(start, center, end, !fromTopToRight, direction)}
+                {this.renderText(payment, id, !fromTopToRight, true, direction)}
+                {showPao && this.renderText('pao', id, fromTopToRight, true, direction)}
             </g>
         );
     }
@@ -357,8 +377,8 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
                         {this.renderLeftBottom(offsetX, offsetY)}
                         {this.renderLeftTop(offsetX, offsetY)}
-                        {this.renderRightBottom(offsetX, offsetY)}
-                        {this.renderRightTop(offsetX, offsetY)}
+                        {this.renderBottomRight(offsetX, offsetY)}
+                        {this.renderTopRight(offsetX, offsetY)}
                         {this.renderHorizontal()}
                         {this.renderVertical()}
 
