@@ -112,7 +112,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         let lx = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(direction) ? -1 : 1;
         let ly = [Direction.BOTTOM_RIGHT, Direction.BOTTOM_LEFT].includes(direction) ? -1 : 1;
-        let pathOffset = TEXT_PATH_OFFSET + RIICHI_HEIGHT / 2;
+        let pathOffset = 0;
         let offsetX = curvePoint1.x + pathOffset * lx;
         let offsetY = curvePoint1.y + pathOffset * ly;
 
@@ -148,23 +148,23 @@ export class ResultArrows extends React.Component<IProps, IState> {
         let offsetX = textOffset * lx;
         let offsetY = textOffset * ly;
 
-        let textAnchor = renderAtStart ? 'start' : 'end';
-        let startOffset = renderAtStart ? TEXT_START_OFFSET_PERCENT : TEXT_END_OFFSET_PERCENT;
-
         return (
             <text transform={`translate(${offsetX} ${offsetY})`}>
-                <textPath xlinkHref={'#'+pathId} startOffset={startOffset+'%'} textAnchor={textAnchor} fill="currentColor">
+                <textPath xlinkHref={'#'+pathId} startOffset={50+'%'} textAnchor="middle" fill="currentColor">
                     {text}
                 </textPath>
             </text>
         )
     }
 
-    private getCurvePoint(start: Point, center: Point, end: Point, t: number): Point {
+    private getBezierCurveCoordinate(p0: number, p1: number, p2: number, t: number) {
         //Quadratic Bezier curve
-        let b = (p0, p1, p2) => (1 - t)*(1 - t) * p0 +  2 * t * (1 - t) * p1 + t * t * p2;
-        let bx = b(start.x, center.x, end.x);
-        let by = b(start.y, center.y, end.y);
+        return (1 - t)*(1 - t) * p0 +  2 * t * (1 - t) * p1 + t * t * p2;
+    }
+
+    private getCurvePoint(start: Point, center: Point, end: Point, t: number): Point {
+        let bx = this.getBezierCurveCoordinate(start.x, center.x, end.x, t);
+        let by = this.getBezierCurveCoordinate(start.y, center.y, end.y, t);
         return new Point(bx, by);
     }
 
@@ -202,12 +202,38 @@ export class ResultArrows extends React.Component<IProps, IState> {
         )
     }
 
+    private getTForCurve(p0: number, p1: number, p2: number, value: number) {
+        let a = p0 - 2 * p1 + p2;
+        let b = -2 * p0 + 2 * p1;
+        let c = p0 - value;
+
+        let d = b * b - 4 * a * c;
+        let t1 = (-b + Math.sqrt(d)) / (2 * a);
+        let t2 = (-b - Math.sqrt(d)) / (2 * a);
+
+        let t = (t1 > 0 && t1 < 1) ? t1 : t2;
+        return t;
+    }
+
+    private getYFor(start: Point, center: Point, end: Point, x: number) {
+        let t = this.getTForCurve(start.x, center.x, end.x, x);
+        let y = this.getBezierCurveCoordinate(start.y, center.y, end.y, t);
+        return y;
+    }
+
+    private getXFor(start: Point, center: Point, end: Point, y: number) {
+        let t = this.getTForCurve(start.y, center.y, end.y, y);
+        let x = this.getBezierCurveCoordinate(start.x, center.x, end.x, t);
+
+        return x;
+    }
+
     private renderLeftBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToBottom = true;
         const showRiichi = true;
-        const showPao = true;
-        const payment = '16000';
+        const showPao = false;
+        const payment = '1';
         const id = 'left-bottom';
         const direction = Direction.BOTTOM_LEFT;
 
@@ -215,9 +241,25 @@ export class ResultArrows extends React.Component<IProps, IState> {
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, height);
 
+        let X = end.x / 2;
+        let Y = -(start.y - end.y) / 2 + start.y;
+        let e1 = this.getYFor(start, center, end, X);
+        let e2 = this.getXFor(start, center, end, Y);
+
         return (
             <g>
                 {this.renderPath(id, start, center, end, true, direction)}
+
+                <circle r={4} cx={X} cy={e1} fill="green" />
+
+
+                <circle r={4} cx={e2} cy={Y} fill="blue" />
+
+                <path d={`M ${start.x} ${start.y} ${end.x} ${end.y}`} stroke-width="1" stroke="black"/>
+                <path d={`M ${center.x} ${center.y} ${end.x} ${end.y}`} stroke-width="1" stroke="black"/>
+                {/*<path d={`M ${start.x} ${start.y} ${center.x} ${center.y}`} stroke-width="1" stroke="black"/>*/}
+
+
                 {this.renderArrows(start, center, end, !fromLeftToBottom, direction)}
 
                 {showRiichi && this.renderRiichiBet(start, center, end, !fromLeftToBottom, direction)}
