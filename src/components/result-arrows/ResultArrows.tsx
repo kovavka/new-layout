@@ -228,6 +228,62 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return x;
     }
 
+    private getCrossPoint(a1: Point, a2: Point, b1: Point, b2: Point) : Point{
+        let la = a2.x - a1.x;
+        let ma = a2.y - a1.y;
+        let lb = b2.x - b1.x;
+        let mb = b2.y - b1.y;
+
+        let xa = a1.x;
+        let ya = a1.y;
+        let xb = b1.x;
+        let yb = b1.y;
+
+        let q1 = -yb * lb / mb + ya * la / ma + xb - xa;
+        let q2 = la / ma - lb / mb;
+
+        let y = q1 / q2;
+        let x = (y - ya) * la / ma + xa;
+
+        return new Point(x, y);
+    }
+
+    private getPerpPoint(start: Point, control: Point, end: Point) {
+        let bx = -10;
+
+        //ax*bx + ay*by = 0, if bx = -1 then by = - ax/ay
+        //for a (vector from start to end) x = x2 - x1, y = y2 - y1
+        let by =  -(end.x - start.x) * bx / (end.y - start.y);
+
+        //vector b from (0, 0) to (-1, by) => vector from p0 to p
+        let p0 = new Point((start.x + end.x) / 2, (start.y + end.y) / 2);
+        let p1 = new Point(bx + p0.x, by + p0.y);
+
+        // return this.getCrossPoint(p0, p1, start, end);
+
+        let t = 0.5;
+        let curvePoint1 = this.getCurvePoint(start, control, end, t);
+        let curvePoint2 = this.getCurvePoint(start, control, end, t + 0.02);
+
+        let cross = this.getCrossPoint(p0, p1, curvePoint1, curvePoint2);
+
+
+        let e = this.getYFor(start, control, end, cross.x);
+        // return cross;
+
+
+        return (
+            <>
+                {/*<circle r={4} cx={cross.x} cy={cross.y} fill="red" />*/}
+
+                <circle r={4} cx={cross.x} cy={e} fill="red" />
+
+                <path d={`M ${p0.x} ${p0.y} ${p1.x} ${p1.y}`} strokeWidth="1" stroke="black"/>
+                <path d={`M ${curvePoint1.x} ${curvePoint1.y} ${curvePoint2.x} ${curvePoint2.y}`} strokeWidth="1" stroke="black"/>
+            </>
+        )
+    }
+
     private renderLeftBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToBottom = true;
@@ -246,17 +302,29 @@ export class ResultArrows extends React.Component<IProps, IState> {
         let e1 = this.getYFor(start, center, end, X);
         let e2 = this.getXFor(start, center, end, Y);
 
+
+        let p0 = new Point((start.x + end.x) / 2, (start.y + end.y) / 2);
+        let tr = this.getPerpPoint(start, center, end);
+        // let e3 = this.getYFor(start, center, end, tr.x);
+
         return (
             <g>
                 {this.renderPath(id, start, center, end, true, direction)}
 
                 <circle r={4} cx={X} cy={e1} fill="green" />
 
+                {/*<circle r={4} cx={tr.x} cy={tr.y} fill="red" />*/}
+
+                {tr}
+
 
                 <circle r={4} cx={e2} cy={Y} fill="blue" />
 
-                <path d={`M ${start.x} ${start.y} ${end.x} ${end.y}`} stroke-width="1" stroke="black"/>
-                <path d={`M ${center.x} ${center.y} ${end.x} ${end.y}`} stroke-width="1" stroke="black"/>
+                {/*<path d={`M ${p0.x} ${p0.y} ${tr.x} ${tr.y}`} strokeWidth="1" stroke="black"/>*/}
+
+
+                <path d={`M ${start.x} ${start.y} ${end.x} ${end.y}`} strokeWidth="1" stroke="black"/>
+                <path d={`M ${center.x} ${center.y} ${end.x} ${end.y}`} strokeWidth="1" stroke="black"/>
                 {/*<path d={`M ${start.x} ${start.y} ${center.x} ${center.y}`} stroke-width="1" stroke="black"/>*/}
 
 
