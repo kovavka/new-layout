@@ -188,6 +188,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         let loseButtonMode: PlayerButtonMode | undefined;
         let riichiButtonMode: PlayerButtonMode | undefined;
         let showDeadButton: boolean | undefined;
+        let showInlineRiichi = tableMode === TableMode.RESULT;
 
         if (tableMode && tableMode !== TableMode.RESULT && outcomeMode !== undefined) {
             switch (outcomeMode) {
@@ -232,6 +233,7 @@ export class TableScreen extends React.Component<IProps, IState> {
                 loseButtonMode={loseButtonMode}
                 riichiButtonMode={riichiButtonMode}
                 showDeadButton={showDeadButton}
+                showInlineRiichi={showInlineRiichi}
             />
             );
     }

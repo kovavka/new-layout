@@ -14,6 +14,7 @@ type IProps = {
     loseButtonMode?: PlayerButtonMode
     riichiButtonMode?: PlayerButtonMode
     showDeadButton?: boolean
+    showInlineRiichi?: boolean
 }
 
 export class PlayerBottom extends React.Component<IProps> {
@@ -29,6 +30,7 @@ export class PlayerBottom extends React.Component<IProps> {
             loseButtonMode,
             riichiButtonMode,
             showDeadButton,
+            showInlineRiichi,
         } = this.props;
 
         return (
@@ -44,6 +46,7 @@ export class PlayerBottom extends React.Component<IProps> {
                 loseButtonMode={loseButtonMode}
                 riichiButtonMode={riichiButtonMode}
                 showDeadButton={showDeadButton}
+                showInlineRiichi={showInlineRiichi}
             />
         );
     }

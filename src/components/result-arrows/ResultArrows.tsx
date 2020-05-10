@@ -11,8 +11,6 @@ const RIICHI_STROKE = 1;
 const RIICHI_POINT_RADIUS = 1.8;
 const RIICHI_WIDTH = 42;
 const RIICHI_HEIGHT = 7;
-const TEXT_START_OFFSET_PERCENT = 12; //todo пересчитать с косинусами и использовать px, а не проценты
-const TEXT_END_OFFSET_PERCENT = 84;
 
 class Point {
     x: number;
@@ -68,36 +66,10 @@ export class ResultArrows extends React.Component<IProps, IState> {
         }
     }
 
-    /*
-    * inverted - text below curve -> need to add text height to offset
-    * */
-    private renderPath(id: string, start: Point, center: Point, end: Point, inverted: boolean, offsetDirection: Direction) {
-        let paymentOffset = TEXT_PATH_OFFSET + (inverted ? TEXT_HEIGHT : 0);
-        let paoOffset = TEXT_PATH_OFFSET + (inverted ? 0 : TEXT_HEIGHT);
-
-        let paymentOffsetX = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(offsetDirection) ? paymentOffset : -paymentOffset;
-        let paymentOffsetY = [Direction.BOTTOM_RIGHT, Direction.BOTTOM_LEFT].includes(offsetDirection) ? paymentOffset : -paymentOffset;
-
-        let paoOffsetX = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(offsetDirection) ? -paoOffset : paoOffset;
-        let paoOffsetY = [Direction.BOTTOM_RIGHT, Direction.BOTTOM_LEFT].includes(offsetDirection) ? -paoOffset : paoOffset;
-
-        let paymentTextStartOffset = TEXT_START_OFFSET_PERCENT;
-        let paoTextStartOffset = TEXT_END_OFFSET_PERCENT;
-
-        return (
+    private renderPath(id: string, start: Point, center: Point, end: Point) {
+      return (
             <g>
                 <path id={id} d={`M ${start.x},${start.y} Q${center.x},${center.y} ${end.x},${end.y} `} stroke="currentColor" />
-
-                {/*<text transform={`translate(${paymentOffsetX} ${paymentOffsetY})`}>*/}
-                {/*    <textPath xlinkHref={'#'+id} startOffset={paymentTextStartOffset+'%'} textAnchor="start" fill="currentColor">*/}
-                {/*        16000 + 1200*/}
-                {/*    </textPath>*/}
-                {/*</text>*/}
-                {/*<text transform={`translate(${paymentOffsetX} ${paymentOffsetY})`}>*/}
-                {/*    <textPath xlinkHref={'#'+id} startOffset={paoTextStartOffset+'%'} textAnchor="end" fill="currentColor">*/}
-                {/*        pao*/}
-                {/*    </textPath>*/}
-                {/*</text>*/}
             </g>
         );
     }
@@ -112,7 +84,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         let lx = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(direction) ? -1 : 1;
         let ly = [Direction.BOTTOM_RIGHT, Direction.BOTTOM_LEFT].includes(direction) ? -1 : 1;
-        let pathOffset = 0;
+        let pathOffset = 6;
         let offsetX = curvePoint1.x + pathOffset * lx;
         let offsetY = curvePoint1.y + pathOffset * ly;
 
@@ -139,7 +111,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
         );
     }
 
-    private renderText(text: string, pathId: string, renderAtStart: boolean, isTextAbove: boolean, direction: Direction) {
+    private renderText(payment: string, pathId: string, withPao: boolean, isTextAbove: boolean, direction: Direction) {
         let textOffset = TEXT_PATH_OFFSET + (isTextAbove ? 0 : TEXT_HEIGHT);
 
         let lx = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(direction) ? 1 : -1;
@@ -147,6 +119,8 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         let offsetX = textOffset * lx;
         let offsetY = textOffset * ly;
+
+        let text = payment + (withPao ? ' (pao)' : '');
 
         return (
             <text transform={`translate(${offsetX} ${offsetY})`}>
@@ -248,48 +222,12 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return new Point(x, y);
     }
 
-    private getPerpPoint(start: Point, control: Point, end: Point) {
-        let bx = -10;
-
-        //ax*bx + ay*by = 0, if bx = -1 then by = - ax/ay
-        //for a (vector from start to end) x = x2 - x1, y = y2 - y1
-        let by =  -(end.x - start.x) * bx / (end.y - start.y);
-
-        //vector b from (0, 0) to (-1, by) => vector from p0 to p
-        let p0 = new Point((start.x + end.x) / 2, (start.y + end.y) / 2);
-        let p1 = new Point(bx + p0.x, by + p0.y);
-
-        // return this.getCrossPoint(p0, p1, start, end);
-
-        let t = 0.5;
-        let curvePoint1 = this.getCurvePoint(start, control, end, t);
-        let curvePoint2 = this.getCurvePoint(start, control, end, t + 0.02);
-
-        let cross = this.getCrossPoint(p0, p1, curvePoint1, curvePoint2);
-
-
-        let e = this.getYFor(start, control, end, cross.x);
-        // return cross;
-
-
-        return (
-            <>
-                {/*<circle r={4} cx={cross.x} cy={cross.y} fill="red" />*/}
-
-                <circle r={4} cx={cross.x} cy={e} fill="red" />
-
-                <path d={`M ${p0.x} ${p0.y} ${p1.x} ${p1.y}`} strokeWidth="1" stroke="black"/>
-                <path d={`M ${curvePoint1.x} ${curvePoint1.y} ${curvePoint2.x} ${curvePoint2.y}`} strokeWidth="1" stroke="black"/>
-            </>
-        )
-    }
-
     private renderLeftBottom(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToBottom = true;
         const showRiichi = true;
         const showPao = false;
-        const payment = '1';
+        const payment = '1000 + 300';
         const id = 'left-bottom';
         const direction = Direction.BOTTOM_LEFT;
 
@@ -297,42 +235,13 @@ export class ResultArrows extends React.Component<IProps, IState> {
         let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
         let end = new Point(width/2 - START_ARROWS_OFFSET, height);
 
-        let X = end.x / 2;
-        let Y = -(start.y - end.y) / 2 + start.y;
-        let e1 = this.getYFor(start, center, end, X);
-        let e2 = this.getXFor(start, center, end, Y);
-
-
-        let p0 = new Point((start.x + end.x) / 2, (start.y + end.y) / 2);
-        let tr = this.getPerpPoint(start, center, end);
-        // let e3 = this.getYFor(start, center, end, tr.x);
-
         return (
             <g>
-                {this.renderPath(id, start, center, end, true, direction)}
-
-                <circle r={4} cx={X} cy={e1} fill="green" />
-
-                {/*<circle r={4} cx={tr.x} cy={tr.y} fill="red" />*/}
-
-                {tr}
-
-
-                <circle r={4} cx={e2} cy={Y} fill="blue" />
-
-                {/*<path d={`M ${p0.x} ${p0.y} ${tr.x} ${tr.y}`} strokeWidth="1" stroke="black"/>*/}
-
-
-                <path d={`M ${start.x} ${start.y} ${end.x} ${end.y}`} strokeWidth="1" stroke="black"/>
-                <path d={`M ${center.x} ${center.y} ${end.x} ${end.y}`} strokeWidth="1" stroke="black"/>
-                {/*<path d={`M ${start.x} ${start.y} ${center.x} ${center.y}`} stroke-width="1" stroke="black"/>*/}
-
-
+                {this.renderPath(id, start, center, end)}
                 {this.renderArrows(start, center, end, !fromLeftToBottom, direction)}
 
                 {showRiichi && this.renderRiichiBet(start, center, end, !fromLeftToBottom, direction)}
-                {this.renderText(payment, id, !fromLeftToBottom, false, direction)}
-                {showPao && this.renderText('pao', id, fromLeftToBottom, false, direction)}
+                {this.renderText(payment, id, showPao, false, direction)}
             </g>
         )
     }
@@ -353,12 +262,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         return (
             <g>
-                {this.renderPath('left-top', start, center, end, false, direction)}
+                {this.renderPath('left-top', start, center, end)}
                 {this.renderArrows(start, center, end, !fromLeftToTop, direction)}
 
                 {showRiichi && this.renderRiichiBet(start, center, end, !fromLeftToTop, direction)}
-                {this.renderText(payment, id, !fromLeftToTop, true, direction)}
-                {showPao && this.renderText('pao', id, fromLeftToTop, true, direction)}
+                {this.renderText(payment, id, showPao, true, direction)}
             </g>
         )
     }
@@ -378,12 +286,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         return (
             <g>
-                {this.renderPath('bottom-right', start, center, end, true, direction)}
+                {this.renderPath('bottom-right', start, center, end)}
                 {this.renderArrows(start, center, end, !fromBottomToRight, direction)}
 
                 {showRiichi && this.renderRiichiBet(start, center, end, !fromBottomToRight, direction)}
-                {this.renderText(payment, id, !fromBottomToRight, false, direction)}
-                {showPao && this.renderText('pao', id, fromBottomToRight, false, direction)}
+                {this.renderText(payment, id, showPao, false, direction)}
             </g>
         );
     }
@@ -393,7 +300,7 @@ export class ResultArrows extends React.Component<IProps, IState> {
         const fromTopToRight = false;
         const showRiichi = true;
         const showPao = false;
-        const payment = '16000';
+        const payment = '12000';
         const id = 'top-right';
         const direction = Direction.TOP_RIGHT;
 
@@ -403,12 +310,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
         return (
             <g>
-                {this.renderPath('right-top', start, center, end, false, Direction.TOP_RIGHT)}
+                {this.renderPath(id, start, center, end)}
                 {this.renderArrows(start, center, end, !fromTopToRight, direction)}
 
                 {showRiichi && this.renderRiichiBet(start, center, end, !fromTopToRight, direction)}
-                {this.renderText(payment, id, !fromTopToRight, true, direction)}
-                {showPao && this.renderText('pao', id, fromTopToRight, true, direction)}
+                {this.renderText(payment, id, showPao, true, direction)}
             </g>
         );
     }
@@ -416,39 +322,28 @@ export class ResultArrows extends React.Component<IProps, IState> {
     private renderHorizontal() {
         const {width, height} = this.state;
         const fromLeftToRight = true;
-        const fromRightToLeft = false;
 
-        let offsetDirection = Direction.TOP_RIGHT;
         let id = 'hor';
-        let paymentOffset = TEXT_PATH_OFFSET + (false ? TEXT_HEIGHT : 0);
-        let paoOffset = TEXT_PATH_OFFSET + (false ? 0 : TEXT_HEIGHT);
-
-        let paymentOffsetX = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(offsetDirection) ? paymentOffset : -paymentOffset;
-        let paymentOffsetY = [Direction.BOTTOM_RIGHT, Direction.BOTTOM_LEFT].includes(offsetDirection) ? paymentOffset : -paymentOffset;
-
-        let paoOffsetX = [Direction.TOP_RIGHT, Direction.BOTTOM_RIGHT].includes(offsetDirection) ? -paoOffset : paoOffset;
-        let paoOffsetY = [Direction.BOTTOM_RIGHT, Direction.BOTTOM_LEFT].includes(offsetDirection) ? -paoOffset : paoOffset;
-
-        let paymentTextStartOffset = 15;
-        let paoTextStartOffset = TEXT_END_OFFSET_PERCENT;
+        let paymentFromStart = !fromLeftToRight;
+        let getTextAnchor = (fromStart) => fromStart ? 'start' : 'end';
+        let getStartOffset = (fromStart) => fromStart ? '5%' : '95%';
 
         return (
             <g>
                 <path id={id} d={`M ${0} ${height/2} H ${width}`} stroke="currentColor" fill="none"/>
-                {fromRightToLeft && this.renderArrow(new Point(0, height/2), 0)}
+                {!fromLeftToRight && this.renderArrow(new Point(0, height/2), 0)}
                 {fromLeftToRight && this.renderArrow(new Point(width, height/2), 180)}
 
-
-                {/*<text transform={`translate(${paymentOffsetX} ${paymentOffsetY})`}>*/}
-                {/*    <textPath xlinkHref={'#'+id} startOffset={paymentTextStartOffset+'%'} textAnchor="start" fill="currentColor">*/}
-                {/*        16000 + 1200 */}
-                {/*    </textPath>*/}
-                {/*</text>*/}
-                {/*<text transform={`translate(${paoOffsetX} ${paoOffsetY})`}>*/}
-                {/*    <textPath xlinkHref={'#'+id} startOffset={paoTextStartOffset+'%'} textAnchor="end" fill="currentColor">*/}
-                {/*        pao*/}
-                {/*    </textPath>*/}
-                {/*</text>*/}
+                <text transform={`translate(${0} ${-TEXT_PATH_OFFSET})`}>
+                    <textPath xlinkHref={'#'+id} startOffset={getStartOffset(paymentFromStart)} textAnchor={getTextAnchor(paymentFromStart)} fill="currentColor">
+                        16000 + 1200
+                    </textPath>
+                </text>
+                <text transform={`translate(${0} ${-TEXT_PATH_OFFSET})`}>
+                    <textPath xlinkHref={'#'+id} startOffset={getStartOffset(!paymentFromStart)} textAnchor={getTextAnchor(!paymentFromStart)} fill="currentColor">
+                        pao
+                    </textPath>
+                </text>
             </g>
         );
     }
@@ -456,14 +351,27 @@ export class ResultArrows extends React.Component<IProps, IState> {
     private renderVertical() {
         const {width, height} = this.state;
         const fromTopToBottom = true;
-        const fromBottomToTop = false;
+        let id = 'ver';
+        let paymentFromStart = fromTopToBottom;
+        let getTextAnchor = (fromStart) => fromStart ? 'start' : 'end';
+        let getStartOffset = (fromStart) => fromStart ? '5%' : '95%';
 
         return (
             <g>
-                <path d={`M ${width/2} ${0} V ${height}`} stroke="currentColor" fill="none"/>
-
+                <path id={id} d={`M ${width/2} ${0} V ${height}`} stroke="currentColor" fill="none"/>
                 {fromTopToBottom && this.renderArrow(new Point(width / 2, 0), 90)}
-                {fromBottomToTop && this.renderArrow(new Point(width / 2, height), -90)}
+                {!fromTopToBottom && this.renderArrow(new Point(width / 2, height), -90)}
+
+                <text transform={`translate(${TEXT_PATH_OFFSET} ${0})`}>
+                    <textPath xlinkHref={'#'+id} startOffset={getStartOffset(paymentFromStart)} textAnchor={getTextAnchor(paymentFromStart)} fill="currentColor">
+                        16000 + 1200
+                    </textPath>
+                </text>
+                <text transform={`translate(${TEXT_PATH_OFFSET} ${0})`}>
+                    <textPath xlinkHref={'#'+id} startOffset={getStartOffset(!paymentFromStart)} textAnchor={getTextAnchor(!paymentFromStart)} fill="currentColor">
+                        pao
+                    </textPath>
+                </text>
             </g>
         );
     }

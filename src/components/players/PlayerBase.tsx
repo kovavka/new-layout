@@ -18,6 +18,7 @@ type IProps = {
     winButtonMode?: PlayerButtonMode
     loseButtonMode?: PlayerButtonMode
     riichiButtonMode?: PlayerButtonMode
+    showInlineRiichi?: boolean
     showDeadButton?: boolean
 }
 
@@ -140,6 +141,7 @@ export class PlayerBase extends React.Component<IProps> {
             points,
             pointsMode,
             penaltyPoints,
+            showInlineRiichi,
         } = this.props;
 
         return (
@@ -168,10 +170,18 @@ export class PlayerBase extends React.Component<IProps> {
                     <div className="player__score-container">
                         {pointsMode === PlayerPointsMode.IDLE && (
                             <div className="player__score">
-                                {points}
+                                <p>
+                                    {points}
+                                    {showInlineRiichi && (
+                                        <svg className="player__inline-riichi">
+                                            <use xlinkHref="#riichi-big" />
+                                        </svg>
+                                    )}
+                                </p>
                                 {penaltyPoints && (
                                     <div className="player__penalty">{penaltyPoints / 1000 + 'k'}</div>
                                 )}
+
                             </div>
                         )}
                         {pointsMode === PlayerPointsMode.POSITIVE && (

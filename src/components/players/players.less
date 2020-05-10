@@ -6,10 +6,14 @@
   }
 
   .player__score {
-    font-size: @font-size-secondary;
+    font-size: @font-size-primary;
     display: flex;
     align-items: center;
     justify-content: center;
+
+    p {
+      position: relative;
+    }
   }
 
   .player__inline-wind {
@@ -30,10 +34,13 @@
   margin-bottom: 4px;
 
   .player__wind-container,
-  .player__score-container,
   .player__button-container,
   .player__riichi-button {
     margin-top: 12px;
+  }
+
+  .player__score-container {
+    margin-top: 6px;
   }
 }
 
@@ -42,10 +49,13 @@
   margin-bottom: 16px;
 
   .player__wind-container,
-  .player__score-container,
   .player__button-container,
   .player__riichi-button {
     margin-bottom: 12px;
+  }
+
+  .player__score-container {
+    margin-bottom: 6px;
   }
 }
 
@@ -64,10 +74,13 @@
   align-items: center;
 
   .player__wind-container,
-  .player__score-container,
   .player__button-container,
   .player__riichi-button {
     margin-left: 12px;
+  }
+
+  .player__score-container {
+    margin-left: 6px;
   }
 }
 
@@ -77,10 +90,13 @@
   align-items: center;
 
   .player__wind-container,
-  .player__score-container,
   .player__button-container,
   .player__riichi-button {
     margin-right: 12px;
+  }
+
+  .player__score-container {
+    margin-right: 6px;
   }
 }
 
@@ -142,23 +158,23 @@
     }
 
     .player__score-container {
-      height: 200px; //max width for score
-      width: 32px; //from height
+      height: 300px; //max width for score
+      width: 23px; //from height
       overflow: hidden;
       position: relative;
     }
 
     .player__score {
-      width: 200px;
+      width: 300px;
     }
 
     &.player--left .player__score {
-      left: 32px;
+      left: 23px;
       transform: rotate(90deg);
     }
 
     &.player--right .player__score {
-      bottom: -32px;
+      bottom: -23px;
       left: 0;
       transform: rotate(270deg);
     }
@@ -231,4 +247,13 @@
       height: 17px;
     }
   }
+}
+
+.player__inline-riichi {
+  width: 53px;
+  height: 8.5px;
+  margin-left: 8px;
+  margin-top: 7px;
+  position: absolute;
+
 }
