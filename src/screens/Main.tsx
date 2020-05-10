@@ -15,6 +15,7 @@ import {SearchPlayerScreen} from './new-game/SearchPlayerScreen';
 import {OtherPlayingTablesScreen} from './other-tables/OtherPlayingTablesScreen';
 import {LoginErrorScreen} from './login/LoginErrorScreen';
 import {TableScreenResult} from "./examples/TableScreenResult";
+import { HomeScreen } from './home/HomeScreen'
 
 type MainState = {
     currentScreen: ScreenType;
@@ -88,6 +89,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.LOGIN_ERROR && (
                     <LoginErrorScreen />
+                )}
+                {currentScreen === ScreenType.HOME && (
+                    <HomeScreen />
                 )}
             </div>
         )

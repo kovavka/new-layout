@@ -4,8 +4,8 @@ import {ScreenType} from "../types/ScreenType";
 declare var frame: any;
 
 export class StateService {
-    frameInnerHeight: string = 'initial'
-    currentScreen: ScreenType = ScreenType.TABLE_RESULT;
+    frameInnerHeight: string = 'initial';
+    currentScreen: ScreenType = ScreenType.HOME;
 
     onChange: signals.Signal = new signals.Signal();
     frameHeightChanged: signals.Signal = new signals.Signal();
