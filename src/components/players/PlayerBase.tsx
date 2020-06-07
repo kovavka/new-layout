@@ -72,7 +72,7 @@ export class PlayerBase extends React.Component<IProps> {
             <>
                 {!startWithName && this.renderRiichiButton()}
 
-                {hasWinButton && hasLoseButton && showDeadButton && (
+                {(hasWinButton || hasLoseButton || showDeadButton) && (
                     <div className={classNames(
                         'player__button-container',
                         {'player__button-container--horizontal': !verticalButtons}

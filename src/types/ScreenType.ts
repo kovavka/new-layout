@@ -13,4 +13,5 @@ export enum ScreenType {
     OTHER_PLAYINGS_TABLES,
     LOGIN_ERROR,
     HOME,
+    LOG,
 }

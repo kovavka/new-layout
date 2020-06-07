@@ -18,6 +18,7 @@ import {TableScreenResult} from "./examples/TableScreenResult";
 import { HomeScreen } from './home/HomeScreen'
 import {HomeScreenExample} from './examples/HomeScreenExample';
 import {TableScreenSelect} from './examples/TableScreenSelect';
+import {LogScreenExample} from './examples/LogScreenExample';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -97,6 +98,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.HOME && (
                     <HomeScreenExample />
+                )}
+                {currentScreen === ScreenType.LOG && (
+                    <LogScreenExample />
                 )}
             </div>
         )

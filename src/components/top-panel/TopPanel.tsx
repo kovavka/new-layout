@@ -20,6 +20,12 @@ export class TopPanel extends React.Component<IProps, IState> {
         });
     }
 
+    private onClearClick() {
+        this.setState({
+            searchValue: ''
+        });
+    }
+
     render() {
         const {showSearch} = this.props;
         const {searchValue} = this.state;
@@ -40,7 +46,7 @@ export class TopPanel extends React.Component<IProps, IState> {
 
                         </input>
                         {!!searchValue && (
-                            <svg>
+                            <svg onClick={this.onClearClick.bind(this)}>
                                 <use xlinkHref="#close"></use>
                             </svg>
                         )}

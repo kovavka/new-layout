@@ -27,7 +27,9 @@ export class BottomPanel extends React.Component<IProps> {
             showRefresh,
             showAdd,
             showLog,
-        } = this.props
+        } = this.props;
+
+        const needRenderEmptyButton = showBack && !!text && !showNext && !showSave;
 
         return (
             <div className="bottom-panel">
@@ -44,6 +46,7 @@ export class BottomPanel extends React.Component<IProps> {
                             {text}
                         </div>
                     )}
+                    {needRenderEmptyButton && <div className="svg-button" />}
                     {showNext && (
                         <div className={classNames('svg-button', {'svg-button--disabled': isNextDisabled})}>
                             <svg>
