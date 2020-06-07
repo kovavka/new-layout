@@ -50,8 +50,8 @@ p {
 
 //general styles
 .svg-button {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
 
   svg {
     width: 100%;
@@ -64,6 +64,11 @@ p {
 
   &:not(.svg-button--disabled):active {
     color: @color-secondary; //todo think about active color
+  }
+
+  &.svg-button--small {
+    width: 28px;
+    height: 28px;
   }
 }
 
