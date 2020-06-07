@@ -9,6 +9,7 @@ import {TableMode} from '../../types/TableMode';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
 import {ResultArrows} from '../../components/result-arrows/ResultArrows';
 import {StateService} from '../../services/StateService';
+import {SelectOutcomeModal} from './SelectOutcomeModal';
 
 type IProps = {
     tableMode: TableMode
@@ -20,6 +21,7 @@ type IProps = {
     showPoints?: boolean
     inlineWind?: boolean
     showArrows?: boolean
+    selectOutcome?: boolean
     // topPlayer: Player
     // leftPlayer: Player
     // bottomPlayer: Player
@@ -358,7 +360,7 @@ export class TableScreen extends React.Component<IProps, IState> {
 
     //move to HOC
     renderBottomPanel() {
-        const {tableMode, outcomeMode} = this.props;
+        const {tableMode, outcomeMode, selectOutcome} = this.props;
 
         let text = outcomeMode;
         let showBack = tableMode === TableMode.SELECT_PLAYERS || tableMode ===  TableMode.RESULT;
@@ -367,24 +369,31 @@ export class TableScreen extends React.Component<IProps, IState> {
         let showSave = tableMode === TableMode.RESULT;
         let isSaveDisabled = true;
 
-        let showHome = [TableMode.IDLE, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
-        let showRefresh = [TableMode.IDLE, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
-        let showAdd = tableMode === TableMode.IDLE;
-        let showLog = [TableMode.IDLE, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+        let showHome = [TableMode.GAME, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+        let showRefresh = [TableMode.GAME, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+        let showAdd = tableMode === TableMode.GAME;
+        let showLog = [TableMode.GAME, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
+        let canShowSelectModal = selectOutcome && showAdd;
 
         return (
-            <BottomPanel
-                text={text}
-                showBack={showBack}
-                showNext={showNext}
-                isNextDisabled={isNextDisabled}
-                showSave={showSave}
-                isSaveDisabled={isSaveDisabled}
-                showHome={showHome}
-                showRefresh={showRefresh}
-                showAdd={showAdd}
-                showLog={showLog}
-            />
+            <>
+                <BottomPanel
+                    text={text}
+                    showBack={showBack}
+                    showNext={showNext}
+                    isNextDisabled={isNextDisabled}
+                    showSave={showSave}
+                    isSaveDisabled={isSaveDisabled}
+                    showHome={showHome}
+                    showRefresh={showRefresh}
+                    showAdd={showAdd}
+                    showLog={showLog}
+                />
+
+                {canShowSelectModal && (
+                    <SelectOutcomeModal />
+                )}
+            </>
         )
     }
 

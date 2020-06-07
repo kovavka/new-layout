@@ -2,6 +2,7 @@ export enum ScreenType {
     SETTINGS,
     BEFORE_START,
     TABLE,
+    TABLE_SELECT_OUTCOME,
     TABLE_RON,
     TABLE_DRAW,
     TABLE_RESULT,

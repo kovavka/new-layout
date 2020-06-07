@@ -17,6 +17,7 @@ import {LoginErrorScreen} from './login/LoginErrorScreen';
 import {TableScreenResult} from "./examples/TableScreenResult";
 import { HomeScreen } from './home/HomeScreen'
 import {HomeScreenExample} from './examples/HomeScreenExample';
+import {TableScreenSelect} from './examples/TableScreenSelect';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -63,6 +64,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.TABLE && (
                     <TableScreenIdle />
+                )}
+                {currentScreen === ScreenType.TABLE_SELECT_OUTCOME && (
+                    <TableScreenSelect />
                 )}
                 {currentScreen === ScreenType.TABLE_RON && (
                     <TableScreenRon />

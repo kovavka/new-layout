@@ -5,7 +5,7 @@ import {TableMode} from '../../types/TableMode';
 export class TableScreenIdle extends React.Component {
     render() {
         return (
-           <TableScreen tableMode={TableMode.IDLE} showRoundInfo={true} showTimer={true} inlineWind={true} showPoints={true}/>
+           <TableScreen tableMode={TableMode.GAME} showRoundInfo={true} showTimer={true} inlineWind={true} showPoints={true}/>
         );
     }
 }

@@ -1,5 +1,5 @@
 export enum TableMode {
-    IDLE,
+    GAME,
     BEFORE_START,
     SELECT_PLAYERS,
     RESULT,
