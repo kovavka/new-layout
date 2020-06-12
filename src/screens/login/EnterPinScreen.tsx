@@ -64,9 +64,17 @@ export class EnterPinScreen extends React.PureComponent<{}, IState> {
 
                 <div className="page-enter-pin__input">
                     <div className="page-enter-pin__input-group">
-                        <div className="page-enter-pin__number">
-                            {pin}
-                        </div>
+                        {!!pin && (
+                            <div className="page-enter-pin__number">
+                                {pin}
+                            </div>
+                        )}
+                        {!pin && (
+                            <div className="page-enter-pin__placeholder">
+                                enter pin code
+                            </div>
+                        )}
+
                         <div className="page-enter-pin__qr svg-button">
                             <svg>
                                 <use xlinkHref="#qr" />
