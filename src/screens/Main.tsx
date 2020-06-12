@@ -1,5 +1,4 @@
 import * as React from 'react'
-import './screen.less'
 import '../components/components.less'
 import {StateService} from '../services/StateService'
 import {ScreenType} from '../types/ScreenType'

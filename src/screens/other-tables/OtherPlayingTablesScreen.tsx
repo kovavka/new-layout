@@ -1,5 +1,6 @@
 import * as React from "react";
 import { TopPanel } from "../../components/top-panel/TopPanel";
+import './page-other-tables.less'
 
 type IProps = {
     showTableNumbers?: boolean

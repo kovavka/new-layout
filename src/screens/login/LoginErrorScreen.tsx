@@ -1,4 +1,5 @@
 import * as React from "react";
+import './page-login-error.less'
 
 export class LoginErrorScreen extends React.Component {
 

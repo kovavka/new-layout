@@ -2,6 +2,7 @@ import * as React from "react";
 import {StateService} from '../../services/StateService'
 import { TopPanel } from "../../components/top-panel/TopPanel";
 import { Switch } from "../../components/switch/Switch";
+import './page-setting.less'
 
 type IState = {
     switched: boolean

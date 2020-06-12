@@ -1,7 +1,5 @@
 import * as React from "react";
-import {StateService} from '../../services/StateService'
-import { TopPanel } from "../../components/top-panel/TopPanel";
-import { Switch } from "../../components/switch/Switch";
+import './page-game-result.less'
 
 type IProps = {
     showRepeatButton?: boolean

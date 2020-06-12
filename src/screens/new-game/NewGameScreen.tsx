@@ -1,8 +1,7 @@
 import * as React from "react";
-import {StateService} from '../../services/StateService'
-import { TopPanel } from "../../components/top-panel/TopPanel";
-import { Switch } from "../../components/switch/Switch";
 import {PlayerDropdown} from '../../components/dropdown/PlayerDropdown';
+import './page-new-game.less'
+import { TopPanel } from "../../components/top-panel/TopPanel";
 
 export class NewGameScreen extends React.Component {
     render() {

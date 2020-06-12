@@ -10,6 +10,7 @@ import {OutcomeTableMode} from '../../types/OutcomeTypes';
 import {ResultArrows} from '../../components/result-arrows/ResultArrows';
 import {StateService} from '../../services/StateService';
 import {SelectOutcomeModal} from './SelectOutcomeModal';
+import './page-table.less'
 
 type IProps = {
     tableMode: TableMode

@@ -1,8 +1,6 @@
 import * as React from "react";
-import {StateService} from '../../services/StateService'
-import { TopPanel } from "../../components/top-panel/TopPanel";
-import { Switch } from "../../components/switch/Switch";
 import {classNames} from '../../services/ReactUtils';
+import './page-home.less'
 
 type IProps = {
     canStartGame: boolean

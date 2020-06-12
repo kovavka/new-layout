@@ -1,10 +1,8 @@
 import * as React from "react";
-import {StateService} from '../../services/StateService'
-import { TopPanel } from "../../components/top-panel/TopPanel";
-import { Switch } from "../../components/switch/Switch";
 import {classNames} from '../../services/ReactUtils';
 import {OutcomeType} from '../../types/OutcomeTypes';
 import {BottomPanel} from '../../components/bottom-panel/BottomPanel';
+import './page-log.less'
 
 interface IHand {
     han?: number
