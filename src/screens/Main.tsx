@@ -19,6 +19,7 @@ import {TableScreenSelect} from './examples/TableScreenSelect';
 import {LogScreenExample} from './examples/LogScreenExample';
 import {SelectYakuScreenExample} from './examples/SelectYakuScreenExample';
 import {SelectHandScreenExample} from './examples/SelectHandScreenExample';
+import {EnterPinScreen} from './login/EnterPinScreen';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -92,6 +93,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.OTHER_PLAYINGS_TABLES && (
                     <OtherPlayingTablesScreen />
+                )}
+                {currentScreen === ScreenType.LOGIN && (
+                    <EnterPinScreen />
                 )}
                 {currentScreen === ScreenType.LOGIN_ERROR && (
                     <LoginErrorScreen />

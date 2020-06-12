@@ -11,6 +11,7 @@ export enum ScreenType {
     NEW_GAME,
     SEARCH_PLAYER,
     OTHER_PLAYINGS_TABLES,
+    LOGIN,
     LOGIN_ERROR,
     HOME,
     LOG,
