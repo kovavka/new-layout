@@ -18,6 +18,7 @@ import {HomeScreenExample} from './examples/HomeScreenExample';
 import {TableScreenSelect} from './examples/TableScreenSelect';
 import {LogScreenExample} from './examples/LogScreenExample';
 import {SelectYakuScreenExample} from './examples/SelectYakuScreenExample';
+import {SelectHandScreenExample} from './examples/SelectHandScreenExample';
 
 type MainState = {
     currentScreen: ScreenType;
@@ -103,6 +104,9 @@ export class Main extends React.Component<any, MainState> {
                 )}
                 {currentScreen === ScreenType.SELECT_YAKU && (
                     <SelectYakuScreenExample />
+                )}
+                {currentScreen === ScreenType.SELECT_TOTAL && (
+                    <SelectHandScreenExample />
                 )}
             </div>
         )

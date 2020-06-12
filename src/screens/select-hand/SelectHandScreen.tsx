@@ -1,10 +1,12 @@
-import * as React from "react";
+import * as React from 'react';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
 import {ArrowState, SelectHandActiveTab, YakuGroup} from './YakuTypes';
-import './page-set-hand.less'
+import './page-set-hand.less';
 import {Tab} from '../../components/tab/Tab';
 import {SelectYakuPanel} from './SelectYakuPanel';
 import {BottomPanel} from '../../components/bottom-panel/BottomPanel';
+import {SelectTotalPanel} from './SelectTotalPanel';
+import {doraValues, fuValues, redFivesValues} from './HandValuesExamples';
 
 type IProps = {
     playerName: string
@@ -58,7 +60,23 @@ export class SelectHandScreen extends React.Component<IProps> {
                     </div>
                 </div>
                 <Tab items={getTabItems(activeTab)}/>
-                <SelectYakuPanel yakuGroups={yakuGroups} />
+                {activeTab === SelectHandActiveTab.YAKU && (
+                    <SelectYakuPanel yakuGroups={yakuGroups} />
+                )}
+                {activeTab === SelectHandActiveTab.TOTAL && (
+                    <SelectTotalPanel
+                        yakuHan={1}
+                        doraCount={1}
+                        uraDoraCount={0}
+                        fuCount={120}
+                        redFivesCount={0}
+                        withRedFives={true}
+                        doraValues={doraValues}
+                        uraDoraValues={doraValues}
+                        redFivesValues={redFivesValues}
+                        fuValues={fuValues}
+                    />
+                )}
                 <div className="flex-container__bottom">
                     <BottomPanel
                         text={outcome}

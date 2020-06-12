@@ -15,4 +15,5 @@ export enum ScreenType {
     HOME,
     LOG,
     SELECT_YAKU,
+    SELECT_TOTAL,
 }

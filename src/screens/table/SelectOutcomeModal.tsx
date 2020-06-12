@@ -32,6 +32,6 @@ const items: ItemSelect[] = [
 ];
 export class SelectOutcomeModal extends React.Component<{}> {
     render() {
-        return <SelectModal items={items} />
+        return <SelectModal items={items} onHide={() => {}} />
     }
 }

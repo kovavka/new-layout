@@ -5,6 +5,7 @@ import './select-modal.less'
 
 type IProps = {
     items: ItemSelect[]
+    onHide: () => void
 }
 
 export class SelectModal extends React.Component<IProps> {
@@ -30,18 +31,18 @@ export class SelectModal extends React.Component<IProps> {
     }
 
     private renderModal() {
-        const {items} = this.props;
+        const {items, onHide} = this.props;
 
         return (
             <div className="modal">
 
-                <div className="modal__bg" />
+                <div className="modal__bg" onClick={onHide} />
                 <div className="modal__content select-modal">
                     <div className="select-modal__pointer" />
 
                     <div className="select-modal__items">
                         {items.map((item, i) => (
-                            <div key={i} className="select-modal__item">
+                            <div key={i} className="select-modal__item" onClick={item.onSelect}>
                                 {item.text}
                             </div>
                         ))}
