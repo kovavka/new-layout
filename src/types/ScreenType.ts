@@ -14,4 +14,5 @@ export enum ScreenType {
     LOGIN_ERROR,
     HOME,
     LOG,
+    SELECT_YAKU,
 }

@@ -40,8 +40,8 @@ export class SelectModal extends React.Component<IProps> {
                     <div className="select-modal__pointer" />
 
                     <div className="select-modal__items">
-                        {items.map(item => (
-                            <div className="select-modal__item">
+                        {items.map((item, i) => (
+                            <div key={i} className="select-modal__item">
                                 {item.text}
                             </div>
                         ))}
