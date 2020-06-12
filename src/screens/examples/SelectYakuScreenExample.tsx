@@ -1,11 +1,20 @@
 import * as React from 'react';
-import {SelectYakuScreen} from '../select-yaku/SelectYakuScreen';
+import {SelectHandScreen} from '../select-hand/SelectHandScreen';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
+import {defaultYakuGroups} from '../select-hand/YakuEmaple';
+import {ArrowState, SelectHandActiveTab} from '../select-hand/YakuTypes';
 
 export class SelectYakuScreenExample extends React.Component<{}> {
     render() {
         return (
-            <SelectYakuScreen playerName="Bla Blabla" selectedYaku={[]} disabledYaku={[]} outcome={OutcomeTableMode.RON} canGoNext={false} />
+            <SelectHandScreen
+                playerName="Bla Blabla"
+                yakuGroups={defaultYakuGroups}
+                outcome={OutcomeTableMode.RON}
+                leftArrowState={ArrowState.UNAVAILABLE}
+                rightArrowState={ArrowState.UNAVAILABLE}
+                activeTab={SelectHandActiveTab.YAKU}
+                canGoNext={false} />
         );
     }
 }

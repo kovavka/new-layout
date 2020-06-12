@@ -1,0 +1,49 @@
+@import '../../variables.less';
+
+.page-select-hand {
+  .page-select-hand__player-name {
+    font-size: @font-size-secondary;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 8px;
+  }
+
+  .page-select-hand__top-panel {
+    margin: 24px 26px 16px 26px;
+    .page-select-yaku__top-panel-arrow {
+    }
+  }
+}
+
+.select-yaku-panel {
+  margin: 4px 6px;
+  flex-grow: 1;
+  height: 100%;
+  font-size: @font-size-secondary;
+  overflow: scroll;
+
+  .select-yaku-panel__group {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .select-yaku-panel__button {
+    flex: 1 0 auto;
+    align-self: stretch;
+    text-align: center;
+    padding: 8px 12px;
+    margin: 2px;
+    border: 2px solid @color-secondary-light-1;
+    border-radius: 4px;
+
+    &.select-yaku-panel__button--clicked {
+      background-color: @color-primary-light;
+    }
+
+    &.select-yaku-panel__button--disabled {
+      background-color: @color-secondary-light-3;
+      color: @color-secondary-light-1;
+    }
+  }
+}
