@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@babel/core": "7.5.5",
     "@svgr/webpack": "4.3.2",
     "@types/jest": "24.0.18",
     "@types/node": "^12.7.5",
@@ -14,7 +13,6 @@
     "@typescript-eslint/parser": "1.13.0",
     "babel-eslint": "10.0.2",
     "babel-jest": "^24.8.0",
-    "babel-loader": "8.0.6",
     "babel-plugin-named-asset-import": "^0.3.3",
     "babel-preset-react-app": "^9.0.1",
     "camelcase": "^5.2.0",
@@ -49,10 +47,10 @@
     "postcss-normalize": "7.0.1",
     "postcss-preset-env": "6.7.0",
     "postcss-safe-parser": "4.0.1",
-    "react": "^16.9.0",
+    "react": "^16.13.1",
     "react-app-polyfill": "^1.0.2",
     "react-dev-utils": "^9.0.3",
-    "react-dom": "^16.9.0",
+    "react-dom": "^16.13.1",
     "react-svg-use": "^2.1.0",
     "resolve": "1.12.0",
     "resolve-url-loader": "3.1.0",
@@ -73,7 +71,8 @@
     "start": "npm run svg && node scripts/start.js",
     "build": "npm run svg && node scripts/build.js",
     "test": "node scripts/test.js",
-    "svg": "node scripts/svgGenerator.js"
+    "svg": "node scripts/svgGenerator.js",
+    "storybook": "npm run svg && start-storybook"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -142,5 +141,11 @@
     "presets": [
       "react-app"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/react": "^5.3.19",
+    "babel-loader": "^8.0.6"
   }
 }
