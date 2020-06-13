@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {storiesOf} from '@storybook/react';
 import { withKnobs, select, text } from '@storybook/addon-knobs';
-import {Test} from './Test';
+import {GameResultScreen} from '../GameResultScreen';
 
 export const ButtonStories = storiesOf('Screen | Game result', module);
 ButtonStories.addDecorator(withKnobs);
@@ -16,7 +16,7 @@ ButtonStories.add(
     'all',
     () => (
         <div>
-            <Test />
+            <GameResultScreen />
         </div>
     )
 )
