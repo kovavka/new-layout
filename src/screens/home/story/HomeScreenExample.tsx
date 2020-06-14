@@ -1,8 +1,5 @@
 import * as React from "react";
-import {StateService} from '../../services/StateService'
-import { TopPanel } from "../../components/top-panel/TopPanel";
-import { Switch } from "../../components/switch/Switch";
-import {HomeScreen} from '../home/HomeScreen';
+import {HomeScreen} from '../HomeScreen';
 
 export class HomeScreenExample extends React.Component<{}> {
 

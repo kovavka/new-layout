@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ItemSelect} from './ItemSelect';
-import ReactDOM from "react-dom";
+import * as ReactDOM from "react-dom";
 import './select-modal.less'
 
 type IProps = {
@@ -16,11 +16,11 @@ export class SelectModal extends React.Component<IProps> {
     }
 
     componentDidMount() {
-        document.body.appendChild(this.element);
+        document.getElementById('screen')!.appendChild(this.element);
     }
 
     componentWillUnmount() {
-        document.body.removeChild(this.element);
+        document.getElementById('screen')!.removeChild(this.element);
     }
 
     render() {

@@ -47,13 +47,13 @@ export class ResultArrows extends React.Component<IProps, IState> {
 
     componentDidMount(): void {
         this.onFrameHeightChanged();
-        StateService.instance.frameHeightChanged.add(this.onFrameHeightChanged, this);
+        // StateService.instance.frameHeightChanged.add(this.onFrameHeightChanged, this);
 
 
     }
 
     componentWillUnmount(): void {
-        StateService.instance.frameHeightChanged.remove(this.onFrameHeightChanged, this);
+        // StateService.instance.frameHeightChanged.remove(this.onFrameHeightChanged, this);
     }
 
     private onFrameHeightChanged() {

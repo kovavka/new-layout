@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {GameResultScreen} from '../GameResultScreen';
 import {ScreenStories} from '../../../storybook-base/StoryVars';
+import {HomeScreenExample} from './HomeScreenExample';
 
 ScreenStories.add(
-    'game result',
+    'home',
     () => (
-        <GameResultScreen />
+        <HomeScreenExample />
     )
 );

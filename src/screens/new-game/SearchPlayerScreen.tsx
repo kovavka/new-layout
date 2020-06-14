@@ -3,7 +3,6 @@ import { TopPanel } from "../../components/top-panel/TopPanel";
 import './page-search-player.less'
 
 export class SearchPlayerScreen extends React.Component {
-
     private getNames() {
         return [
             'Random player 1',

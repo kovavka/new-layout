@@ -71,8 +71,8 @@
     "build": "npm run svg && node scripts/build.js",
     "test": "node scripts/test.js",
     "svg": "node scripts/svgGenerator.js",
-    "storybook": "npm run svg && start-storybook",
-    "build-storybook": "npm run svg && build-storybook"
+    "storybook": "npm run svg && start-storybook -p 9009 -s public",
+    "build-storybook": "npm run svg && build-storybook -s public"
   },
   "eslintConfig": {
     "extends": "react-app"

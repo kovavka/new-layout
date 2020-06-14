@@ -28,7 +28,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 
 module.exports = {
     stories: ['../src/**/*.stories.*'],
-    addons: ['@storybook/addon-knobs/register'],
     webpackFinal: async config => {
         config.module.rules.push({
             test: /\.(ts|tsx)$/,
@@ -38,7 +37,7 @@ module.exports = {
                 },
             ],
         });
-        config.module.rules.push( {
+        config.module.rules.push({
             test: /\.(?:le|c)ss$/,
             exclude: cssModuleRegex,
             use: getStyleLoaders({

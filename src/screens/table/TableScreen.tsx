@@ -8,7 +8,6 @@ import {PlayerBottom} from '../../components/players/PlayerBottom';
 import {TableMode} from '../../types/TableMode';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
 import {ResultArrows} from '../../components/result-arrows/ResultArrows';
-import {StateService} from '../../services/StateService';
 import {SelectOutcomeModal} from './SelectOutcomeModal';
 import './page-table.less'
 
@@ -41,11 +40,11 @@ export class TableScreen extends React.Component<IProps, IState> {
 
     componentDidMount(): void {
         this.onFrameHeightChanged();
-        StateService.instance.frameHeightChanged.add(this.onFrameHeightChanged, this);
+        // StateService.instance.frameHeightChanged.add(this.onFrameHeightChanged, this);
     }
 
     componentWillUnmount(): void {
-        StateService.instance.frameHeightChanged.remove(this.onFrameHeightChanged, this);
+        // StateService.instance.frameHeightChanged.remove(this.onFrameHeightChanged, this);
     }
 
     onFrameHeightChanged() {

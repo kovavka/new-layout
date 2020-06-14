@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {SelectHandScreen} from '../select-hand/SelectHandScreen';
-import {OutcomeTableMode} from '../../types/OutcomeTypes';
-import {defaultYakuGroups} from '../select-hand/YakuEmaple';
-import {ArrowState, SelectHandActiveTab} from '../select-hand/YakuTypes';
+import {SelectHandScreen} from '../SelectHandScreen';
+import {OutcomeTableMode} from '../../../types/OutcomeTypes';
+import {defaultYakuGroups} from '../YakuEmaple';
+import {ArrowState, SelectHandActiveTab} from '../YakuTypes';
 
-export class SelectHandScreenExample extends React.Component<{}> {
+export class SelectYakuScreenExample extends React.Component<{}> {
     render() {
         return (
             <SelectHandScreen
@@ -13,7 +13,7 @@ export class SelectHandScreenExample extends React.Component<{}> {
                 outcome={OutcomeTableMode.RON}
                 leftArrowState={ArrowState.UNAVAILABLE}
                 rightArrowState={ArrowState.UNAVAILABLE}
-                activeTab={SelectHandActiveTab.TOTAL}
+                activeTab={SelectHandActiveTab.YAKU}
                 canGoNext={false} />
         );
     }

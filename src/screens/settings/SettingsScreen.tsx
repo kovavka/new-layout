@@ -1,24 +1,9 @@
 import * as React from "react";
-import {StateService} from '../../services/StateService'
 import { TopPanel } from "../../components/top-panel/TopPanel";
 import { Switch } from "../../components/switch/Switch";
 import './page-setting.less'
 
-type IState = {
-    switched: boolean
-}
-
-export class SettingsScreen extends React.Component<{}, IState> {
-    stateService: StateService = StateService.instance;
-
-    state = {switched: false};
-
-    private onSingleDeviceModeToggle() {
-        this.setState({
-            switched: !this.state.switched
-        });
-    }
-
+export class SettingsScreen extends React.Component {
     render() {
         return (
             <div className="flex-container page-setting">
@@ -59,7 +44,7 @@ export class SettingsScreen extends React.Component<{}, IState> {
                     </div>
                     <div className="page-setting__section">
                         <div className="switch-setting">
-                            <Switch switched={this.state.switched} onToggle={this.onSingleDeviceModeToggle.bind(this)} />
+                            <Switch switched={false} onToggle={() => {}} />
                             <div className="switch-setting__description">
                                 <div className="switch-setting__caption">Single device mode</div>
                                 <div className="switch-setting__info">Turn on if you use one device on table during the game</div>

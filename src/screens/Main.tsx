@@ -3,22 +3,22 @@ import '../components/components.less'
 import {StateService} from '../services/StateService'
 import {ScreenType} from '../types/ScreenType'
 import { SettingsScreen } from './settings/SettingsScreen'
-import { TableScreenBeforeStart } from './examples/TableScreenBeforeStart'
-import {TableScreenIdle} from './examples/TableScreenIdle';
-import {TableScreenRon} from './examples/TableScreenRon';
-import {TableScreenExhaustiveDraw} from './examples/TableScreenExhaustiveDraw';
-import {TableScreenChombo} from './examples/TableScreenChombo';
+import { TableScreenBeforeStart } from './table/story/TableScreenBeforeStart'
+import {TableScreenIdle} from './table/story/TableScreenIdle';
+import {TableScreenRon} from './table/story/TableScreenRon';
+import {TableScreenExhaustiveDraw} from './table/story/TableScreenExhaustiveDraw';
+import {TableScreenChombo} from './table/story/TableScreenChombo';
 import {GameResultScreen} from './game-result/GameResultScreen';
 import { NewGameScreen } from './new-game/NewGameScreen'
 import {SearchPlayerScreen} from './new-game/SearchPlayerScreen';
 import {OtherPlayingTablesScreen} from './other-tables/OtherPlayingTablesScreen';
 import {LoginErrorScreen} from './login/LoginErrorScreen';
-import {TableScreenResult} from "./examples/TableScreenResult";
-import {HomeScreenExample} from './examples/HomeScreenExample';
-import {TableScreenSelect} from './examples/TableScreenSelect';
-import {LogScreenExample} from './examples/LogScreenExample';
-import {SelectYakuScreenExample} from './examples/SelectYakuScreenExample';
-import {SelectHandScreenExample} from './examples/SelectHandScreenExample';
+import {TableScreenResult} from "./table/story/TableScreenResult";
+import {HomeScreenExample} from './home/story/HomeScreenExample';
+import {TableScreenSelect} from './table/story/TableScreenSelect';
+import {LogScreenExample} from './log/story/LogScreenExample';
+import {SelectYakuScreenExample} from './select-hand/story/SelectYakuScreenExample';
+import {SelectHandScreenExample} from './select-hand/story/SelectHandScreenExample';
 import {EnterPinScreen} from './login/EnterPinScreen';
 
 type MainState = {
@@ -57,7 +57,7 @@ export class Main extends React.Component<any, MainState> {
     render() {
         const {currentScreen} = this.state;
         return (
-            <div className="App" onClick={this.onAppClicked.bind(this)}>
+            <div id="screen" className="App" onClick={this.onAppClicked.bind(this)}>
                 {currentScreen === ScreenType.SETTINGS && (
                     <SettingsScreen />
                 )}

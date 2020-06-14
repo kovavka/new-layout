@@ -1,10 +1,6 @@
 import * as React from "react";
-import {StateService} from '../../services/StateService'
-import { TopPanel } from "../../components/top-panel/TopPanel";
-import { Switch } from "../../components/switch/Switch";
-import {classNames} from '../../services/ReactUtils';
-import {OutcomeType} from '../../types/OutcomeTypes';
-import {LogScreen} from '../log/LogScreen';
+import {OutcomeType} from '../../../types/OutcomeTypes';
+import {LogScreen} from '../LogScreen';
 
 
 const round1 = {

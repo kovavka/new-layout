@@ -1,10 +1,10 @@
 import * as React from 'react';
-import {GameResultScreen} from '../GameResultScreen';
+import {LogScreenExample} from './LogScreenExample';
 import {ScreenStories} from '../../../storybook-base/StoryVars';
 
 ScreenStories.add(
-    'game result',
+    'log',
     () => (
-        <GameResultScreen />
+        <LogScreenExample />
     )
 );

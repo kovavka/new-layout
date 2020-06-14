@@ -65,6 +65,7 @@ ${symbols.join('')}
         if (err) throw err;
         console.log('svg has generated');
     });
+    fs.writeFile(`${outputDir}/sprite.svg`, content, () => {});
 }
 
 generateSvg()
