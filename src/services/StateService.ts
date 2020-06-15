@@ -5,7 +5,7 @@ declare var frame: any;
 
 export class StateService {
     frameInnerHeight: string = 'initial';
-    currentScreen: ScreenType = ScreenType.LOGIN;
+    currentScreen: ScreenType = ScreenType.SELECT_TOTAL;
 
     onChange: signals.Signal = new signals.Signal();
     frameHeightChanged: signals.Signal = new signals.Signal();
