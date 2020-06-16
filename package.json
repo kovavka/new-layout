@@ -145,6 +145,7 @@
   "devDependencies": {
     "@babel/core": "^7.5.5",
     "@storybook/addon-knobs": "^5.3.19",
+    "@storybook/addon-viewport": "^5.3.19",
     "@storybook/react": "^5.3.19",
     "babel-loader": "^8.0.6",
     "ts-loader": "^7.0.5",
