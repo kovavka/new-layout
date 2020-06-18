@@ -8,11 +8,13 @@ const OPENHAND = {
 
 const TOITOI = {
     name: 'Toitoi',
+    clicked: true,
     onClick: () => {}
 } as YakuItem;
 
 const HONROTO = {
     name: 'Homroto',
+    clicked: true,
     onClick: () => {}
 } as YakuItem;
 
@@ -38,11 +40,13 @@ const SUUKANTSU = {
 
 const SUUANKOU = {
     name: 'Suuankou',
+    clicked: true,
     onClick: () => {}
 } as YakuItem;
 
 const PINFU = {
     name: 'Pinfu',
+    clicked: true,
     onClick: () => {}
 } as YakuItem;
 
@@ -58,11 +62,13 @@ const RYANPEIKOU = {
 
 const SANSHOKUDOUJUN = {
     name: 'Sanshoku',
+    clicked: true,
     onClick: () => {}
 } as YakuItem;
 
 const ITTSU = {
     name: 'Ittsu',
+    clicked: true,
     onClick: () => {}
 } as YakuItem;
 

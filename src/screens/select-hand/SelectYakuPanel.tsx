@@ -22,7 +22,7 @@ export class SelectYakuPanel extends React.Component<IProps> {
                             <div key={j}
                                  className={classNames(
                                      'select-yaku-panel__button',
-                                     {'select-yaku-panel__button--clicked': yaku.clicked},
+                                     {'select-yaku-panel__button--pressed': yaku.clicked},
                                      {'select-yaku-panel__button--disabled': yaku.disabled},
                                  )}
                             >

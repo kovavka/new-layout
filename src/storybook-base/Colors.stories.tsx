@@ -7,15 +7,15 @@ export const colorsStories = storiesOf('General | Colors', module);
 const colors = [
     {
         name: 'bg-color',
-        description: 'app background, modal background'
+        description: 'app background, modal content background'
     },
     {
         name: 'primary-text-color',
-        description: ''
+        description: 'primary text color'
     },
     {
         name: 'secondary-text-color',
-        description: ''
+        description: 'font/element colors for active states'
     },
     {
         name: 'color-primary',
@@ -27,35 +27,39 @@ const colors = [
     },
     {
         name: 'color-primary-light',
-        description: ''
+        description: 'only select-yaku-panel__button--pressed'
     },
     {
-        name: 'color-secondary',
-        description: ''
+        name: 'color-primary-light-active',
+        description: ':hover & :active for color-primary-light'
     },
     {
-        name: 'color-secondary-light-1',
-        description: ''
+        name: 'color-secondary-1',
+        description: 'flat-btn--pressed, svg-button:active, modal overlay background'
     },
     {
-        name: 'color-secondary-light-2',
-        description: ''
+        name: 'color-secondary-2',
+        description: 'svg-button--disabled, switch-setting__info'
     },
     {
-        name: 'color-secondary-light-3',
-        description: ''
+        name: 'color-secondary-3',
+        description: 'main color for borders and placeholders'
     },
     {
-        name: 'color-secondary-dark',
-        description: ''
+        name: 'color-secondary-4',
+        description: 'disabled for text/border on light background or zebra'
+    },
+    {
+        name: 'color-secondary-5',
+        description: ':hover & :active + select-yaku-panel__button--disabled'
     },
     {
         name: 'color-success',
-        description: ''
+        description: 'pressed win buttons, positive scores'
     },
     {
         name: 'color-danger',
-        description: ''
+        description: 'pressed lose buttons, negative scores, riichi center circle'
     },
 ];
 
