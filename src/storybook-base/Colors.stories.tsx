@@ -43,14 +43,18 @@ const colors = [
     },
     {
         name: 'color-secondary-3',
-        description: 'main color for borders and placeholders'
+        description: 'bottom panel background'
     },
     {
         name: 'color-secondary-4',
-        description: 'disabled for text/border on light background or zebra'
+        description: 'main color for borders and placeholders'
     },
     {
         name: 'color-secondary-5',
+        description: 'disabled for text/border on light background or zebra'
+    },
+    {
+        name: 'color-secondary-6',
         description: ':hover & :active + select-yaku-panel__button--disabled'
     },
     {
