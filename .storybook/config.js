@@ -12,41 +12,11 @@ addDecorator(withKnobs);
 
 addDecorator(storyFn => <StoryWrapper>{storyFn()}</StoryWrapper>);
 
-
-const customViewports = {
-    iPhoneSE: {
-        name: 'IPhone SE',
-        styles: {
-            width: '320px',
-            height: '568px',
-        },
-    },
-    iPhone8: {
-        name: 'IPhone 8',
-        styles: {
-            width: '375px',
-            height: '667px',
-        },
-    },
-    iPhoneX: {
-        name: 'IPhone X',
-        styles: {
-            width: '375px',
-            height: '812px',
-        },
-    },
-    iPad: {
-        name: 'IPad',
-        styles: {
-            width: '768px',
-            height: '1024px',
-        },
-    },
-};
 addParameters({
-    viewport: {
-        viewports: customViewports,
-    },
+    themes: [
+        { name: 'day', class: 'theme-day', color: '#f4f5f7', default: true },
+        { name: 'night', class: 'theme-night', color: '#282c34'},
+    ],
 });
 
 function loadStories () {

@@ -28,6 +28,9 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 
 module.exports = {
     stories: ['../src/**/*.stories.*'],
+    addons: [
+        'storybook-addon-themes'
+    ],
     webpackFinal: async config => {
         config.module.rules.push({
             test: /\.(ts|tsx)$/,
