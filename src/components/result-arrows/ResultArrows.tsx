@@ -1,6 +1,6 @@
 import * as React from "react";
 import './result-arrows.less'
-import {StateService} from '../../services/StateService'
+// import {StateService} from '../../services/StateService'
 
 const START_ARROWS_OFFSET = 20;
 const TEXT_PATH_OFFSET = 4;
@@ -48,8 +48,6 @@ export class ResultArrows extends React.Component<IProps, IState> {
     componentDidMount(): void {
         this.onFrameHeightChanged();
         // StateService.instance.frameHeightChanged.add(this.onFrameHeightChanged, this);
-
-
     }
 
     componentWillUnmount(): void {

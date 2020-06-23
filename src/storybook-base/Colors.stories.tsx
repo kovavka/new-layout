@@ -23,7 +23,7 @@ const colors = [
     },
     {
         name: 'color-primary-active',
-        description: ':hover & :active for color-primary'
+        description: ':active for color-primary'
     },
     {
         name: 'color-primary-light',
@@ -31,7 +31,7 @@ const colors = [
     },
     {
         name: 'color-primary-light-active',
-        description: ':hover & :active for color-primary-light'
+        description: ':active for color-primary-light'
     },
     {
         name: 'color-secondary-1',
@@ -55,7 +55,7 @@ const colors = [
     },
     {
         name: 'color-secondary-6',
-        description: ':hover & :active + select-yaku-panel__button--disabled'
+        description: ':active + select-yaku-panel__button--disabled'
     },
     {
         name: 'color-success',

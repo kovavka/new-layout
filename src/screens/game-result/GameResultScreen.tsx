@@ -1,94 +1,33 @@
 import * as React from "react";
 import './page-game-result.less'
+import {GameResultScreenStateless} from './GameResultScreenStateless';
 
-type IProps = {
-    showRepeatButton?: boolean
-}
+const player1 = {
+    name: 'Random player 1',
+    score: 21600,
+    delta: -13400,
+};
+const player2 = {
+    name: 'Super long long long name',
+    score: 10500,
+    delta: -34500,
+};
+const player3 = {
+    name: 'Test Testov',
+    score: 33800,
+    delta: 8800,
+};
+const player4 = {
+    name: 'Bla Blablah',
+    score: 54100,
+    delta: 39100,
+};
+const players = [player1, player2, player3, player4];
 
-export class GameResultScreen extends React.Component<IProps> {
+export class GameResultScreen extends React.Component {
     render() {
-        const {showRepeatButton} = this.props;
-
         return (
-            <div className="page-game-result">
-                <div className="page-game-result__players">
-                    <div className="player-result">
-                        <div className="player-result__name">
-                            Random player 1
-                        </div>
-                        <div className="player-result__score-container">
-                            <div className="player-result__score">
-                                21600
-                            </div>
-                            <div className="player-result__delta player-result__delta--danger">
-                                -13400
-                            </div>
-                        </div>
-                    </div>
-                    <div className="player-result">
-                        <div className="player-result__name">
-                            Super long long long name
-                        </div>
-                        <div className="player-result__score-container">
-                            <div className="player-result__score">
-                                10500
-                            </div>
-                            <div className="player-result__delta player-result__delta--danger">
-                                -34500
-                            </div>
-                        </div>
-                    </div>
-                    <div className="player-result">
-                        <div className="player-result__name">
-                            Test Testov
-                        </div>
-                        <div className="player-result__score-container">
-                            <div className="player-result__score">
-                                33800
-                            </div>
-                            <div className="player-result__delta player-result__delta--success">
-                                +8800
-                            </div>
-                        </div>
-                    </div>
-                    <div className="player-result">
-                        <div className="player-result__name">
-                            Bla Blablah
-                        </div>
-                        <div className="player-result__score-container">
-                            <div className="player-result__score">
-                                54100
-                            </div>
-                            <div className="player-result__delta player-result__delta--success">
-                                +39100
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="page-game-result__buttons">
-                    {showRepeatButton && (
-                        <>
-                            <div className="flat-btn flat-btn--medium">
-                                <svg>
-                                    <use xlinkHref="#repeat"></use>
-                                </svg>
-                            </div>
-                            <div className="flat-btn flat-btn--medium">
-                                <svg>
-                                    <use xlinkHref="#save"></use>
-                                </svg>
-                            </div>
-                        </>
-                    )}
-                    {!showRepeatButton && (
-                        <div className="flat-btn flat-btn--large">
-                            <svg>
-                                <use xlinkHref="#save"></use>
-                            </svg>
-                        </div>
-                    )}
-                </div>
-            </div>
+            <GameResultScreenStateless players={players} showRepeatButton={false}  />
         );
     }
 }

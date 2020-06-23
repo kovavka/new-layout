@@ -86,7 +86,7 @@ export class PlayerBase extends React.Component<IProps> {
                                 {'flat-btn--v-large': oneButton && verticalButtons},
                                 {'flat-btn--large': oneButton && !verticalButtons},
                                 {'flat-btn--disabled': winButtonMode === PlayerButtonMode.DISABLE},
-                                {'flat-btn--danger': winButtonMode === PlayerButtonMode.PRESSED},
+                                {'flat-btn--success': winButtonMode === PlayerButtonMode.PRESSED},
                             )}
                             >
                                 <svg>

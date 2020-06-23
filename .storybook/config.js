@@ -7,7 +7,6 @@ import { addParameters } from '@storybook/client-api';
 
 const req = require.context('./', true, /stories\..*$/)
 
-
 addDecorator(withKnobs);
 
 addDecorator(storyFn => <StoryWrapper>{storyFn()}</StoryWrapper>);

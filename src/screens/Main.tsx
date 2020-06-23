@@ -14,7 +14,7 @@ import {SearchPlayerScreen} from './new-game/SearchPlayerScreen';
 import {OtherPlayingTablesScreen} from './other-tables/OtherPlayingTablesScreen';
 import {LoginErrorScreen} from './login/LoginErrorScreen';
 import {TableScreenResult} from "./table/story/TableScreenResult";
-import {HomeScreenExample} from './home/story/HomeScreenExample';
+import {HomeScreen} from './home/HomeScreen';
 import {TableScreenSelect} from './table/story/TableScreenSelect';
 import {LogScreenExample} from './log/story/LogScreenExample';
 import {SelectYakuScreenExample} from './select-hand/story/SelectYakuScreenExample';
@@ -51,13 +51,13 @@ export class Main extends React.Component<any, MainState> {
     }
 
     onAppClicked() {
-        // this.stateService.prevScreen();
+        this.stateService.prevScreen();
     }
 
     render() {
         const {currentScreen} = this.state;
         return (
-            <div id="screen" className="App" onClick={this.onAppClicked.bind(this)}>
+            <div id="screen" className="App theme-night" onClick={this.onAppClicked.bind(this)}>
                 {currentScreen === ScreenType.SETTINGS && (
                     <SettingsScreen />
                 )}
@@ -83,7 +83,7 @@ export class Main extends React.Component<any, MainState> {
                     <TableScreenChombo />
                 )}
                 {currentScreen === ScreenType.GAME_RESULT && (
-                    <GameResultScreen showRepeatButton={true} />
+                    <GameResultScreen />
                 )}
                 {currentScreen === ScreenType.NEW_GAME && (
                     <NewGameScreen />
@@ -101,7 +101,7 @@ export class Main extends React.Component<any, MainState> {
                     <LoginErrorScreen />
                 )}
                 {currentScreen === ScreenType.HOME && (
-                    <HomeScreenExample />
+                    <HomeScreen />
                 )}
                 {currentScreen === ScreenType.LOG && (
                     <LogScreenExample />
