@@ -1,31 +1,24 @@
 import * as React from 'react';
-import {BottomPanel} from '../../components/bottom-panel/BottomPanel';
-import {PlayerTop} from '../../components/players/PlayerTop';
-import {PlayerLeft} from '../../components/players/PlayerLeft';
-import {PlayerRight} from '../../components/players/PlayerRight';
 import {PlayerButtonMode, PlayerPointsMode} from '../../types/PlayerEnums';
-import {PlayerBottom} from '../../components/players/PlayerBottom';
 import {TableMode} from '../../types/TableMode';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
-import {ResultArrows} from '../../components/result-arrows/ResultArrows';
-import {SelectOutcomeModal} from './SelectOutcomeModal';
-import './page-table.less'
+import './base/page-table.less'
+import {TableScreenStateless} from './base/TableScreenStateless';
+import {TableInfoProps} from './base/TableInfoProps';
 
 type IProps = {
     tableMode: TableMode
     outcomeMode?: OutcomeTableMode
-    showRoundInfo?: boolean
-    showTableNumber?: boolean
-    showTimer?: boolean
-    gamesLeft?: number
+
     showPoints?: boolean
     inlineWind?: boolean
     showArrows?: boolean
     selectOutcome?: boolean
-    // topPlayer: Player
-    // leftPlayer: Player
-    // bottomPlayer: Player
-    // rightPlayer: Player
+
+    showRoundInfo?: boolean
+    showTableNumber?: boolean
+    showTimer?: boolean
+    gamesLeft?: number
 }
 
 //todo move to general state and HOC
@@ -53,73 +46,7 @@ export class TableScreen extends React.Component<IProps, IState> {
         });
     }
 
-    renderTableInfo() {
-        const {showRoundInfo, showTableNumber, showTimer, gamesLeft, showArrows} = this.props;
-
-        return (
-            <>
-                <div className="table-info">
-                    {showRoundInfo && (
-                        <>
-                            <div className="table-info__round">
-                                東 1
-                            </div>
-                            <div className="table-info__tenbou">
-                                <div className="svg-button">
-                                    <svg>
-                                        <use xlinkHref="#riichi-small"></use>
-                                    </svg>
-                                </div>
-                                <div className="table-info__tenbou-count">
-                                    1
-                                </div>
-                            </div>
-                            <div className="table-info__tenbou">
-                                <div className="svg-button">
-                                    <svg>
-                                        <use xlinkHref="#honba"></use>
-                                    </svg>
-                                </div>
-                                <div className="table-info__tenbou-count">
-                                    2
-                                </div>
-                            </div>
-                            {showTimer && (
-                                <div className="table-info__timer">
-                                    47:25
-                                </div>
-                            )}
-                            {gamesLeft && (
-                                <div className="table-info__games-left">
-                                    <div className="table-info__games-left-count">
-                                        {gamesLeft}
-                                    </div>
-                                    <div className="table-info__games-left-caption">
-                                        max games left
-                                    </div>
-                                </div>
-                            )}
-                        </>
-                    )}
-                    {showTableNumber && (
-                        <>
-                            <div className="table-info__table-caption">
-                                Table
-                            </div>
-                            <div className="table-info__table-number">
-                                #4
-                            </div>
-                        </>
-                    )}
-                </div>
-                {showArrows && (
-                    <ResultArrows />
-                )}
-            </>
-        );
-    }
-
-    renderPlayerTop() {
+    getPlayerTop() {
         const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
         let points = showPoints ? 21600 : undefined;
         let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
@@ -162,24 +89,22 @@ export class TableScreen extends React.Component<IProps, IState> {
             }
         }
 
-        return (
-            <PlayerTop
-                name="Random player"
-                wind="東"
-                rotated={false}
-                inlineWind={inlineWind}
-                points={points}
-                pointsMode={pointsMode}
-                penaltyPoints={penaltyPoints}
-                winButtonMode={winButtonMode}
-                loseButtonMode={loseButtonMode}
-                riichiButtonMode={riichiButtonMode}
-                showDeadButton={showDeadButton}
-            />
-            );
+        return {
+            name: "Random player",
+            wind: "東",
+            rotated: false,
+            inlineWind: inlineWind,
+            points: points,
+            pointsMode: pointsMode,
+            winButtonMode: winButtonMode,
+            loseButtonMode: loseButtonMode,
+            riichiButtonMode: riichiButtonMode,
+            showDeadButton: showDeadButton,
+            penaltyPoints: penaltyPoints,
+        };
     }
 
-    renderPlayerLeft() {
+    getPlayerLeft() {
         const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
         const {rotatedNameHeight} = this.state;
         let points = showPoints ? 54100 : undefined;
@@ -223,24 +148,21 @@ export class TableScreen extends React.Component<IProps, IState> {
             }
         }
 
-        return (
-            <PlayerLeft
-                name="Bla Blabla"
-                wind="南"
-                nameHeight={rotatedNameHeight}
-                inlineWind={inlineWind}
-                points={points}
-                pointsMode={pointsMode}
-                winButtonMode={winButtonMode}
-                loseButtonMode={loseButtonMode}
-                riichiButtonMode={riichiButtonMode}
-                showDeadButton={showDeadButton}
-                showInlineRiichi={showInlineRiichi}
-            />
-            );
+        return {
+            name: "Bla Blabla",
+            wind: "南",
+            nameWidth: rotatedNameHeight,
+            inlineWind: inlineWind,
+            points: points,
+            pointsMode: pointsMode,
+            winButtonMode: winButtonMode,
+            loseButtonMode: loseButtonMode,
+            riichiButtonMode: riichiButtonMode,
+            showDeadButton: showDeadButton,
+        };
     }
 
-    renderPlayerRight() {
+    getPlayerRight() {
         const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
         const {rotatedNameHeight} = this.state;
         let points = showPoints ? 32800 : undefined;
@@ -284,23 +206,21 @@ export class TableScreen extends React.Component<IProps, IState> {
             }
         }
 
-        return (
-            <PlayerRight
-                name="Test Testov"
-                wind="北"
-                nameHeight={rotatedNameHeight}
-                inlineWind={inlineWind}
-                points={points}
-                pointsMode={pointsMode}
-                winButtonMode={winButtonMode}
-                loseButtonMode={loseButtonMode}
-                riichiButtonMode={riichiButtonMode}
-                showDeadButton={showDeadButton}
-            />
-            );
+        return {
+            name: "Test Testov",
+            wind: "北",
+            nameWidth: rotatedNameHeight,
+            inlineWind: inlineWind,
+            points: points,
+            pointsMode: pointsMode,
+            winButtonMode: winButtonMode,
+            loseButtonMode: loseButtonMode,
+            riichiButtonMode: riichiButtonMode,
+            showDeadButton: showDeadButton,
+        };
     }
 
-    renderPlayerBottom() {
+    getPlayerBottom() {
         const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
         let points = showPoints ? 10500 : undefined;
         let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
@@ -343,24 +263,21 @@ export class TableScreen extends React.Component<IProps, IState> {
             }
         }
 
-        return (
-            <PlayerBottom
-                name="Super long long long name"
-                wind="西"
-                inlineWind={inlineWind}
-                points={points}
-                pointsMode={pointsMode}
-                winButtonMode={winButtonMode}
-                loseButtonMode={loseButtonMode}
-                riichiButtonMode={riichiButtonMode}
-                showDeadButton={showDeadButton}
-            />
-            );
+        return {
+            name: "Super long long long name",
+            wind: "西",
+            inlineWind: inlineWind,
+            points: points,
+            pointsMode: pointsMode,
+            winButtonMode: winButtonMode,
+            loseButtonMode: loseButtonMode,
+            riichiButtonMode: riichiButtonMode,
+            showDeadButton: showDeadButton,
+        };
     }
 
-    //move to HOC
-    renderBottomPanel() {
-        const {tableMode, outcomeMode, selectOutcome} = this.props;
+    getBottomPanel() {
+        const {tableMode, outcomeMode} = this.props;
 
         let text = outcomeMode;
         let showBack = tableMode === TableMode.SELECT_PLAYERS || tableMode ===  TableMode.RESULT;
@@ -373,52 +290,52 @@ export class TableScreen extends React.Component<IProps, IState> {
         let showRefresh = [TableMode.GAME, TableMode.BEFORE_START, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
         let showAdd = tableMode === TableMode.GAME;
         let showLog = [TableMode.GAME, TableMode.OTHER_PLAYER_TABLE].includes(tableMode);
-        let canShowSelectModal = selectOutcome && showAdd;
 
-        return (
-            <>
-                <BottomPanel
-                    text={text}
-                    showBack={showBack}
-                    showNext={showNext}
-                    isNextDisabled={isNextDisabled}
-                    showSave={showSave}
-                    isSaveDisabled={isSaveDisabled}
-                    showHome={showHome}
-                    showRefresh={showRefresh}
-                    showAdd={showAdd}
-                    showLog={showLog}
-                />
+        return {
+            text: text,
+            showBack: showBack,
+            showNext: showNext,
+            isNextDisabled: isNextDisabled,
+            showHome: showHome,
+            showRefresh: showRefresh,
+            showAdd: showAdd,
+            showLog: showLog,
+            showSave: showSave,
+            isSaveDisabled: isSaveDisabled,
+        };
+    }
 
-                {canShowSelectModal && (
-                    <SelectOutcomeModal />
-                )}
-            </>
-        )
+    getTableInfo() {
+        const {showRoundInfo, showTableNumber, showTimer, gamesLeft} = this.props;
+        return {
+            showRoundInfo: showRoundInfo,
+            showTableNumber: showTableNumber,
+            showTimer: showTimer,
+            gamesLeft: gamesLeft,
+            round: '東 1',
+            riichiCount: 1,
+            honbaCount: 2,
+            currentTime: '47:25',
+            tableNumber: 4,
+        } as TableInfoProps;
     }
 
     render() {
+        const {selectOutcome, showArrows} = this.props;
+
         return (
-            <div className="flex-container page-table">
-                <div className="flex-container__content flex-container">
-                    <div className="flex-container__top">
-                        {this.renderPlayerTop()}
-                    </div>
-                    <div className="flex-container__content page-table__center">
-                        {this.renderPlayerLeft()}
-
-                        {this.renderTableInfo()}
-
-                        {this.renderPlayerRight()}
-                    </div>
-                    <div className="flex-container__bottom">
-                        {this.renderPlayerBottom()}
-                    </div>
-                </div>
-                <div className="flex-container__bottom">
-                    {this.renderBottomPanel()}
-                </div>
-            </div>
+            <>
+               <TableScreenStateless
+                   topPlayer={this.getPlayerTop()}
+                   leftPlayer={this.getPlayerLeft()}
+                   bottomPlayer={this.getPlayerBottom()}
+                   rightPlayer={this.getPlayerRight()}
+                   tableInfo={this.getTableInfo()}
+                   bottomPanel={this.getBottomPanel()}
+                   showOutcomeModal={selectOutcome}
+                   showArrows={showArrows}
+               />
+           </>
         );
     }
 }

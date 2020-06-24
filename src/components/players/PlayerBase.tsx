@@ -2,34 +2,22 @@ import * as React from 'react';
 import './players.less';
 import {PlayerButtonMode, PlayerMode, PlayerPointsMode} from '../../types/PlayerEnums';
 import {classNames} from '../../services/ReactUtils';
+import {PlayerProps} from './PlayerProps';
 
-type IProps = {
-    name: string,
-    wind: string
+type IProps = PlayerProps & {
     mode: PlayerMode
-    nameHeight?: string
-    rotated?: boolean
     startWithName?: boolean
-    inlineWind?: boolean
     verticalButtons?: boolean
-    points?: number
-    pointsMode?: PlayerPointsMode
-    penaltyPoints?: number
-    winButtonMode?: PlayerButtonMode
-    loseButtonMode?: PlayerButtonMode
-    riichiButtonMode?: PlayerButtonMode
-    showInlineRiichi?: boolean
-    showDeadButton?: boolean
 }
 
 export class PlayerBase extends React.Component<IProps> {
 
     renderName() {
-        const {name, wind, nameHeight, inlineWind} = this.props;
+        const {name, wind, nameWidth, inlineWind} = this.props;
 
         return (
             <div className="player__name-container">
-                <div className="player__name" style={{width: nameHeight}}>
+                <div className="player__name" style={{width: nameWidth}}>
                     {inlineWind && (
                         <span className="player__inline-wind">{wind}</span>
                     )}

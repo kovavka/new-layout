@@ -1,20 +1,8 @@
 import * as React from "react";
 import {classNames} from '../../services/ReactUtils';
+import {BottomPanelProps} from './BottomPanelProps';
 
-type IProps = {
-    text?: string
-    showBack?: boolean
-    showNext?: boolean
-    isNextDisabled?: boolean
-    showSave?: boolean
-    isSaveDisabled?: boolean
-    showHome?: boolean
-    showRefresh?: boolean
-    showAdd?: boolean
-    showLog?: boolean
-}
-
-export class BottomPanel extends React.Component<IProps> {
+export class BottomPanel extends React.Component<BottomPanelProps> {
     render() {
         const {
             text,
