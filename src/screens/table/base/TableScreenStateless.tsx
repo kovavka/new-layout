@@ -1,16 +1,16 @@
 import * as React from 'react';
 import './page-table.less'
-import {BottomPanelProps} from 'components/bottom-panel/BottomPanelProps';
-import {PlayerProps} from 'components/players/PlayerProps';
-import {TableInfo} from 'screens/table/base/TableInfo';
-import {TableInfoProps} from 'screens/table/base/TableInfoProps';
-import {ResultArrows} from 'components/result-arrows/ResultArrows';
-import {PlayerTop} from 'components/players/PlayerTop';
-import {PlayerLeft} from 'components/players/PlayerLeft';
-import {PlayerRight} from 'components/players/PlayerRight';
-import {PlayerBottom} from 'components/players/PlayerBottom';
-import {BottomPanel} from 'components/bottom-panel/BottomPanel';
-import { SelectOutcomeModal } from '../SelectOutcomeModal';
+import {BottomPanelProps} from '../../../components/bottom-panel/BottomPanelProps';
+import {PlayerProps} from '../../../components/players/PlayerProps';
+import {TableInfo} from './TableInfo';
+import {TableInfoProps} from './TableInfoProps';
+import {ResultArrows} from '../../../components/result-arrows/ResultArrows';
+import {PlayerTop} from '../../../components/players/PlayerTop';
+import {PlayerLeft} from '../../../components/players/PlayerLeft';
+import {PlayerRight} from '../../../components/players/PlayerRight';
+import {PlayerBottom} from '../../../components/players/PlayerBottom';
+import {SelectOutcomeModal} from '../SelectOutcomeModal';
+import { BottomPanel } from '../../../components/bottom-panel/BottomPanel';
 
 type IProps = {
     showArrows?: boolean

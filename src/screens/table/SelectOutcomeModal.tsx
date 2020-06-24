@@ -1,6 +1,6 @@
 import * as React from "react";
-import {SelectModal} from 'components/select-modal/SelectModal';
-import {ItemSelect} from 'components/select-modal/ItemSelect';
+import { SelectModal } from "../../components/select-modal/SelectModal";
+import {ItemSelect} from '../../components/select-modal/ItemSelect';
 
 const items: ItemSelect[] = [
     {
