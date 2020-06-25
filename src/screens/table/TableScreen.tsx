@@ -3,15 +3,18 @@ import {PlayerButtonMode, PlayerPointsMode} from '../../types/PlayerEnums';
 import {TableMode} from '../../types/TableMode';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
 import './base/page-table.less'
-import {TableScreenStateless} from './base/TableScreenStateless';
 import {TableInfoProps} from './base/TableInfoProps';
 import {PlayerProps} from '../../components/players/PlayerProps';
+import {TableScreenStateless} from './base/TableScreenStateless';
 
 type IProps = {
     tableMode: TableMode
     outcomeMode?: OutcomeTableMode
 
     topPlayer: PlayerProps
+    leftPlayer: PlayerProps
+    rightPlayer: PlayerProps
+    bottomPlayer: PlayerProps
 
     showPoints?: boolean
     inlineWind?: boolean
@@ -47,178 +50,6 @@ export class TableScreen extends React.Component<IProps, IState> {
         this.setState({
             rotatedNameHeight: document.querySelector('.page-table__center')!.clientHeight + 'px'
         });
-    }
-
-    getPlayerLeft() {
-        const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
-        const {rotatedNameHeight} = this.state;
-        let points = showPoints ? 54100 : undefined;
-        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
-
-        //todo move to HOC
-        let winButtonMode: PlayerButtonMode | undefined;
-        let loseButtonMode: PlayerButtonMode | undefined;
-        let riichiButtonMode: PlayerButtonMode | undefined;
-        let showDeadButton: boolean | undefined;
-        let showInlineRiichi = tableMode === TableMode.RESULT;
-
-        if (tableMode && tableMode !== TableMode.RESULT && outcomeMode !== undefined) {
-            switch (outcomeMode) {
-                case OutcomeTableMode.RON:
-                    winButtonMode = PlayerButtonMode.PRESSED;
-                    loseButtonMode = PlayerButtonMode.DISABLE;
-                    riichiButtonMode = PlayerButtonMode.PRESSED;
-                    break;
-                case OutcomeTableMode.TSUMO:
-                    winButtonMode = PlayerButtonMode.IDLE;
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.CHOMBO:
-                    loseButtonMode = PlayerButtonMode.PRESSED;
-                    break;
-                case OutcomeTableMode.NAGASHI:
-                    winButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.NAGASHI_TEMPAI:
-                case OutcomeTableMode.EXHAUSTIVE_DRAW:
-                    riichiButtonMode = PlayerButtonMode.PRESSED;
-                    showDeadButton = true;
-                    break;
-                case OutcomeTableMode.ABORTIVE_DRAW:
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.PAO:
-                    loseButtonMode = PlayerButtonMode.IDLE;
-                    break;
-            }
-        }
-
-        return {
-            name: "Bla Blabla",
-            wind: "南",
-            nameWidth: rotatedNameHeight,
-            inlineWind: inlineWind,
-            points: points,
-            pointsMode: pointsMode,
-            winButtonMode: winButtonMode,
-            loseButtonMode: loseButtonMode,
-            riichiButtonMode: riichiButtonMode,
-            showDeadButton: showDeadButton,
-        };
-    }
-
-    getPlayerRight() {
-        const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
-        const {rotatedNameHeight} = this.state;
-        let points = showPoints ? 32800 : undefined;
-        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
-
-        //todo move to HOC
-        let winButtonMode: PlayerButtonMode | undefined;
-        let loseButtonMode: PlayerButtonMode | undefined;
-        let riichiButtonMode: PlayerButtonMode | undefined;
-        let showDeadButton: boolean | undefined;
-
-        if (tableMode && tableMode !== TableMode.RESULT && outcomeMode !== undefined) {
-            switch (outcomeMode) {
-                case OutcomeTableMode.RON:
-                    winButtonMode = PlayerButtonMode.IDLE;
-                    loseButtonMode = PlayerButtonMode.DISABLE;
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.TSUMO:
-                    winButtonMode = PlayerButtonMode.IDLE;
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.CHOMBO:
-                    loseButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.NAGASHI:
-                    winButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.NAGASHI_TEMPAI:
-                case OutcomeTableMode.EXHAUSTIVE_DRAW:
-                    winButtonMode = PlayerButtonMode.PRESSED;
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    showDeadButton = false;
-                    break;
-                case OutcomeTableMode.ABORTIVE_DRAW:
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.PAO:
-                    loseButtonMode = PlayerButtonMode.IDLE;
-                    break;
-            }
-        }
-
-        return {
-            name: "Test Testov",
-            wind: "北",
-            nameWidth: rotatedNameHeight,
-            inlineWind: inlineWind,
-            points: points,
-            pointsMode: pointsMode,
-            winButtonMode: winButtonMode,
-            loseButtonMode: loseButtonMode,
-            riichiButtonMode: riichiButtonMode,
-            showDeadButton: showDeadButton,
-        };
-    }
-
-    getPlayerBottom() {
-        const {inlineWind, showPoints, tableMode, outcomeMode} = this.props;
-        let points = showPoints ? 10500 : undefined;
-        let pointsMode = showPoints ? PlayerPointsMode.IDLE : undefined;
-
-        //todo move to HOC
-        let winButtonMode: PlayerButtonMode | undefined;
-        let loseButtonMode: PlayerButtonMode | undefined;
-        let riichiButtonMode: PlayerButtonMode | undefined;
-        let showDeadButton: boolean | undefined;
-
-        if (tableMode && tableMode !== TableMode.RESULT && outcomeMode !== undefined) {
-            switch (outcomeMode) {
-                case OutcomeTableMode.RON:
-                    winButtonMode = PlayerButtonMode.DISABLE;
-                    loseButtonMode = PlayerButtonMode.PRESSED;
-                    riichiButtonMode = PlayerButtonMode.PRESSED;
-                    break;
-                case OutcomeTableMode.TSUMO:
-                    winButtonMode = PlayerButtonMode.IDLE;
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.CHOMBO:
-                    loseButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.NAGASHI:
-                    winButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.NAGASHI_TEMPAI:
-                case OutcomeTableMode.EXHAUSTIVE_DRAW:
-                    winButtonMode = PlayerButtonMode.IDLE;
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    showDeadButton = false;
-                    break;
-                case OutcomeTableMode.ABORTIVE_DRAW:
-                    riichiButtonMode = PlayerButtonMode.IDLE;
-                    break;
-                case OutcomeTableMode.PAO:
-                    loseButtonMode = PlayerButtonMode.IDLE;
-                    break;
-            }
-        }
-
-        return {
-            name: "Super long long long name",
-            wind: "西",
-            inlineWind: inlineWind,
-            points: points,
-            pointsMode: pointsMode,
-            winButtonMode: winButtonMode,
-            loseButtonMode: loseButtonMode,
-            riichiButtonMode: riichiButtonMode,
-            showDeadButton: showDeadButton,
-        };
     }
 
     getBottomPanel() {
@@ -266,15 +97,15 @@ export class TableScreen extends React.Component<IProps, IState> {
     }
 
     render() {
-        const {topPlayer, selectOutcome, showArrows} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, selectOutcome, showArrows} = this.props;
 
         return (
             <>
                <TableScreenStateless
                    topPlayer={topPlayer}
-                   leftPlayer={this.getPlayerLeft()}
-                   bottomPlayer={this.getPlayerBottom()}
-                   rightPlayer={this.getPlayerRight()}
+                   leftPlayer={leftPlayer}
+                   rightPlayer={rightPlayer}
+                   bottomPlayer={bottomPlayer}
                    tableInfo={this.getTableInfo()}
                    bottomPanel={this.getBottomPanel()}
                    showOutcomeModal={selectOutcome}

@@ -32,17 +32,15 @@ export class PlayerBase extends React.Component<IProps> {
 
         if (riichiButtonMode !== undefined) {
            return (
-               <div className={classNames('player__riichi-button', {'player__riichi-button--rotated': verticalButtons})}>
-                   {riichiButtonMode === PlayerButtonMode.IDLE && (
-                       <svg>
-                           <use xlinkHref="#riichi-big-empty" />
-                       </svg>
+               <div className={classNames(
+                   'player__riichi-button',
+                   {'player__riichi-button--rotated': verticalButtons},
+                   {'player__riichi-button--empty': riichiButtonMode === PlayerButtonMode.IDLE}
                    )}
-                   {riichiButtonMode === PlayerButtonMode.PRESSED && (
-                       <svg>
-                           <use xlinkHref="#riichi-big" />
-                       </svg>
-                   )}
+               >
+                   <svg>
+                       <use xlinkHref="#riichi-big" />
+                   </svg>
                </div>
            )
         } else {

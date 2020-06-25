@@ -204,6 +204,8 @@
 }
 
 .player__button-container {
+  z-index: 1;
+
   &.player__button-container--horizontal {
     display: flex;
     justify-content: center;
@@ -231,7 +233,7 @@
 
     svg {
       position: absolute;
-      z-index: -1;
+      z-index: 0;
       height: 106px;
       width: 106px;
 
@@ -246,6 +248,18 @@
       width: 106px;
       height: 17px;
     }
+  }
+
+  &.player__riichi-button--empty {
+    color: @color-secondary-4;
+  }
+
+  &:not(.player__riichi-button--empty) {
+    --riichi-circle-color: @color-danger;
+  }
+
+  &:active {
+    --riichi-fill-color: @color-secondary-6;
   }
 }
 
