@@ -16,24 +16,21 @@ export class TableInfo extends React.Component<TableInfoProps> {
             tableNumber,
         } = this.props;
 
+        if (!showRoundInfo || showTableNumber) {
+            return null
+        }
+
         return (
             <div className="table-info">
                 {showRoundInfo && (
                     <>
-                        <div className="table-info__round">
-                            {round}
-                        </div>
-                        {this.renderTebou('riichi-small', riichiCount)}
-                        <div className="table-info__tenbou">
-                            <div className="svg-button">
-                                <svg>
-                                    <use xlinkHref="#honba"></use>
-                                </svg>
+                        {!!round && (
+                            <div className="table-info__round">
+                                {round}
                             </div>
-                            <div className="table-info__tenbou-count">
-                                {honbaCount}
-                            </div>
-                        </div>
+                        )}
+                        {!!riichiCount && this.renderTebou('riichi-small', riichiCount)}
+                        {!!honbaCount && this.renderTebou('honba', honbaCount)}
                         {showTimer && (
                             <div className="table-info__timer">
                                 {currentTime}

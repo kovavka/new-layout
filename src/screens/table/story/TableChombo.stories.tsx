@@ -1,8 +1,15 @@
 import * as React from 'react';
 import {PlayerButtonMode} from '../../../types/PlayerEnums';
-import {getBottomPlayerBase, getLeftPlayerBase, getRightPlayerBase, getTopPlayerBase} from '../TableScreenExamples';
+import {
+    getBottomPlayerBase,
+    getLeftPlayerBase,
+    getRightPlayerBase,
+    getTableInfoBase,
+    getTopPlayerBase,
+} from '../TableScreenExamples';
 import {TableStories} from '../../../storybook-base/StoryVars';
 import {PlayerPropsChombo, TableChombo} from '../variations/TableChombo';
+import {TableInfoProps} from '../base/TableInfoProps';
 
 const topPlayer = {
     ...getTopPlayerBase(),
@@ -24,6 +31,13 @@ const bottomPlayer = {
     loseButtonMode: PlayerButtonMode.IDLE,
 } as PlayerPropsChombo;
 
+const tableInfo = {
+    ...getTableInfoBase(),
+    showRoundInfo: false,
+    showTableNumber: false,
+    showTimer: true,
+} as TableInfoProps;
+
 TableStories.add(
     'chombo',
     () => (
@@ -32,6 +46,7 @@ TableStories.add(
             leftPlayer={leftPlayer}
             rightPlayer={rightPlayer}
             bottomPlayer={bottomPlayer}
+            tableInfo={tableInfo}
         />
     )
 );

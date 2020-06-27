@@ -1,8 +1,15 @@
 import * as React from 'react';
 import {PlayerButtonMode} from '../../../types/PlayerEnums';
-import {getBottomPlayerBase, getLeftPlayerBase, getRightPlayerBase, getTopPlayerBase} from '../TableScreenExamples';
+import {
+    getBottomPlayerBase,
+    getLeftPlayerBase,
+    getRightPlayerBase,
+    getTableInfoBase,
+    getTopPlayerBase,
+} from '../TableScreenExamples';
 import {TableStories} from '../../../storybook-base/StoryVars';
 import {PlayerPropsExhaustiveDraw, TableExhaustiveDraw} from '../variations/TableExhaustiveDraw';
+import {TableInfoProps} from '../base/TableInfoProps';
 
 const topPlayer = {
     ...getTopPlayerBase(),
@@ -32,6 +39,13 @@ const bottomPlayer = {
     showDeadButton: false,
 } as PlayerPropsExhaustiveDraw;
 
+const tableInfo = {
+    ...getTableInfoBase(),
+    showRoundInfo: false,
+    showTableNumber: false,
+    showTimer: true,
+} as TableInfoProps;
+
 
 TableStories.add(
     'exhaustive draw',
@@ -41,6 +55,7 @@ TableStories.add(
             leftPlayer={leftPlayer}
             rightPlayer={rightPlayer}
             bottomPlayer={bottomPlayer}
+            tableInfo={tableInfo}
         />
     )
 );

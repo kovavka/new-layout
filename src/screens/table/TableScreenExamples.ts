@@ -1,3 +1,4 @@
+import {TableInfoProps} from './base/TableInfoProps';
 
 export function getTopPlayerBase() {
     return {
@@ -29,4 +30,15 @@ export function getBottomPlayerBase() {
         wind: "西",
         rotated: false,
     }
+}
+
+
+export function getTableInfoBase(): TableInfoProps {
+    return {
+        round: '東 1',
+        riichiCount: 1,
+        honbaCount: 2,
+        currentTime: '47:25',
+        tableNumber: 4,
+    } as TableInfoProps;
 }

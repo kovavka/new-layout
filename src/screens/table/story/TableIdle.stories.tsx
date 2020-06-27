@@ -1,8 +1,15 @@
 import * as React from 'react';
 import {PlayerPointsMode} from '../../../types/PlayerEnums';
-import {getBottomPlayerBase, getLeftPlayerBase, getRightPlayerBase, getTopPlayerBase} from '../TableScreenExamples';
+import {
+    getBottomPlayerBase,
+    getLeftPlayerBase,
+    getRightPlayerBase,
+    getTableInfoBase,
+    getTopPlayerBase,
+} from '../TableScreenExamples';
 import {TableStories} from '../../../storybook-base/StoryVars';
 import {PlayerPropsIdle, TableIdle} from '../variations/TableIdle';
+import {TableInfoProps} from '../base/TableInfoProps';
 
 const topPlayer = {
     ...getTopPlayerBase(),
@@ -32,6 +39,13 @@ const bottomPlayer = {
     penaltyPoints: undefined,
 } as PlayerPropsIdle;
 
+const tableInfo = {
+    ...getTableInfoBase(),
+    showRoundInfo: true,
+    showTableNumber: false,
+    showTimer: true,
+} as TableInfoProps;
+
 TableStories.add(
     'idle',
     () => (
@@ -40,6 +54,7 @@ TableStories.add(
             leftPlayer={leftPlayer}
             rightPlayer={rightPlayer}
             bottomPlayer={bottomPlayer}
+            tableInfo={tableInfo}
         />
     )
 );

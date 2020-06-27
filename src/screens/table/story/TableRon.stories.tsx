@@ -1,9 +1,17 @@
 import * as React from 'react';
 import {PlayerButtonMode, PlayerPointsMode} from '../../../types/PlayerEnums';
-import {getBottomPlayerBase, getLeftPlayerBase, getRightPlayerBase, getTopPlayerBase} from '../TableScreenExamples';
+import {
+    getBottomPlayerBase,
+    getLeftPlayerBase,
+    getRightPlayerBase,
+    getTableInfoBase,
+    getTopPlayerBase,
+} from '../TableScreenExamples';
 import {TableStories} from '../../../storybook-base/StoryVars';
 import {PlayerPropsBeforeStart} from '../variations/TableBeforeStart';
 import {TableRon} from '../variations/TableRon';
+import {TableInfoProps} from '../base/TableInfoProps';
+import {TableChombo} from '../variations/TableChombo';
 
 const topPlayer = {
     ...getTopPlayerBase(),
@@ -33,6 +41,13 @@ const bottomPlayer = {
     riichiButtonMode: PlayerButtonMode.PRESSED,
 } as PlayerPropsBeforeStart;
 
+const tableInfo = {
+    ...getTableInfoBase(),
+    showRoundInfo: false,
+    showTableNumber: false,
+    showTimer: true,
+} as TableInfoProps;
+
 
 TableStories.add(
     'ron',
@@ -42,6 +57,7 @@ TableStories.add(
             leftPlayer={leftPlayer}
             rightPlayer={rightPlayer}
             bottomPlayer={bottomPlayer}
+            tableInfo={tableInfo}
         />
     )
 );

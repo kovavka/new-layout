@@ -3,6 +3,9 @@ import {TableScreen} from '../TableScreen';
 import {TableMode} from '../../../types/TableMode';
 import {OutcomeTableMode} from '../../../types/OutcomeTypes';
 import {PlayerProps} from '../../../components/players/PlayerProps';
+import {getTableInfoBase} from '../TableScreenExamples';
+import {TableInfoProps} from '../base/TableInfoProps';
+import {PlayerPropsChombo} from './TableChombo';
 
 export type PlayerPropsRon =  Pick<PlayerProps, 'name' | 'wind' | 'rotated' | 'winButtonMode' | 'loseButtonMode' | 'riichiButtonMode'>
 
@@ -11,6 +14,7 @@ type IProps = {
     leftPlayer: PlayerPropsRon
     rightPlayer: PlayerPropsRon
     bottomPlayer: PlayerPropsRon
+    tableInfo: TableInfoProps
 }
 
 function getPlayer(player: PlayerPropsRon): PlayerProps {
@@ -26,7 +30,7 @@ function getPlayer(player: PlayerPropsRon): PlayerProps {
 
 export class TableRon extends React.Component<IProps> {
     render() {
-        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo} = this.props;
 
         return (
             <TableScreen
@@ -36,7 +40,7 @@ export class TableRon extends React.Component<IProps> {
                bottomPlayer={getPlayer(bottomPlayer)}
                tableMode={TableMode.SELECT_PLAYERS}
                outcomeMode={OutcomeTableMode.RON}
-               inlineWind={true}
+               tableInfo={tableInfo}
            />
         );
     }

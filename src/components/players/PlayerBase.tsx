@@ -153,35 +153,26 @@ export class PlayerBase extends React.Component<IProps> {
                     </div>
                 )}
 
-                {points && (
+                {points !== undefined && (
                     <div className="player__score-container">
-                        {pointsMode === PlayerPointsMode.IDLE && (
-                            <div className="player__score">
-                                <p>
-                                    {points}
-                                    {showInlineRiichi && (
-                                        <svg className="player__inline-riichi">
-                                            <use xlinkHref="#riichi-big" />
-                                        </svg>
-                                    )}
-                                </p>
-                                {penaltyPoints && (
-                                    <div className="player__penalty">{penaltyPoints / 1000 + 'k'}</div>
+                        <div className={classNames(
+                            'player__score',
+                            {'player__score--success': pointsMode === PlayerPointsMode.POSITIVE},
+                            {'player__score--danger': pointsMode === PlayerPointsMode.NEGATIVE}
+                        )}
+                        >
+                            <p>
+                                {points}
+                                {showInlineRiichi && (
+                                    <svg className="player__inline-riichi">
+                                        <use xlinkHref="#riichi-big" />
+                                    </svg>
                                 )}
-
-                            </div>
-                        )}
-                        {pointsMode === PlayerPointsMode.POSITIVE && (
-                            <div className="player__score player__score--success">
-                                +{points}
-                            </div>
-                        )}
-                        {pointsMode === PlayerPointsMode.NEGATIVE && (
-                            <div className="player__score player__score--danger">
-                                -{points}
-                            </div>
-                        )}
-
+                            </p>
+                            {penaltyPoints && (
+                                <div className="player__penalty">{penaltyPoints / 1000 + 'k'}</div>
+                            )}
+                        </div>
                     </div>
                 )}
 

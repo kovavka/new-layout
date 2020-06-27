@@ -1,7 +1,12 @@
 import * as React from 'react';
 import {TableStories} from '../../../storybook-base/StoryVars';
 import {PlayerPropsBeforeStart, TableBeforeStart} from '../variations/TableBeforeStart';
-import {getBottomPlayerBase, getLeftPlayerBase, getRightPlayerBase, getTopPlayerBase} from '../TableScreenExamples';
+import {
+    getBottomPlayerBase,
+    getLeftPlayerBase,
+    getRightPlayerBase,
+    getTopPlayerBase,
+} from '../TableScreenExamples';
 
 const topPlayer = {
     ...getTopPlayerBase(),
@@ -27,6 +32,7 @@ TableStories.add(
             leftPlayer={leftPlayer}
             rightPlayer={rightPlayer}
             bottomPlayer={bottomPlayer}
+            tableNumber={4}
         />
     )
 );

@@ -3,6 +3,9 @@ import {TableScreen} from '../TableScreen';
 import {TableMode} from '../../../types/TableMode';
 import {OutcomeTableMode} from '../../../types/OutcomeTypes';
 import {PlayerProps} from '../../../components/players/PlayerProps';
+import {getTableInfoBase} from '../TableScreenExamples';
+import {TableInfoProps} from '../base/TableInfoProps';
+import {PlayerPropsChombo} from './TableChombo';
 
 export type PlayerPropsExhaustiveDraw =  Pick<PlayerProps, 'name' | 'wind' | 'rotated' | 'winButtonMode' | 'riichiButtonMode' | 'showDeadButton'>
 
@@ -11,6 +14,7 @@ type IProps = {
     leftPlayer: PlayerPropsExhaustiveDraw
     rightPlayer: PlayerPropsExhaustiveDraw
     bottomPlayer: PlayerPropsExhaustiveDraw
+    tableInfo: TableInfoProps
 }
 
 function getPlayer(player: PlayerPropsExhaustiveDraw): PlayerProps {
@@ -26,7 +30,7 @@ function getPlayer(player: PlayerPropsExhaustiveDraw): PlayerProps {
 
 export class TableExhaustiveDraw extends React.Component<IProps> {
     render() {
-        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo} = this.props;
 
         return (
            <TableScreen
@@ -36,7 +40,7 @@ export class TableExhaustiveDraw extends React.Component<IProps> {
                bottomPlayer={getPlayer(bottomPlayer)}
                tableMode={TableMode.SELECT_PLAYERS}
                outcomeMode={OutcomeTableMode.EXHAUSTIVE_DRAW}
-               inlineWind={true}
+               tableInfo={tableInfo}
            />
         );
     }

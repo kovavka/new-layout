@@ -1,11 +1,11 @@
 import * as React from 'react';
-import {PlayerButtonMode, PlayerPointsMode} from '../../types/PlayerEnums';
 import {TableMode} from '../../types/TableMode';
 import {OutcomeTableMode} from '../../types/OutcomeTypes';
 import './base/page-table.less'
 import {TableInfoProps} from './base/TableInfoProps';
 import {PlayerProps} from '../../components/players/PlayerProps';
 import {TableScreenStateless} from './base/TableScreenStateless';
+import {ResultArrowsProps} from './base/ResultArrowsProps';
 
 type IProps = {
     tableMode: TableMode
@@ -16,42 +16,13 @@ type IProps = {
     rightPlayer: PlayerProps
     bottomPlayer: PlayerProps
 
-    showPoints?: boolean
-    inlineWind?: boolean
-    showArrows?: boolean
     selectOutcome?: boolean
 
-    showRoundInfo?: boolean
-    showTableNumber?: boolean
-    showTimer?: boolean
-    gamesLeft?: number
+    tableInfo: TableInfoProps
+    arrows?: ResultArrowsProps
 }
 
-//todo move to general state and HOC
-type IState = {
-    rotatedNameHeight: string
-}
-
-export class TableScreen extends React.Component<IProps, IState> {
-    state = {
-        rotatedNameHeight: 'initial'
-    };
-
-    componentDidMount(): void {
-        this.onFrameHeightChanged();
-        // StateService.instance.frameHeightChanged.add(this.onFrameHeightChanged, this);
-    }
-
-    componentWillUnmount(): void {
-        // StateService.instance.frameHeightChanged.remove(this.onFrameHeightChanged, this);
-    }
-
-    onFrameHeightChanged() {
-        this.setState({
-            rotatedNameHeight: document.querySelector('.page-table__center')!.clientHeight + 'px'
-        });
-    }
-
+export class TableScreen extends React.Component<IProps> {
     getBottomPanel() {
         const {tableMode, outcomeMode} = this.props;
 
@@ -81,23 +52,8 @@ export class TableScreen extends React.Component<IProps, IState> {
         };
     }
 
-    getTableInfo() {
-        const {showRoundInfo, showTableNumber, showTimer, gamesLeft} = this.props;
-        return {
-            showRoundInfo: showRoundInfo,
-            showTableNumber: showTableNumber,
-            showTimer: showTimer,
-            gamesLeft: gamesLeft,
-            round: '東 1',
-            riichiCount: 1,
-            honbaCount: 2,
-            currentTime: '47:25',
-            tableNumber: 4,
-        } as TableInfoProps;
-    }
-
     render() {
-        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, selectOutcome, showArrows} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, selectOutcome, arrows, tableInfo} = this.props;
 
         return (
             <>
@@ -106,10 +62,10 @@ export class TableScreen extends React.Component<IProps, IState> {
                    leftPlayer={leftPlayer}
                    rightPlayer={rightPlayer}
                    bottomPlayer={bottomPlayer}
-                   tableInfo={this.getTableInfo()}
+                   tableInfo={tableInfo}
                    bottomPanel={this.getBottomPanel()}
                    showOutcomeModal={selectOutcome}
-                   showArrows={showArrows}
+                   arrows={arrows}
                />
            </>
         );

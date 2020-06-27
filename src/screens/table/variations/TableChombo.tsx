@@ -3,6 +3,7 @@ import {TableScreen} from '../TableScreen';
 import {TableMode} from '../../../types/TableMode';
 import {OutcomeTableMode} from '../../../types/OutcomeTypes';
 import {PlayerProps} from '../../../components/players/PlayerProps';
+import {TableInfoProps} from '../base/TableInfoProps';
 
 export type PlayerPropsChombo =  Pick<PlayerProps, 'name' | 'wind' | 'rotated' | 'loseButtonMode'>
 
@@ -11,6 +12,7 @@ type IProps = {
     leftPlayer: PlayerPropsChombo
     rightPlayer: PlayerPropsChombo
     bottomPlayer: PlayerPropsChombo
+    tableInfo: TableInfoProps
 }
 
 function getPlayer(player: PlayerPropsChombo): PlayerProps {
@@ -28,7 +30,7 @@ function getPlayer(player: PlayerPropsChombo): PlayerProps {
 
 export class TableChombo extends React.Component<IProps> {
     render() {
-        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo} = this.props;
 
         return (
            <TableScreen
@@ -38,7 +40,7 @@ export class TableChombo extends React.Component<IProps> {
                bottomPlayer={getPlayer(bottomPlayer)}
                tableMode={TableMode.SELECT_PLAYERS}
                outcomeMode={OutcomeTableMode.CHOMBO}
-               inlineWind={true}
+               tableInfo={tableInfo}
            />
         );
     }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import {TableScreen} from '../TableScreen';
 import {TableMode} from '../../../types/TableMode';
 import {PlayerProps} from '../../../components/players/PlayerProps';
+import {TableInfoProps} from '../base/TableInfoProps';
 
 export type PlayerPropsIdle =  Pick<PlayerProps, 'name' | 'wind' | 'rotated' | 'points' | 'pointsMode' | 'penaltyPoints'>
 
@@ -10,6 +11,7 @@ type IProps = {
     leftPlayer: PlayerPropsIdle
     rightPlayer: PlayerPropsIdle
     bottomPlayer: PlayerPropsIdle
+    tableInfo: TableInfoProps
 }
 
 function getPlayer(player: PlayerPropsIdle): PlayerProps {
@@ -25,7 +27,7 @@ function getPlayer(player: PlayerPropsIdle): PlayerProps {
 
 export class TableIdle extends React.Component<IProps> {
     render() {
-        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo} = this.props;
 
         return (
            <TableScreen
@@ -34,10 +36,7 @@ export class TableIdle extends React.Component<IProps> {
                rightPlayer={getPlayer(rightPlayer)}
                bottomPlayer={getPlayer(bottomPlayer)}
                tableMode={TableMode.GAME}
-               showRoundInfo={true}
-               showTimer={true}
-               inlineWind={true}
-               showPoints={true}
+               tableInfo={tableInfo}
            />
         );
     }
