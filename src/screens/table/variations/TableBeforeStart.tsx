@@ -2,38 +2,17 @@ import * as React from "react";
 import {TableScreen} from '../TableScreen';
 import {TableMode} from '../../../types/TableMode';
 import {PlayerProps} from '../../../components/players/PlayerProps';
-import {PlayerPropsChombo} from './TableScreenChombo';
 
-export type PlayerPropsBeforeStart =  Pick<PlayerProps, 'name' | 'wind' | 'rotated' | 'nameWidth'>
-const topPlayer = {
-    name: "Random player",
-    wind: "東",
-    rotated: false,
-    nameWidth: undefined,
-} as PlayerPropsBeforeStart;
+export type PlayerPropsBeforeStart =  Pick<PlayerProps, 'name' | 'wind' | 'rotated'>
 
-const leftPlayer = {
-    name: "Bla Blabla",
-    wind: "南",
-    rotated: false,
-    nameWidth: 'initial',
-} as PlayerPropsBeforeStart;
+type IProps = {
+    topPlayer: PlayerPropsBeforeStart
+    leftPlayer: PlayerPropsBeforeStart
+    rightPlayer: PlayerPropsBeforeStart
+    bottomPlayer: PlayerPropsBeforeStart
+}
 
-const rightPlayer = {
-    name: "Test Testov",
-    wind: "北",
-    rotated: false,
-    nameWidth: 'initial',
-} as PlayerPropsBeforeStart;
-
-const bottomPlayer = {
-    name: "Super long long long name",
-    wind: "西",
-    rotated: false,
-    nameWidth: undefined,
-} as PlayerPropsBeforeStart;
-
-function getPlayer(player: PlayerPropsChombo): PlayerProps {
+function getPlayer(player: PlayerPropsBeforeStart): PlayerProps {
     return {
         ...player,
         inlineWind: false,
@@ -47,8 +26,10 @@ function getPlayer(player: PlayerPropsChombo): PlayerProps {
     }
 }
 
-export class TableScreenBeforeStart extends React.Component {
+export class TableBeforeStart extends React.Component<IProps> {
     render() {
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer} = this.props;
+
         return (
            <TableScreen
                topPlayer={getPlayer(topPlayer)}

@@ -8,6 +8,7 @@ type IProps = PlayerProps & {
     mode: PlayerMode
     startWithName?: boolean
     verticalButtons?: boolean
+    nameWidth?: string
 }
 
 export class PlayerBase extends React.Component<IProps> {

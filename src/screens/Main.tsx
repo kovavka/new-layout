@@ -3,19 +3,14 @@ import '../components/components.less'
 import {StateService} from '../services/StateService'
 import {ScreenType} from '../types/ScreenType'
 import { SettingsScreen } from './settings/SettingsScreen'
-import { TableScreenBeforeStart } from './table/story/TableScreenBeforeStart'
-import {TableScreenIdle} from './table/story/TableScreenIdle';
-import {TableScreenRon} from './table/story/TableScreenRon';
-import {TableScreenExhaustiveDraw} from './table/story/TableScreenExhaustiveDraw';
-import {TableScreenChombo} from './table/story/TableScreenChombo';
+import { TableBeforeStart } from './table/variations/TableBeforeStart'
+import {TableChombo} from './table/variations/TableChombo';
 import {GameResultScreen} from './game-result/GameResultScreen';
 import { NewGameScreen } from './new-game/NewGameScreen'
 import {SearchPlayerScreen} from './new-game/SearchPlayerScreen';
 import {OtherPlayingTablesScreen} from './other-tables/OtherPlayingTablesScreen';
 import {LoginErrorScreen} from './login/LoginErrorScreen';
-import {TableScreenResult} from "./table/story/TableScreenResult";
 import {HomeScreen} from './home/HomeScreen';
-import {TableScreenSelect} from './table/story/TableScreenSelect';
 import {LogScreenExample} from './log/story/LogScreenExample';
 import {SelectYakuScreenExample} from './select-hand/story/SelectYakuScreenExample';
 import {SelectHandScreenExample} from './select-hand/story/SelectHandScreenExample';
@@ -61,27 +56,27 @@ export class Main extends React.Component<any, MainState> {
                 {currentScreen === ScreenType.SETTINGS && (
                     <SettingsScreen />
                 )}
-                {currentScreen === ScreenType.BEFORE_START && (
-                    <TableScreenBeforeStart />
-                )}
-                {currentScreen === ScreenType.TABLE && (
-                    <TableScreenIdle />
-                )}
-                {currentScreen === ScreenType.TABLE_SELECT_OUTCOME && (
-                    <TableScreenSelect />
-                )}
-                {currentScreen === ScreenType.TABLE_RON && (
-                    <TableScreenRon />
-                )}
-                {currentScreen === ScreenType.TABLE_DRAW && (
-                    <TableScreenExhaustiveDraw />
-                )}
-                {currentScreen === ScreenType.TABLE_RESULT && (
-                    <TableScreenResult />
-                )}
-                {currentScreen === ScreenType.CHOMBO && (
-                    <TableScreenChombo />
-                )}
+                {/*{currentScreen === ScreenType.BEFORE_START && (*/}
+                {/*    <TableBeforeStart />*/}
+                {/*)}*/}
+                {/*{currentScreen === ScreenType.TABLE && (*/}
+                {/*    <TableIdle />*/}
+                {/*)}*/}
+                {/*{currentScreen === ScreenType.TABLE_SELECT_OUTCOME && (*/}
+                {/*    <TableSelect />*/}
+                {/*)}*/}
+                {/*{currentScreen === ScreenType.TABLE_RON && (*/}
+                {/*    <TableRon />*/}
+                {/*)}*/}
+                {/*{currentScreen === ScreenType.TABLE_DRAW && (*/}
+                {/*    <TableExhaustiveDraw />*/}
+                {/*)}*/}
+                {/*{currentScreen === ScreenType.TABLE_RESULT && (*/}
+                {/*    <TableResult />*/}
+                {/*)}*/}
+                {/*{currentScreen === ScreenType.CHOMBO && (*/}
+                {/*    <TableChombo />*/}
+                {/*)}*/}
                 {currentScreen === ScreenType.GAME_RESULT && (
                     <GameResultScreen />
                 )}

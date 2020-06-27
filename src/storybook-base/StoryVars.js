@@ -1,6 +1,7 @@
 import {storiesOf} from '@storybook/react';
 
 export const ScreenStories = storiesOf('Screen', module);
+export const TableStories = storiesOf('Table', module);
 
 export const CUSTOM_VIEWPORTS = {
     iPhoneSE: {
@@ -37,5 +38,6 @@ ScreenStories.addParameters({viewport: {
     viewports: CUSTOM_VIEWPORTS,
 }});
 
-
-// ScreenStories.addDecorator(storyFn => <StoryWrapper>{storyFn()}</StoryWrapper>);
+TableStories.addParameters({viewport: {
+    viewports: CUSTOM_VIEWPORTS,
+}});
