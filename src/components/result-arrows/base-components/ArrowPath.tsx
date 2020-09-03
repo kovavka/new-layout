@@ -1,6 +1,5 @@
 import * as React from 'react';
-import './result-arrows.less';
-import {Point} from './base';
+import {Point} from '../base';
 
 type IProps = {
     id: string

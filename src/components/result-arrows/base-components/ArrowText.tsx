@@ -1,7 +1,6 @@
 import * as React from 'react';
-import './result-arrows.less';
-import {Direction} from './base';
-import {TEXT_HEIGHT, TEXT_PATH_OFFSET} from './vars';
+import {Direction} from '../base';
+import {TEXT_HEIGHT, TEXT_PATH_OFFSET} from '../vars';
 
 type IProps = {
     payment: string

@@ -1,4 +1,5 @@
 import {Point} from './base';
+import {PlayerArrow} from '../../screens/table/base/ResultArrowsProps';
 
 export function getCurvePoint(start: Point, center: Point, end: Point, t: number): Point {
     let bx = getBezierCurveCoordinate(start.x, center.x, end.x, t);
@@ -28,4 +29,8 @@ export function getArrowAngle(start: Point, center: Point, end: Point): number {
 
     let angle = getAngleForCurve(start, point);
     return angle;
+}
+
+export function getPayment(arrow: PlayerArrow): string {
+    return arrow.honbaPoints ? `${arrow.points} + ${arrow.honbaPoints}` : arrow.points.toString();
 }

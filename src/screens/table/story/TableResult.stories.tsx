@@ -49,27 +49,35 @@ const tableInfo = {
 const arrowsInfo = {
     arrows: [
         {
-            points: 0,
-            honbaPoints: 0,
+            points: 1000,
+            honbaPoints: 300,
             withRiichi: false,
             withPao: false,
             start: PlayerSide.BOTTOM,
             end: PlayerSide.LEFT,
         },
         {
-            points: 0,
+            points: 5200,
             honbaPoints: 0,
             withRiichi: false,
-            withPao: false,
-            start: PlayerSide.TOP,
-            end: PlayerSide.BOTTOM,
+            withPao: true,
+            start: PlayerSide.BOTTOM,
+            end: PlayerSide.TOP,
         },
         {
-            points: 0,
+            points: 12000,
             honbaPoints: 0,
-            withRiichi: false,
+            withRiichi: true,
             withPao: false,
             start: PlayerSide.BOTTOM,
+            end: PlayerSide.RIGHT,
+        },
+        {
+            points: 3900,
+            honbaPoints: 0,
+            withRiichi: true,
+            withPao: true,
+            start: PlayerSide.LEFT,
             end: PlayerSide.RIGHT,
         },
     ]

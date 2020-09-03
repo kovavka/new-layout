@@ -9,12 +9,15 @@ import {
     TEXT_HEIGHT,
     TEXT_PATH_OFFSET,
 } from './vars';
-import {BottomLeftArrow} from './BottomLeftArrow';
+import {BottomLeftArrow} from './sideArrows/BottomLeftArrow';
 import {ArrowList} from './base';
-import {ArrowPath} from './ArrowPath';
-import {ArrowEnd} from './ArrowEnd';
-import {RiichiBet} from './RiichiBet';
-import {ArrowText} from './ArrowText';
+import {ArrowPath} from './base-components/ArrowPath';
+import {ArrowEnd} from './base-components/ArrowEnd';
+import {RiichiBetByCurve} from './base-components/RiichiBet';
+import {ArrowText} from './base-components/ArrowText';
+import {BottomRightArrow} from './sideArrows/BottomRightArrow';
+import {TopBottomArrow} from './sideArrows/TopBottomArrow';
+import {LeftRightArrow} from './sideArrows/LeftRightArrow';
 // import {StateService} from '../../services/StateService'
 
 
@@ -252,33 +255,6 @@ export class ResultArrows extends React.Component<ResultArrowsProps, IState> {
         )
     }
 
-    private renderBottomRight(offsetX: number, offsetY: number, arrow: PlayerArrow | undefined) {
-        if (!arrow) {
-            return null
-        }
-
-        const {width, height} = this.state;
-        const fromBottomToRight = true;
-        const showRiichi = true;
-        const showPao = false;
-        const payment = '16000';
-        const id = 'bottom-right';
-        const direction = Direction.BOTTOM_RIGHT;
-
-        let start = new Point(width/2 + START_ARROWS_OFFSET, height);
-        let center = new Point(width/2 + START_ARROWS_OFFSET + offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
-        let end = new Point(width, height/2 + START_ARROWS_OFFSET);
-
-        return (
-            <g>
-                {this.renderPath('bottom-right', start, center, end)}
-                {this.renderArrows(start, center, end, !fromBottomToRight, direction)}
-
-                {showRiichi && this.renderRiichiBet(start, center, end, !fromBottomToRight, direction)}
-                {this.renderText(payment, id, showPao, false, direction)}
-            </g>
-        );
-    }
 
     private renderTopRight(offsetX: number, offsetY: number, arrow: PlayerArrow | undefined) {
         if (!arrow) {
@@ -308,75 +284,10 @@ export class ResultArrows extends React.Component<ResultArrowsProps, IState> {
         );
     }
 
-    private renderHorizontal(arrow: PlayerArrow | undefined) {
-        if (!arrow) {
-            return null
-        }
-
-        const {width, height} = this.state;
-        const fromLeftToRight = true;
-
-        let id = 'hor';
-        let paymentFromStart = !fromLeftToRight;
-        let getTextAnchor = (fromStart) => fromStart ? 'start' : 'end';
-        let getStartOffset = (fromStart) => fromStart ? '5%' : '95%';
-
-        return (
-            <g>
-                <path id={id} d={`M ${0} ${height/2} H ${width}`} stroke="currentColor" fill="none"/>
-                {!fromLeftToRight && this.renderArrow(new Point(0, height/2), 0)}
-                {fromLeftToRight && this.renderArrow(new Point(width, height/2), 180)}
-
-                <text transform={`translate(${0} ${-TEXT_PATH_OFFSET})`}>
-                    <textPath xlinkHref={'#'+id} startOffset={getStartOffset(paymentFromStart)} textAnchor={getTextAnchor(paymentFromStart)} fill="currentColor">
-                        16000 + 1200
-                    </textPath>
-                </text>
-                <text transform={`translate(${0} ${-TEXT_PATH_OFFSET})`}>
-                    <textPath xlinkHref={'#'+id} startOffset={getStartOffset(!paymentFromStart)} textAnchor={getTextAnchor(!paymentFromStart)} fill="currentColor">
-                        pao
-                    </textPath>
-                </text>
-            </g>
-        );
-    }
-
-    private renderVertical(arrow: PlayerArrow | undefined) {
-        if (!arrow) {
-            return null
-        }
-
-        const {width, height} = this.state;
-        const fromTopToBottom = true;
-        let id = 'ver';
-        let paymentFromStart = fromTopToBottom;
-        let getTextAnchor = (fromStart) => fromStart ? 'start' : 'end';
-        let getStartOffset = (fromStart) => fromStart ? '5%' : '95%';
-
-        return (
-            <g>
-                <path id={id} d={`M ${width/2} ${0} V ${height}`} stroke="currentColor" fill="none"/>
-                {fromTopToBottom && this.renderArrow(new Point(width / 2, 0), 90)}
-                {!fromTopToBottom && this.renderArrow(new Point(width / 2, height), -90)}
-
-                <text transform={`translate(${TEXT_PATH_OFFSET} ${0})`}>
-                    <textPath xlinkHref={'#'+id} startOffset={getStartOffset(paymentFromStart)} textAnchor={getTextAnchor(paymentFromStart)} fill="currentColor">
-                        16000 + 1200
-                    </textPath>
-                </text>
-                <text transform={`translate(${TEXT_PATH_OFFSET} ${0})`}>
-                    <textPath xlinkHref={'#'+id} startOffset={getStartOffset(!paymentFromStart)} textAnchor={getTextAnchor(!paymentFromStart)} fill="currentColor">
-                        pao
-                    </textPath>
-                </text>
-            </g>
-        );
-    }
 
     isArrowFor(arrow: PlayerArrow, sideA: PlayerSide, sideB: PlayerSide): boolean {
         return (arrow.end === sideA || arrow.start === sideA) && (arrow.end === sideB || arrow.start === sideB)
     }
-
 
     render() {
         const {width, height} = this.state;
@@ -471,11 +382,11 @@ export class ResultArrows extends React.Component<ResultArrowsProps, IState> {
                     >
 
                         <BottomLeftArrow offsetX={offsetX} offsetY={offsetY} arrows={arrowList} width={width} height={height} />
+                        <BottomRightArrow offsetX={offsetX} offsetY={offsetY} arrows={arrowList} width={width} height={height} />
+                        <TopBottomArrow arrows={arrowList} width={width} height={height} />
+                        <LeftRightArrow arrows={arrowList} width={width} height={height} />
                         {this.renderLeftTop(offsetX, offsetY, leftTop)}
-                        {this.renderBottomRight(offsetX, offsetY, rightBottom)}
                         {this.renderTopRight(offsetX, offsetY, rightTop)}
-                        {this.renderHorizontal(leftRight)}
-                        {this.renderVertical(topBottom)}
                     </svg>
 
 
