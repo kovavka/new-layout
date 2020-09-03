@@ -1,16 +1,22 @@
-import * as React from "react";
-import './result-arrows.less'
+import * as React from 'react';
+import './result-arrows.less';
+import {PlayerArrow, PlayerSide, ResultArrowsProps} from '../../screens/table/base/ResultArrowsProps';
+import {
+    ARROW_BACKGROUND_WIDTH, ARROW_HEIGHT,
+    RIICHI_HEIGHT, RIICHI_POINT_RADIUS,
+    RIICHI_STROKE,
+    RIICHI_WIDTH, START_ARROWS_OFFSET,
+    TEXT_HEIGHT,
+    TEXT_PATH_OFFSET,
+} from './vars';
+import {BottomLeftArrow} from './BottomLeftArrow';
+import {ArrowList} from './base';
+import {ArrowPath} from './ArrowPath';
+import {ArrowEnd} from './ArrowEnd';
+import {RiichiBet} from './RiichiBet';
+import {ArrowText} from './ArrowText';
 // import {StateService} from '../../services/StateService'
 
-const START_ARROWS_OFFSET = 20;
-const TEXT_PATH_OFFSET = 4;
-const TEXT_HEIGHT = 8;
-const ARROW_BACKGROUND_WIDTH = 11;
-const ARROW_HEIGHT = 7;
-const RIICHI_STROKE = 1;
-const RIICHI_POINT_RADIUS = 1.8;
-const RIICHI_WIDTH = 42;
-const RIICHI_HEIGHT = 7;
 
 class Point {
     x: number;
@@ -29,15 +35,12 @@ enum Direction {
     BOTTOM_RIGHT,
 }
 
-type IProps = {
-}
-
 type IState = {
     width: number
     height: number
 }
 
-export class ResultArrows extends React.Component<IProps, IState> {
+export class ResultArrows extends React.Component<ResultArrowsProps, IState> {
     state = {
         width: 0,
         height: 0,
@@ -220,31 +223,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
         return new Point(x, y);
     }
 
-    private renderLeftBottom(offsetX: number, offsetY: number) {
-        const {width, height} = this.state;
-        const fromLeftToBottom = true;
-        const showRiichi = true;
-        const showPao = false;
-        const payment = '1000 + 300';
-        const id = 'left-bottom';
-        const direction = Direction.BOTTOM_LEFT;
+    private renderLeftTop(offsetX: number, offsetY: number, arrow: PlayerArrow | undefined) {
+        if (!arrow) {
+            return null
+        }
 
-        let start = new Point(0, height/2 + START_ARROWS_OFFSET);
-        let center = new Point(width/2 - START_ARROWS_OFFSET - offsetX, height/2 + START_ARROWS_OFFSET + offsetY);
-        let end = new Point(width/2 - START_ARROWS_OFFSET, height);
-
-        return (
-            <g>
-                {this.renderPath(id, start, center, end)}
-                {this.renderArrows(start, center, end, !fromLeftToBottom, direction)}
-
-                {showRiichi && this.renderRiichiBet(start, center, end, !fromLeftToBottom, direction)}
-                {this.renderText(payment, id, showPao, false, direction)}
-            </g>
-        )
-    }
-
-    private renderLeftTop(offsetX: number, offsetY: number) {
         const {width, height} = this.state;
         const fromLeftToTop = false;
         const showRiichi = true;
@@ -269,7 +252,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
         )
     }
 
-    private renderBottomRight(offsetX: number, offsetY: number) {
+    private renderBottomRight(offsetX: number, offsetY: number, arrow: PlayerArrow | undefined) {
+        if (!arrow) {
+            return null
+        }
+
         const {width, height} = this.state;
         const fromBottomToRight = true;
         const showRiichi = true;
@@ -293,7 +280,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
         );
     }
 
-    private renderTopRight(offsetX: number, offsetY: number) {
+    private renderTopRight(offsetX: number, offsetY: number, arrow: PlayerArrow | undefined) {
+        if (!arrow) {
+            return null
+        }
+
         const {width, height} = this.state;
         const fromTopToRight = false;
         const showRiichi = true;
@@ -317,7 +308,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
         );
     }
 
-    private renderHorizontal() {
+    private renderHorizontal(arrow: PlayerArrow | undefined) {
+        if (!arrow) {
+            return null
+        }
+
         const {width, height} = this.state;
         const fromLeftToRight = true;
 
@@ -346,7 +341,11 @@ export class ResultArrows extends React.Component<IProps, IState> {
         );
     }
 
-    private renderVertical() {
+    private renderVertical(arrow: PlayerArrow | undefined) {
+        if (!arrow) {
+            return null
+        }
+
         const {width, height} = this.state;
         const fromTopToBottom = true;
         let id = 'ver';
@@ -374,11 +373,91 @@ export class ResultArrows extends React.Component<IProps, IState> {
         );
     }
 
+    isArrowFor(arrow: PlayerArrow, sideA: PlayerSide, sideB: PlayerSide): boolean {
+        return (arrow.end === sideA || arrow.start === sideA) && (arrow.end === sideB || arrow.start === sideB)
+    }
+
+
     render() {
-        // const {} = this.props;
         const {width, height} = this.state;
+        const {arrows} = this.props;
         let offsetX = 0.1 * (width / 2 - START_ARROWS_OFFSET * 2);
         let offsetY = 0.1 * (height / 2 - START_ARROWS_OFFSET * 2);
+
+        let leftTop: PlayerArrow | undefined
+        let leftBottom: PlayerArrow | undefined
+        let leftRight: PlayerArrow | undefined
+        let rightTop: PlayerArrow | undefined
+        let rightBottom: PlayerArrow | undefined
+        let topBottom: PlayerArrow | undefined
+
+        let arrowList: ArrowList = {}
+
+        arrows.forEach(arrow => {
+            if (arrow.start === PlayerSide.TOP) {
+                switch (arrow.end) {
+                    case PlayerSide.LEFT:
+                        arrowList.TopLeft = arrow
+                        break
+                    case PlayerSide.BOTTOM:
+                        arrowList.TopBottom = arrow
+                        break
+                    case PlayerSide.RIGHT:
+                        arrowList.TopRight = arrow
+                        break
+                }
+            } else if (arrow.start === PlayerSide.LEFT) {
+                switch (arrow.end) {
+                    case PlayerSide.TOP:
+                        arrowList.LeftTop = arrow
+                        break
+                    case PlayerSide.BOTTOM:
+                        arrowList.LeftBottom = arrow
+                        break
+                    case PlayerSide.RIGHT:
+                        arrowList.LeftRight = arrow
+                        break
+                }
+            } else if (arrow.start === PlayerSide.RIGHT) {
+                switch (arrow.end) {
+                    case PlayerSide.LEFT:
+                        arrowList.RightLeft = arrow
+                        break
+                    case PlayerSide.BOTTOM:
+                        arrowList.RightBottom = arrow
+                        break
+                    case PlayerSide.TOP:
+                        arrowList.RightTop = arrow
+                        break
+                }
+            } else if (arrow.start === PlayerSide.BOTTOM) {
+                switch (arrow.end) {
+                    case PlayerSide.LEFT:
+                        arrowList.BottomLeft = arrow
+                        break
+                    case PlayerSide.TOP:
+                        arrowList.BottomTop = arrow
+                        break
+                    case PlayerSide.RIGHT:
+                        arrowList.BottomRight = arrow
+                        break
+                }
+            }
+
+            if (this.isArrowFor(arrow, PlayerSide.LEFT, PlayerSide.TOP)) {
+                leftTop = arrow
+            } else if (this.isArrowFor(arrow, PlayerSide.LEFT, PlayerSide.BOTTOM)) {
+                leftBottom = arrow
+            } else if (this.isArrowFor(arrow, PlayerSide.LEFT, PlayerSide.RIGHT)) {
+                leftRight = arrow
+            } else if (this.isArrowFor(arrow, PlayerSide.RIGHT, PlayerSide.TOP)) {
+                rightTop = arrow
+            } else if (this.isArrowFor(arrow, PlayerSide.RIGHT, PlayerSide.BOTTOM)) {
+                rightBottom = arrow
+            } else {
+                topBottom = arrow
+            }
+        })
 
         return (
             <div className="result-arrows">
@@ -391,15 +470,12 @@ export class ResultArrows extends React.Component<IProps, IState> {
                          stroke="none"
                     >
 
-                        {this.renderLeftBottom(offsetX, offsetY)}
-                        {this.renderLeftTop(offsetX, offsetY)}
-                        {this.renderBottomRight(offsetX, offsetY)}
-                        {this.renderTopRight(offsetX, offsetY)}
-                        {this.renderHorizontal()}
-                        {this.renderVertical()}
-
-
-
+                        <BottomLeftArrow offsetX={offsetX} offsetY={offsetY} arrows={arrowList} width={width} height={height} />
+                        {this.renderLeftTop(offsetX, offsetY, leftTop)}
+                        {this.renderBottomRight(offsetX, offsetY, rightBottom)}
+                        {this.renderTopRight(offsetX, offsetY, rightTop)}
+                        {this.renderHorizontal(leftRight)}
+                        {this.renderVertical(topBottom)}
                     </svg>
 
 

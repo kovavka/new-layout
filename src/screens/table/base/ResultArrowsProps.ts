@@ -1,23 +1,19 @@
 export type ResultArrowsProps = {
-    TopLeft?: PlayerArrow
-    TopRight?: PlayerArrow
-    TopBottom?: PlayerArrow
-
-    LeftTop?: PlayerArrow
-    LeftRight?: PlayerArrow
-    LeftBottom?: PlayerArrow
-
-    RightTop?: PlayerArrow
-    RightLeft?: PlayerArrow
-    RightBottom?: PlayerArrow
-
-    BottomTop?: PlayerArrow
-    BottomLeft?: PlayerArrow
-    BottomRight?: PlayerArrow
+    arrows: PlayerArrow[]
 }
 
 export type PlayerArrow = {
     points: number
+    honbaPoints: number
     withRiichi: boolean
     withPao: boolean
+    start: PlayerSide
+    end: PlayerSide
+}
+
+export enum PlayerSide {
+    TOP,
+    LEFT,
+    RIGHT,
+    BOTTOM,
 }

@@ -22,7 +22,7 @@ type IProps = {
     rightPlayer: PlayerProps
 
     tableInfo: TableInfoProps
-    arrows?: ResultArrowsProps
+    arrowsInfo?: ResultArrowsProps
 
     bottomPanel: BottomPanelProps
     showOutcomeModal?: boolean
@@ -30,7 +30,7 @@ type IProps = {
 
 export class TableScreenStateless extends React.Component<IProps> {
     render() {
-        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, bottomPanel, showOutcomeModal, tableInfo, arrows} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, bottomPanel, showOutcomeModal, tableInfo, arrowsInfo} = this.props;
 
         return (
             <div className="flex-container page-table">
@@ -42,7 +42,7 @@ export class TableScreenStateless extends React.Component<IProps> {
                         <PlayerLeft {...leftPlayer} />
 
                         <TableInfo {...tableInfo} />
-                        {!!arrows && <ResultArrows />}
+                        {!!arrowsInfo && <ResultArrows {...arrowsInfo} />}
 
                         <PlayerRight {...rightPlayer} />
                     </div>

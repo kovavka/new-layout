@@ -4,6 +4,7 @@ import {TableMode} from '../../../types/TableMode';
 import {OutcomeTableMode} from '../../../types/OutcomeTypes';
 import {PlayerProps} from '../../../components/players/PlayerProps';
 import {TableInfoProps} from '../base/TableInfoProps';
+import {ResultArrowsProps} from '../base/ResultArrowsProps';
 
 export type PlayerPropsResult =  Pick<PlayerProps, 'name' | 'wind' | 'rotated' | 'points' | 'pointsMode' | 'showInlineRiichi'>
 
@@ -13,6 +14,7 @@ type IProps = {
     rightPlayer: PlayerPropsResult
     bottomPlayer: PlayerPropsResult
     tableInfo: TableInfoProps
+    arrowsInfo?: ResultArrowsProps
 }
 
 function getPlayer(player: PlayerPropsResult): PlayerProps {
@@ -29,7 +31,7 @@ function getPlayer(player: PlayerPropsResult): PlayerProps {
 
 export class TableResult extends React.Component<IProps> {
     render() {
-        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, tableInfo, arrowsInfo} = this.props;
 
         return (
             <TableScreen
@@ -40,7 +42,7 @@ export class TableResult extends React.Component<IProps> {
                 tableMode={TableMode.RESULT}
                 outcomeMode={OutcomeTableMode.RON}
                 tableInfo={tableInfo}
-                arrows={{}}
+                arrowsInfo={arrowsInfo}
             />
         );
     }

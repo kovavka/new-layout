@@ -10,6 +10,7 @@ import {
 import {TableStories} from '../../../storybook-base/StoryVars';
 import {PlayerPropsResult, TableResult} from '../variations/TableResult';
 import {TableInfoProps} from '../base/TableInfoProps';
+import {PlayerArrow, PlayerSide, ResultArrowsProps} from '../base/ResultArrowsProps';
 
 const topPlayer = {
     ...getTopPlayerBase(),
@@ -45,6 +46,35 @@ const tableInfo = {
     showTimer: true,
 } as TableInfoProps;
 
+const arrowsInfo = {
+    arrows: [
+        {
+            points: 0,
+            honbaPoints: 0,
+            withRiichi: false,
+            withPao: false,
+            start: PlayerSide.BOTTOM,
+            end: PlayerSide.LEFT,
+        },
+        {
+            points: 0,
+            honbaPoints: 0,
+            withRiichi: false,
+            withPao: false,
+            start: PlayerSide.TOP,
+            end: PlayerSide.BOTTOM,
+        },
+        {
+            points: 0,
+            honbaPoints: 0,
+            withRiichi: false,
+            withPao: false,
+            start: PlayerSide.BOTTOM,
+            end: PlayerSide.RIGHT,
+        },
+    ]
+} as ResultArrowsProps;
+
 
 TableStories.add(
     'result',
@@ -55,6 +85,7 @@ TableStories.add(
             rightPlayer={rightPlayer}
             bottomPlayer={bottomPlayer}
             tableInfo={tableInfo}
+            arrowsInfo={arrowsInfo}
         />
     )
 );

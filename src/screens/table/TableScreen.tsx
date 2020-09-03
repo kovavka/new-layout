@@ -19,7 +19,7 @@ type IProps = {
     selectOutcome?: boolean
 
     tableInfo: TableInfoProps
-    arrows?: ResultArrowsProps
+    arrowsInfo?: ResultArrowsProps
 }
 
 export class TableScreen extends React.Component<IProps> {
@@ -53,7 +53,7 @@ export class TableScreen extends React.Component<IProps> {
     }
 
     render() {
-        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, selectOutcome, arrows, tableInfo} = this.props;
+        const {topPlayer, leftPlayer, rightPlayer, bottomPlayer, selectOutcome, arrowsInfo, tableInfo} = this.props;
 
         return (
             <>
@@ -65,7 +65,7 @@ export class TableScreen extends React.Component<IProps> {
                    tableInfo={tableInfo}
                    bottomPanel={this.getBottomPanel()}
                    showOutcomeModal={selectOutcome}
-                   arrows={arrows}
+                   arrowsInfo={arrowsInfo}
                />
            </>
         );
