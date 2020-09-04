@@ -1,18 +1,11 @@
 import * as React from 'react';
-import {PlayerArrow, PlayerSide, ResultArrowsProps} from '../../../screens/table/base/ResultArrowsProps';
+import {PlayerSide} from '../../../screens/table/base/ResultArrowsProps';
 import {Direction, Point, ArrowList} from '../base';
-import {getAngleForCurve, getCurvePoint, getPayment} from '../utils';
+import {getPayment} from '../utils';
 import {ArrowText} from '../base-components/ArrowText';
 import {ArrowPath} from '../base-components/ArrowPath';
 import {RiichiBetByCurve} from '../base-components/RiichiBet';
-import {
-    ARROW_BACKGROUND_WIDTH, ARROW_HEIGHT,
-    RIICHI_HEIGHT, RIICHI_POINT_RADIUS,
-    RIICHI_STROKE,
-    RIICHI_WIDTH, START_ARROWS_OFFSET,
-    TEXT_HEIGHT,
-    TEXT_PATH_OFFSET,
-} from '../vars';
+import {START_ARROWS_OFFSET} from '../vars';
 import {ArrowEnd} from '../base-components/ArrowEnd';
 
 type IProps = {

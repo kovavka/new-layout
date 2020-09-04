@@ -80,6 +80,22 @@ const arrowsInfo = {
             start: PlayerSide.LEFT,
             end: PlayerSide.RIGHT,
         },
+        {
+            points: 1000,
+            honbaPoints: 0,
+            withRiichi: true,
+            withPao: false,
+            start: PlayerSide.LEFT,
+            end: PlayerSide.TOP,
+        },
+        {
+            points: 1000,
+            honbaPoints: 0,
+            withRiichi: true,
+            withPao: false,
+            start: PlayerSide.RIGHT,
+            end: PlayerSide.TOP,
+        },
     ]
 } as ResultArrowsProps;
 
